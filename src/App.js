@@ -1,36 +1,19 @@
 import "./App.css";
-
+import Layout from "./components/Layout/Layout";
+import { Routes, Route } from "react-router-dom";
+import AuthForm from "./components/Auth/AuthForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import StartingPageContent from "./components/StartingPage/StartingPage";
 
 function App() {
   return (
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-          />
-        </a>
-
-        <a
-          role="button"
-          className="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">Home</a>
-        </div>
-      </div>
-    </nav>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<StartingPageContent />} />
+        <Route path="/auth" element={<AuthForm />} />
+        {/* {<Route path="/*" element={<Navigate to="/" />} />} */}
+      </Routes>
+    </Layout>
   );
 }
 
