@@ -6,7 +6,7 @@ const Profile = () => {
 
   return (
     <div className={classes.profile}>
-      <h1>Your Profile</h1>
+      <h1>Twój profil</h1>
       <div>
         <span className={classes.label}>Imię: </span>
         {user.firstName}
@@ -21,7 +21,10 @@ const Profile = () => {
       </div>
       <div>
         <span className={classes.label}>Tytuł naukowy: </span>
-        {user.title}
+        {user.title === "Student" ? <>Uczeń</> : ""}
+        {user.title === "Professor" ? <>Profesor</> : ""}
+        {user.title === "Bachelor" ? <>Inżynier</> : ""}
+        {user.title === "Master" ? <>Magister</> : ""}
       </div>
       <div>
         <span className={classes.label}>Rola w systemie: </span>
