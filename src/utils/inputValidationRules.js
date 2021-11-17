@@ -17,7 +17,7 @@ function createValidationRule(ruleName, errorMessage, validateFunc) {
 export function requiredRule(inputName) {
   return createValidationRule(
     "required",
-    `${inputName} required`,
+    `${inputName} wymagane`,
     (inputValue, formObj) => inputValue.length !== 0
   );
 }
@@ -25,7 +25,7 @@ export function requiredRule(inputName) {
 export function minLengthRule(inputName, minCharacters) {
   return createValidationRule(
     "minLength",
-    `${inputName} should contain atleast ${minCharacters} characters`,
+    `${inputName} powinno zawierać przynajmniej ${minCharacters} znaków`,
     (inputValue, formObj) => inputValue.length >= minCharacters
   );
 }
@@ -33,7 +33,7 @@ export function minLengthRule(inputName, minCharacters) {
 export function maxLengthRule(inputName, maxCharacters) {
   return createValidationRule(
     "minLength",
-    `${inputName} cannot contain more than ${maxCharacters} characters`,
+    `${inputName} nie może zawierać więcej niż ${maxCharacters} znaków`,
     (inputValue, formObj) => inputValue.length <= maxCharacters
   );
 }
@@ -41,7 +41,7 @@ export function maxLengthRule(inputName, maxCharacters) {
 export function passwordMatchRule() {
   return createValidationRule(
     "passwordMatch",
-    `passwords do not match`,
+    `hasło nie jest takie samo`,
     (inputValue, formObj) => inputValue === formObj.password.value
   );
 }
@@ -49,7 +49,7 @@ export function passwordMatchRule() {
 export function emailRule(inputName) {
   return createValidationRule(
     "email",
-    `${inputName} is invalid`,
+    `${inputName} jest niepoprawny`,
     (inputValue) => {
       const re =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
