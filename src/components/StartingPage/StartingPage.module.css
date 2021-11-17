@@ -6,3 +6,8 @@
   .starting h1 {
     font-size: 5rem;
   }
+
+  .course {
+    cursor: pointer;
+  }
+  
