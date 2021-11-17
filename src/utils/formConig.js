@@ -44,19 +44,19 @@ function createFormFieldConfig(label, name, type, defaultValue = "") {
 // object representation of auth form
 export const signupForm = {
   firstName: {
-    ...createFormFieldConfig("First name", "firstName", "text"),
+    ...createFormFieldConfig("Imię", "firstName", "text"),
     validationRules : [
-      requiredRule("firstName"),
-      minLengthRule("firstName", 3),
-      maxLengthRule("firstName", 50)
+      requiredRule("imię"),
+      minLengthRule("imię", 3),
+      maxLengthRule("imię", 50)
     ]
   },
   lastName: {
-    ...createFormFieldConfig("Last name", "lastName", "text"),
+    ...createFormFieldConfig("Nazwisko", "lastName", "text"),
     validationRules : [
-      requiredRule("lastName"),
-      minLengthRule("lastName", 3),
-      maxLengthRule("lastName", 50)
+      requiredRule("Nazwisko"),
+      minLengthRule("Nazwisko", 3),
+      maxLengthRule("Nazwisko", 50)
     ]
   },
   email: {
@@ -69,15 +69,15 @@ export const signupForm = {
     ]
   },
   password: {
-    ...createFormFieldConfig("Password", "password", "password"),
+    ...createFormFieldConfig("Hasło", "password", "password"),
     validationRules: [
-      requiredRule("password"),
-      minLengthRule("password", 6),
-      maxLengthRule("password", 120)
+      requiredRule("Hasło"),
+      minLengthRule("Hasło", 6),
+      maxLengthRule("Hasło", 120)
     ]
   },
   confirmPassword: {
-    ...createFormFieldConfig("Confirm Password", "confirmPassword", "password"),
+    ...createFormFieldConfig("Potwierdź hasło", "confirmPassword", "password"),
     validationRules: [passwordMatchRule()]
   },
 };
@@ -93,11 +93,11 @@ export const signinForm = {
     ]
   },
   password: {
-    ...createFormFieldConfig("Password", "password", "password"),
+    ...createFormFieldConfig("Hasło", "password", "password"),
     validationRules: [
-      requiredRule("password"),
-      minLengthRule("password", 6),
-      maxLengthRule("password", 120)
+      requiredRule("Hasło"),
+      minLengthRule("Hasło", 6),
+      maxLengthRule("Hasło", 120)
     ]
   }
 }
