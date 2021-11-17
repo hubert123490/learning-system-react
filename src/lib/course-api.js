@@ -9,7 +9,7 @@ export async function getAllCourses() {
     const data = await response.json();
   
     if (!response.ok) {
-      throw new Error(data.message || "Could not get courses.");
+      throw new Error(data.message || "Nie można pobrać kursów.");
     }
   
     return data;

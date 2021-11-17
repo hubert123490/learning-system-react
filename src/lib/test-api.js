@@ -12,7 +12,7 @@ export async function studentTest(authHeader) {
     const data = await response.json();
   
     if (!response.ok) {
-      throw new Error(data.message || "Could not get student data.");
+      throw new Error(data.message || "Nie można pobrać danych ucznia.");
     }
   
     return data;

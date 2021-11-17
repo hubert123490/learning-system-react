@@ -8,11 +8,11 @@ const Profile = () => {
     <div className={classes.profile}>
       <h1>Your Profile</h1>
       <div>
-        <span className={classes.label}>First name: </span>
+        <span className={classes.label}>Imię: </span>
         {user.firstName}
       </div>
       <div>
-        <span className={classes.label}>Last name: </span>
+        <span className={classes.label}>Nazwisko: </span>
         {user.lastName}
       </div>
       <div>
@@ -20,12 +20,12 @@ const Profile = () => {
         {user.email}
       </div>
       <div>
-        <span className={classes.label}>Title: </span>
+        <span className={classes.label}>Tytuł naukowy: </span>
         {user.title}
       </div>
       <div>
-        <span className={classes.label}>Roles: </span>
-        {user.roles.map((role) => role + ",")}
+        <span className={classes.label}>Rola w systemie: </span>
+        {user.roles.map((role) => role)}
       </div>
     </div>
   );
