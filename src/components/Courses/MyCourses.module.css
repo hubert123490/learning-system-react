@@ -1,0 +1,13 @@
+.myCourses {
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .myCourses h1 {
+    font-size: 3rem;
+  }
+
+  .course {
+    cursor: pointer;
+  }
+  
