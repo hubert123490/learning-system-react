@@ -1,0 +1,18 @@
+.teacherPanel {
+    width: 800px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    padding: 20px;
+}
+
+h1, h4 {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    text-align: center;
+  }
+
