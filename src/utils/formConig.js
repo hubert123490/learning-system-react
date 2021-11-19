@@ -6,7 +6,7 @@ import {
   minLengthRule,
   maxLengthRule,
   passwordMatchRule,
-  emailRule
+  emailRule,
 } from "./inputValidationRules";
 
 /**
@@ -17,7 +17,7 @@ import {
  * @param {string} type - input type
  * @param {string} defaultValue - default value for the input
  */
-function createFormFieldConfig(label, name, type, defaultValue = "") {
+export function createFormFieldConfig(label, name, type, defaultValue = "") {
   return {
     renderInput: (handleChange, value, isValid, error, key) => {
       return (
@@ -37,7 +37,7 @@ function createFormFieldConfig(label, name, type, defaultValue = "") {
     value: defaultValue,
     valid: false,
     errorMessage: "",
-    touched: false
+    touched: false,
   };
 }
 
@@ -45,19 +45,19 @@ function createFormFieldConfig(label, name, type, defaultValue = "") {
 export const signupForm = {
   firstName: {
     ...createFormFieldConfig("Imię", "firstName", "text"),
-    validationRules : [
+    validationRules: [
       requiredRule("imię"),
       minLengthRule("imię", 3),
-      maxLengthRule("imię", 50)
-    ]
+      maxLengthRule("imię", 50),
+    ],
   },
   lastName: {
     ...createFormFieldConfig("Nazwisko", "lastName", "text"),
-    validationRules : [
+    validationRules: [
       requiredRule("Nazwisko"),
       minLengthRule("Nazwisko", 3),
-      maxLengthRule("Nazwisko", 50)
-    ]
+      maxLengthRule("Nazwisko", 50),
+    ],
   },
   email: {
     ...createFormFieldConfig("Email", "email", "email"),
@@ -65,20 +65,20 @@ export const signupForm = {
       emailRule("email"),
       requiredRule("email"),
       minLengthRule("email", 10),
-      maxLengthRule("email", 50)
-    ]
+      maxLengthRule("email", 50),
+    ],
   },
   password: {
     ...createFormFieldConfig("Hasło", "password", "password"),
     validationRules: [
       requiredRule("Hasło"),
       minLengthRule("Hasło", 6),
-      maxLengthRule("Hasło", 120)
-    ]
+      maxLengthRule("Hasło", 120),
+    ],
   },
   confirmPassword: {
     ...createFormFieldConfig("Potwierdź hasło", "confirmPassword", "password"),
-    validationRules: [passwordMatchRule()]
+    validationRules: [passwordMatchRule()],
   },
 };
 
@@ -89,15 +89,50 @@ export const signinForm = {
       emailRule("email"),
       requiredRule("email"),
       minLengthRule("email", 10),
-      maxLengthRule("email", 50)
-    ]
+      maxLengthRule("email", 50),
+    ],
   },
   password: {
     ...createFormFieldConfig("Hasło", "password", "password"),
     validationRules: [
       requiredRule("Hasło"),
       minLengthRule("Hasło", 6),
-      maxLengthRule("Hasło", 120)
-    ]
-  }
-}
+      maxLengthRule("Hasło", 120),
+    ],
+  },
+};
+
+export const createCourseForm = {
+  courseName: {
+    ...createFormFieldConfig("Nazwa kursu", "courseName", "text"),
+    validationRules: [
+      requiredRule("Nazwa kursu"),
+      minLengthRule("Nazwa kursu", 3),
+    ],
+  },
+  courseCategory: {
+    ...createFormFieldConfig("Kategoria kursu", "courseCategory", "text"),
+    validationRules: [
+      requiredRule("Kategoria kursu"),
+      minLengthRule("Kategoria kursu", 3),
+    ],
+  },
+  password: {
+    ...createFormFieldConfig("Hasło do kursu", "password", "password"),
+    validationRules: [minLengthRule("Hasło do kursu", 3)],
+  },
+  confirmPassword: {
+    ...createFormFieldConfig("Potwierdź hasło", "confirmPassword", "password"),
+    validationRules: [passwordMatchRule()],
+  },
+};
+
+export const createLessonForm = {
+  lessonName: {
+    ...createFormFieldConfig("Nazwa lekcji", "lessonName", "text"),
+    validationRules: [
+      requiredRule("Nazwa lekcji"),
+      minLengthRule("Nazwa lekcji", 3),
+    ],
+  },
+};
