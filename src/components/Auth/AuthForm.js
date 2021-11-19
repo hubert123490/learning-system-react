@@ -40,7 +40,6 @@ export default function AuthForm() {
 
   useEffect(() => {
     if (signInData) {
-      console.log(signInData)
       authCtx.login(signInData);
       nav("/");
     }
@@ -76,7 +75,6 @@ export default function AuthForm() {
         title: degree,
         role: [systemRole],
       });
-      console.log( renderSignupFormInputs());
     }
   };
 
