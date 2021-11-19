@@ -16,6 +16,7 @@ const MainNavigation = () => {
   }
 
   useEffect(() => {
+    if(user){
     if(user.roles.includes("ROLE_STUDENT")) {
       setShowStudentContent(true);
     }
@@ -23,7 +24,8 @@ const MainNavigation = () => {
     if(user.roles.includes("ROLE_TEACHER")) {
       setShowTeacherContent(true);
     }
-  }, [user.roles])
+  }
+  }, [user])
 
 
   return (
@@ -41,6 +43,16 @@ const MainNavigation = () => {
           {isLoggedIn && (showStudentContent || showTeacherContent ) && (
             <li>
               <Link to="/profile">Profil</Link>
+            </li>
+          )}
+          {isLoggedIn && showTeacherContent && (
+            <li>
+              <Link to="/teacher">Panel nauczyciela</Link>
+            </li>
+          )}
+          {isLoggedIn && (showTeacherContent || showStudentContent) && (
+            <li>
+              <Link to="/my-courses">Moje kursy</Link>
             </li>
           )}
           {isLoggedIn && (
