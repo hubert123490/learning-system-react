@@ -1,5 +1,5 @@
 import classes from "./TeacherPanel.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const TeacherPanel = () => {
   return (
@@ -7,7 +7,8 @@ const TeacherPanel = () => {
       <h1>Twój Panel</h1>
       <h4>Wybierz akcję: </h4><br/>
       <div className={classes.gridContainer}>
-          <NavLink to="/teacher/create-course" className={classes.gridItem}><button>Stwórz kurs</button></NavLink>
+          <NavLink to="/teacher/my-courses" className={classes.gridItem}><button>Moje kursy</button></NavLink>
+          
       </div>
     </div>
   );
