@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import useForm from "../../hooks/use-form";
-import { signinForm, signupForm } from "../../utils/formConig";
+import { signinForm, signupForm } from "../../lib/forms/auth-form"
 import useHttp from "../../hooks/use-http";
-import { signUp, signIn } from "../../lib/auth-api";
+import { signUp, signIn } from "../../lib/api/auth-api";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./AuthForm.module.css";
 import AuthContext from "../../store/auth-context";
@@ -41,7 +41,7 @@ export default function AuthForm() {
   useEffect(() => {
     if (signInData) {
       authCtx.login(signInData);
-      nav("/");
+      nav("/profile");
     }
   }, [authCtx, signInData, nav]);
 
@@ -62,6 +62,7 @@ export default function AuthForm() {
       });
       if (signInData) {
         authCtx.login(signInData.token);
+        
       }
     } else {
       if (!isSignupFormValid) {
