@@ -8,8 +8,7 @@ import { useContext, useState, useEffect } from "react";
 import AuthContext from "./store/auth-context";
 import AuthFormPage from "./pages/AuthFormPage";
 import TeacherPage from "./pages/TeacherPage";
-import MyCoursesPage from "./pages/MyCoursesPage";
-import CourseDetailsPage from "./pages/CourseDetailsPage";
+
 
 function App() {
   const authCtx = useContext(AuthContext)
@@ -39,8 +38,7 @@ function App() {
         <Route path="/auth" element={<AuthFormPage />} />
         {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
         {isLoggedIn  && showTeacherContent && <Route path="/teacher/*" element={<TeacherPage />} />}
-        {isLoggedIn && (showTeacherContent || showStudentContent) && <Route path="/my-courses" element={<MyCoursesPage />} />}
-        {isLoggedIn && (showTeacherContent || showStudentContent) && <Route path="/courses/:courseId/*" element={<CourseDetailsPage />} />}  
+        
         <Route path="*" element={<StartingPageContent />} />
       </Routes>
     </Layout>
