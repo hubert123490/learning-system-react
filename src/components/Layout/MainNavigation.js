@@ -5,7 +5,7 @@ import AuthContext from "../../store/auth-context";
 
 const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [showStudentContent, setShowStudentContent] = useState(false);
   const [showTeacherContent, setShowTeacherContent] = useState(false);
 
@@ -13,20 +13,19 @@ const MainNavigation = () => {
 
   const logoutHandler = () => {
     authCtx.logout();
-  }
+  };
+
+ 
 
   useEffect(() => {
-    if(user){
-    if(user.roles.includes("ROLE_STUDENT")) {
-      setShowStudentContent(true);
-    }
-  
-    if(user.roles.includes("ROLE_TEACHER")) {
-      setShowTeacherContent(true);
-    }
-  }
-  }, [user])
-
+    if (user) {
+      if (user.roles.includes("ROLE_STUDENT")) {
+        setShowStudentContent(true);
+      } else if (user.roles.includes("ROLE_TEACHER")) {
+        setShowTeacherContent(true);
+      }
+    } 
+  }, [user, showStudentContent, showTeacherContent, isLoggedIn, logoutHandler, authCtx.user]);
 
   return (
     <header className={classes.header}>
@@ -40,7 +39,7 @@ const MainNavigation = () => {
               <Link to="/auth">Logowanie</Link>
             </li>
           )}
-          {isLoggedIn && (showStudentContent || showTeacherContent ) && (
+          {isLoggedIn && (showStudentContent || showTeacherContent) && (
             <li>
               <Link to="/profile">Profil</Link>
             </li>
@@ -50,9 +49,9 @@ const MainNavigation = () => {
               <Link to="/teacher">Panel nauczyciela</Link>
             </li>
           )}
-          {isLoggedIn && (showTeacherContent || showStudentContent) && (
+          {isLoggedIn && showTeacherContent && (
             <li>
-              <Link to="/my-courses">Moje kursy</Link>
+              <Link to="/teacher/my-courses">Moje kursy</Link>
             </li>
           )}
           {isLoggedIn && (
