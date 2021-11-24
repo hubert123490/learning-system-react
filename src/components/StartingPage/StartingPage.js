@@ -1,16 +1,14 @@
 import classes from "./StartingPage.module.css";
 import useHttp from "../../hooks/use-http";
-import { getAllCourses } from "../../lib/course-api";
+import { getAllCourses } from "../../lib/api/course-api";
 import { useEffect } from "react";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import Card from "../UI/Card";
+import { useNavigate } from "react-router";
 
 const StartingPageContent = () => {
+  const navigate = useNavigate();
   const { sendRequest, data, } = useHttp(getAllCourses, true);
-
-  const testFunc = () => {
-    console.log("test");
-  };
 
   const getTitle = title => {
     if(title === "Bachelor")
@@ -24,14 +22,16 @@ const StartingPageContent = () => {
     return sendRequest
   }, [sendRequest]);
 
-  console.log(data);
+  const courseDetailsHandler = (courseId) => {
+    navigate(`/student/courses/${courseId}`);
+  };
 
   return (
     <section className={classes.starting}>
       <h1>Aktualnie prowadzone kursy!</h1>
       {data ? (
         data.courses.map((item) => (
-          <div key={item.id} onClick={testFunc} className={classes.course}>
+          <div key={item.id} onClick={() => courseDetailsHandler(item.id)} className={classes.course}>
             <Card >
               <h2>{item.name}</h2>
               <div>Kategoria kursu:</div>
