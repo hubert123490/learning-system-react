@@ -39,17 +39,17 @@ const MainNavigation = () => {
               <Link to="/auth">Logowanie</Link>
             </li>
           )}
-          {isLoggedIn && (showStudentContent || showTeacherContent) && (
+          {isLoggedIn && (authCtx.isStudent || authCtx.isTeacher) && (
             <li>
               <Link to="/profile">Profil</Link>
             </li>
           )}
-          {isLoggedIn && showTeacherContent && (
+          {isLoggedIn && authCtx.isTeacher && (
             <li>
               <Link to="/teacher">Panel nauczyciela</Link>
             </li>
           )}
-          {isLoggedIn && showTeacherContent && (
+          {isLoggedIn && authCtx.isTeacher && (
             <li>
               <Link to="/teacher/my-courses">Moje kursy</Link>
             </li>
