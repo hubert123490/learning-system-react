@@ -59,6 +59,8 @@ export async function getAllCourses() {
       },
     });
     const data = await response.json();
+
+    console.log(data);
   
     if (!response.ok) {
       throw new Error(data.message || "Nie można pobrać kursów.");
@@ -81,5 +83,24 @@ export async function getAllCourses() {
       throw new Error(data.message || "Nie można usunąć kursu.");
     }
   
+    return data;
+  }
+
+  export async function enrollInCourse(courseData) {
+    const response = await fetch(`${SERVER_DOMAIN}/api/courses/${courseData.courseId}`,
+    {
+      method: "POST",
+      body: courseData.password,
+      headers : {
+        "Content-Type": "application/json",
+        "Authorization" : authHeader()
+      },
+    });
+    const data = await response.json();
+
+    if(!response.ok) {
+      throw new Error(data.message || "Nie można zapisać się do kursu.");
+    }
+
     return data;
   }

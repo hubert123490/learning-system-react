@@ -22,3 +22,10 @@ export const createCourseForm = {
       validationRules: [],
     }
   };
+
+export const enrollInCourseForm = {
+  coursePassword: {
+    ...createFormFieldConfig("Hasło", "coursePassword", "text"),
+    validationRules: []
+  }
+}
