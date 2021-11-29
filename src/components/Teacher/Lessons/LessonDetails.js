@@ -92,13 +92,13 @@ const LessonDetails = () => {
     setShowAddContentForm(!showAddContentForm);
   };
 
-  const showAddFileFormHandler = () => {
+  const showAddContentFormHandler = () => {
     setShowAddContentForm(!showAddContentForm);
   };
 
   return (
     <div className={classes.lessonDetails}>
-      <button onClick={showAddFileFormHandler}>
+      <button onClick={showAddContentFormHandler}>
         {showAddContentForm ? "Zamknji formularz" : "Dodaj kontent"}{" "}
       </button>
       {showAddContentForm && (
@@ -187,6 +187,10 @@ const LessonDetails = () => {
                 >
                   Usuń kontent
                 </button>
+                <hr/>
+                <div>
+                  
+                </div>
               </Card>
             </div>
           ))}
