@@ -29,3 +29,18 @@ export const enrollInCourseForm = {
     validationRules: []
   }
 }
+
+export const getCoursesForm = {
+  courseName : {
+    ...createFormFieldConfig("Nazwa kursu", "courseName", "text"),
+    validationRules: []
+  },
+  courseCategory : {
+    ...createFormFieldConfig("Kategoria kursu", "courseCategory", "text"),
+    validationRules: []
+  },
+  teacherLastName : {
+    ...createFormFieldConfig("Nazwisko prowadzącego", "teacherLastName", "text"),
+    validationRules: []
+  }
+}
