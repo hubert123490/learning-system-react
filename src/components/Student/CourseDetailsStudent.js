@@ -13,10 +13,10 @@ const CourseDetails = () => {
   const location = useLocation();
   const params = useParams();
   const {
-    sendRequest: getLessonsRequest,
-    data: getLessonsData,
-    status: getLessonsStatus,
-    error: getLessonsError,
+    sendRequest: getCourseDetailsRequest,
+    data: getCourseDetailsData,
+    status: getCourseDetailsStatus,
+    error: getCourseDetailsError,
   } = useHttp(courseDetails, true);
   const {
     sendRequest: enrollInCourseRequest,
@@ -31,14 +31,18 @@ const CourseDetails = () => {
 
   useEffect(() => {
     if (params.courseId) {
-      getLessonsRequest(params.courseId);
+      getCourseDetailsRequest(params.courseId);
     }
-    return getLessonsRequest;
-  }, [getLessonsRequest, params.courseId, enrollInCourseStatus]);
+    return getCourseDetailsRequest;
+  }, [getCourseDetailsRequest, params.courseId, enrollInCourseStatus]);
 
   const lessonDetailsHandler = (lessonId) => {
     if (location.pathname) navigate(`${location.pathname}/lessons/${lessonId}`);
   };
+
+  const examDetailsHandler = (examId) => {
+    if(location.pathname) navigate(`${location.pathname}/exams/${examId}`)
+  }
 
   const onEnrollInCourseSubmit = (event) => {
     event.preventDefault();
@@ -48,14 +52,16 @@ const CourseDetails = () => {
     });
   };
 
+  console.log(getCourseDetailsData)
+
   return (
     <div className={classes.courseDetails}>
-      <h1 style={{ fontSize: "3rem" }}>Twoje lekcje!</h1>
+      <h1 style={{ fontSize: "3rem" }}>Witaj!</h1>
       <section className={classes.courseDetails}>
         <hr />
-        {getLessonsData &&
-          getLessonsStatus === "completed" &&
-          getLessonsData.lessons.map((item) => (
+        {getCourseDetailsData &&
+          getCourseDetailsStatus === "completed" &&
+          getCourseDetailsData.lessons.map((item) => (
             <div key={item.id} className={classes.course}>
               <div className={classes.card}>
                 <div
@@ -68,24 +74,39 @@ const CourseDetails = () => {
               </div>
             </div>
           ))}
-        {getLessonsStatus !== "completed" && !getLessonsData && (
+          {getCourseDetailsData &&
+          getCourseDetailsStatus === "completed" &&
+          getCourseDetailsData.exams.map((item) => (
+            <div key={item.id} className={classes.course}>
+              <div className={classes.card} style={{backgroundColor : "lightyellow"}} >
+                <div
+                  onClick={() => {
+                    examDetailsHandler(item.id);
+                  }}
+                >
+                  <h2>{item.name}</h2>
+                </div>
+              </div>
+            </div>
+          ))}
+        {getCourseDetailsStatus !== "completed" && !getCourseDetailsData && (
           <Card>
             <div>
               <LoadingSpinner />
             </div>
           </Card>
         )}
-        {getLessonsError && (
-          <div className={classes.error}>{getLessonsError}</div>
+        {getCourseDetailsError && (
+          <div className={classes.error}>{getCourseDetailsError}</div>
         )}
-        {getLessonsError ===
+        {getCourseDetailsError ===
           "Wygląda na to że nie posiadasz kursu o podanym id" && (
           <form onSubmit={onEnrollInCourseSubmit}>
             {renderEnrollFormInputs()}
             <button type="submit">Zapisz się na kurs</button>
           </form>
         )}
-        {!getLessonsData && getLessonsStatus === "completed" && <h2>Pusto</h2>}
+        {!getCourseDetailsData && getCourseDetailsStatus === "completed" && <h2>Pusto</h2>}
       </section>
     </div>
   );

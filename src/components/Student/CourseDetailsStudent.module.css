@@ -11,6 +11,11 @@
     cursor: pointer;
   }
 
+  .exam {
+    cursor: pointer;
+    background-color: lightyellow;
+  }
+
   .card {
     padding: 1rem;
     margin: 1rem auto;
