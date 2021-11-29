@@ -1,0 +1,47 @@
+.submission {
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .submission h1 {
+    font-size: 3rem;
+  }
+
+  .click {
+    cursor: pointer;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    width: 150px;
+    background: blueviolet;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background: #eee;
+    color: #999;
+    box-shadow: none;
+  }
+
+ .failed {
+   color: red;
+   margin: 1em;
+   font-size: large;
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ }
+  
+ .error {
+   margin-bottom: 1em;
+   color: red;
+ }
+
+ .success {
+   color: green;
+   margin-bottom: 1em;
+ }
+  
