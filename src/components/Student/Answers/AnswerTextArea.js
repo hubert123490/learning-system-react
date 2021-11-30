@@ -8,7 +8,7 @@ const AnswerTextArea = (props) => {
     return (
         <form>
           <p>{props.question.description}</p>
-          <textarea rows={4} cols={120} value={answer} onChange={(e) => props.handleTextArea(e, props.question.id, setAnswer)} />
+          <textarea style={{width : "100%", height: "5rem"}} value={answer} onChange={(e) => props.handleTextArea(e, props.question.id, setAnswer)} />
           <br />
         </form>
       );
