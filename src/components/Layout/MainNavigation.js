@@ -54,6 +54,11 @@ const MainNavigation = () => {
               <Link to="/teacher/my-courses">Moje kursy</Link>
             </li>
           )}
+          {isLoggedIn && authCtx.isTeacher && (
+            <li>
+              <Link to="/teacher/check-courses">Sprawdź egzaminy</Link>
+            </li>
+          )}
           {isLoggedIn && authCtx.isStudent && (
             <li>
               <Link to="/student/my-courses">Moje kursy</Link>
