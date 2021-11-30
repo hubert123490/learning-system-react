@@ -34,8 +34,6 @@ const Submission = () => {
     return checkSubmissionRequest
   }, [checkSubmissionRequest, makeSubmissionStatus])
 
-  console.log(checkSubmissionData)
-
   const makeSubmissionHandler = (event) => {
     event.preventDefault();
     makeSubmissionRequest({
@@ -50,6 +48,7 @@ const Submission = () => {
               {<h1>Witaj!</h1>}
               {checkSubmissionData && checkSubmissionData.status === "SUCCESS" && <form onSubmit={makeSubmissionHandler}><button>Przystąp do egzaminu</button></form>}
               {checkSubmissionData && checkSubmissionData.status === "ERROR" && <div><h3>Test zakończony pomyślnie</h3><div>{checkSubmissionData.message}</div></div>}
+              {checkSubmissionData && checkSubmissionData.status === "PENDING" && <div><h3>Test jest w trakcie sprawdzania</h3><div>{checkSubmissionData.message}</div></div>}
           </div>
       </Card>
   </div>

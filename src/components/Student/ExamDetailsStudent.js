@@ -100,8 +100,6 @@ const ExamDetailsStudent = () => {
     }
   };
 
-  console.log(checkSubmissionData)
-
   return (
     <div className={classes.questionDetails}>
       {(!getQuestionsData || getQuestionsData.length === 0) && <div>pusto</div>}
