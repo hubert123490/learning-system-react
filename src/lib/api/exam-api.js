@@ -36,3 +36,20 @@ export async function createExam(examData) {
   
     return data;
   }
+
+  export async function getUncheckedExams(examData) {
+    const response = await fetch(`${SERVER_DOMAIN}/api/courses/${examData.courseId}/exams`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : authHeader()
+      },
+    });
+    const data = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(data.message || "Nie udało się pobrać egzaminów do sprawdzenia.");
+    }
+  
+    return data;
+  }

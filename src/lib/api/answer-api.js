@@ -18,3 +18,39 @@ export async function submitAnswers(answersData) {
     
       return data;
   }
+
+  export async function getUncheckedAnswers(answersData) {
+    const response = await fetch(`${SERVER_DOMAIN}/api/courses/${answersData.courseId}/exams/${answersData.examId}/submissions/${answersData.submissionId}/unchecked-answers`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : authHeader()
+        },
+      });
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "Nie udało się pobrać odpowiedzi.");
+      }
+    
+      return data;
+  }
+
+  export async function rateAnswer(answersData) {
+    const response = await fetch(`${SERVER_DOMAIN}/api/courses/${answersData.courseId}/exams/${answersData.examId}/submissions/${answersData.submissionId}/answers/${answersData.answerId}`, {
+        method: "POST",
+        body: JSON.stringify(answersData.request),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : authHeader()
+        },
+      });
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "Nie udało się ocenić odpowiedzi.");
+      }
+    
+      return data;
+  }
+  
