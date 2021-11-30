@@ -97,11 +97,11 @@ const CourseDetails = () => {
   };
 
   const createLessonRedirectHandler = () => {
-    navigate(`/courses/${params.courseId}/lessons/${createdLessonData.id}`);
+    navigate(`${location.pathname}/lessons/${createdLessonData.id}`);
   };
 
   const createExamRedirectHandler = () => {
-    navigate(`/courses/${params.courseId}/exams/${createdExamData.id}`)
+    navigate(`${location.pathname}/exams/${createdExamData.id}`);
   }
 
   const createLessonFormJSX = (
