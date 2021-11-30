@@ -47,7 +47,7 @@ const CourseDetails = () => {
   const onEnrollInCourseSubmit = (event) => {
     event.preventDefault();
     enrollInCourseRequest({
-      password: renderEnrollFormInputs()[0].props.value,
+      password: renderEnrollFormInputs()[0].props.value ? renderEnrollFormInputs()[0].props.value : " ",
       courseId: params.courseId,
     });
   };
@@ -101,7 +101,7 @@ const CourseDetails = () => {
         )}
         {getCourseDetailsError ===
           "Wygląda na to że nie posiadasz kursu o podanym id" && (
-          <form onSubmit={onEnrollInCourseSubmit}>
+          <form onSubmit={onEnrollInCourseSubmit} className={classes.enrollForm}>
             {renderEnrollFormInputs()}
             <button type="submit">Zapisz się na kurs</button>
           </form>
