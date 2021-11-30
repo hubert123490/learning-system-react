@@ -32,8 +32,7 @@ const QuestionTextArea = (props) => {
   const textAreaForm = () => {
     return (
       <form>
-        <p>{props.question.description}</p>
-        <textarea rows={4} cols={120} value={text} onChange={handleChange} />
+        <textarea value={text} style={{width : "100%", height: "5rem"}}  onChange={handleChange} />
         <br />
       </form>
     );

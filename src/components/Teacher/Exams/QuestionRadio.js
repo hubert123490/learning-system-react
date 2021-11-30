@@ -80,7 +80,8 @@ const QuestionRadio = (props) => {
       {props.question.type === "radio" &&
         props.question.queries.length !== 0 &&
         radioForm(props.question)}
-      {props.question.queries.length === 0 && <button onClick={showFormHandler}>
+        {props.question.queries.length === 0 && <div className={classes.error}>Wypełnji formularz</div>}
+      {<button onClick={showFormHandler}>
         {!showForm ? "Pokaż formularz" : "Zamknji formularz"}
       </button>}
       {showForm && (

@@ -41,8 +41,9 @@ const QuestionText = (props) => {
       };
 
       return <>
-      {props.question.type === "text" && props.question.correctAnswer !== null &&
+      {props.question.type === "text" && props.question.correctAnswer != null &&
         textForm(props.question)}
+         {props.question.correctAnswer == null && <div className={classes.error}>Wypełnji formularz</div>}
       {<button onClick={showFormHandler}>
         {!showForm ? "Pokaż formularz" : "Zamknji formularz"}
       </button>}
