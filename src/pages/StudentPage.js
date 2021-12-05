@@ -4,10 +4,13 @@ import LessonDetailsStudent from "../components/Student/LessonDetailsStudent";
 import MyCoursesStudent from "../components/Student/MyCoursesStudent";
 import ExamDetailsStudent from "../components/Student/ExamDetailsStudent";
 import Submission from "../components/Student/Submission";
+import MyExamsStudent from "../components/Student/MyExamsStudent";
+import GradeStudent from "../components/Student/Grades/GradeStudent"
 
 const StudentPage = () => {
   return (
     <Routes>
+      <Route path="/grades" element={<GradeStudent />} />
       <Route path="/my-courses" element={<MyCoursesStudent />} />
       <Route path="/courses/:courseId/*" element={<CourseDetailsStudent />} />
       <Route
@@ -21,6 +24,10 @@ const StudentPage = () => {
       <Route
       path="/courses/:courseId/exams/:examId/submissions/:submissionId/*"
       element={<ExamDetailsStudent />}
+      />
+      <Route
+      path="/pending-exams*"
+      element={<MyExamsStudent />}
       />
     </Routes>
   );
