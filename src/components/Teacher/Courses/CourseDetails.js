@@ -84,6 +84,8 @@ const CourseDetails = () => {
     createExamRequest({
       name: renderCreateExamFormInputs()[0].props.value,
       description: renderCreateExamFormInputs()[1].props.value,
+      startDate: renderCreateExamFormInputs()[2].props.value,
+      endDate: renderCreateExamFormInputs()[3].props.value,
       courseId: params.courseId,
     });
   };
