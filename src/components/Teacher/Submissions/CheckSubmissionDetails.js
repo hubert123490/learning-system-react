@@ -38,11 +38,10 @@ const CheckSubmissionDetails = () => {
     });
   };
 
-
   return (
     <div className={classes.submissionDetails}>
       {(!getUncheckedAnswersData || getUncheckedAnswersData.length === 0) && (
-        <div>pusto</div>
+        <Card><div><h3>Sprawdzony</h3></div></Card>
       )}
       {getUncheckedAnswersData &&
         getUncheckedAnswersData
