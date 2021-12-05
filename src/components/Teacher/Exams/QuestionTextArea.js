@@ -41,9 +41,9 @@ const QuestionTextArea = (props) => {
   return (
     <>
       {props.question.type === "textarea" &&
-        props.question.correctAnswer !== null &&
+        props.question.correctAnswer === null &&
         textAreaForm(props.question)}
-      {props.question.correctAnswer === null && (
+      {/* {props.question.correctAnswer === null && (
         <button onClick={showFormHandler}>
           {!showForm ? "Pokaż formularz" : "Zamknji formularz"}
         </button>
@@ -58,8 +58,8 @@ const QuestionTextArea = (props) => {
           <button type="submit" disabled={!isFormValid()}>
             Zapisz
           </button>
-        </form>
-      )}
+        </form> */}
+      
     </>
   );
 };

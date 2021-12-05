@@ -23,8 +23,9 @@ const CheckCourses = () => {
     navigate(`/teacher/check-courses/${courseId}/exams`);
   };
 
+
   return (
-    <section className={classes.CheckCourses}>
+    <section className={classes.checkCourses}>
       <h1>Twoje kursy!</h1>
       {coursesData ? (
         coursesData.courses.map((item) => (

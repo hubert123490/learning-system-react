@@ -66,8 +66,7 @@ const ExamDetails = () => {
     });
   }, [
     getQuestionsRequest,
-    params.courseId,
-    params.examId,
+    params,
     addQuestionStatus,
     deleteQuestionStatus,
     addQuestionRadioStatus,
@@ -132,7 +131,7 @@ const ExamDetails = () => {
       {(!getQuestionsData || getQuestionsData.length === 0) && <div>pusto</div>}
       {getQuestionsData &&
         getQuestionsData
-          .sort((a, b) => a.id - b.id)
+          .sort((a, b) => b.id - a.id)
           .map((item) => (
             <div key={item.id} className={classes.question}>
               <Card>
