@@ -42,7 +42,7 @@ function App() {
         {isLoggedIn  && authCtx.isTeacher && <Route path="/teacher/*" element={<TeacherPage />} />}
         {isLoggedIn  && (authCtx.isTeacher || authCtx.isStudent) && <Route path="/student/*" element={<StudentPage />} />}
         
-        <Route path="*" element={<StartingPageContent />} />
+        <Route path="*" element={<AuthFormPage />} />
       </Routes>
     </Layout>
   );
