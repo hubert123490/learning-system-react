@@ -1,0 +1,14 @@
+.error {
+    margin-bottom: 1em;
+    color: red;
+  }
+
+  .details {
+    background-color: #dddddd;
+  }
+
+  .cell {
+    border: 1px solid black;
+    text-align: center;
+    padding: 1rem;
+  }
