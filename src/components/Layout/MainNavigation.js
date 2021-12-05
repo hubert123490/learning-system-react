@@ -59,9 +59,19 @@ const MainNavigation = () => {
               <Link to="/teacher/check-courses">Sprawdź egzaminy</Link>
             </li>
           )}
+           {isLoggedIn && authCtx.isTeacher && (
+            <li>
+              <Link to="/teacher/grades">Oceny</Link>
+            </li>
+          )}
           {isLoggedIn && authCtx.isStudent && (
             <li>
               <Link to="/student/my-courses">Moje kursy</Link>
+            </li>
+          )}
+          {isLoggedIn && authCtx.isStudent && (
+            <li>
+              <Link to="/student/pending-exams">Egzaminy</Link>
             </li>
           )}
           {isLoggedIn && (
