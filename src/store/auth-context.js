@@ -2,15 +2,19 @@ import React, { useState } from "react";
 
 const AuthContext = React.createContext({
   user: {},
+  webexUser : {},
   isLoggedIn: false,
   isTeacher: false,
   isStudent: false,
   login: (token) => {},
   logout: () => {},
+  webexIntegrationHandler: (webexUser) => {}
 });
 
 export const AuthContextProvider = (props) => {
   const initialUser = JSON.parse(localStorage.getItem("user"));
+  const initialWebexUser = JSON.parse(localStorage.getItem("webexUser"));
+  const [webexUser, setWebexUser] = useState(initialWebexUser);
   const [user, setUser] = useState(initialUser);
   const [roles, setRoles] = useState(initialUser);
 
@@ -24,16 +28,25 @@ export const AuthContextProvider = (props) => {
 
   const logoutHandler = () => {
     setUser(null);
+    setWebexUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("webexUser");
   };
+
+  const webexIntegrationHandler = (webexUser) => {
+    setWebexUser(webexUser);
+    localStorage.setItem("webexUser", JSON.stringify(webexUser))
+  }
 
   const contextValue = {
     user: user,
+    webexUser : webexUser,
     isLoggedIn: userIsLoggedIn,
     isTeacher: (user && user !== undefined) ? user.roles.includes("ROLE_TEACHER") : false,
     isStudent: (user && user !== undefined) ? user.roles.includes("ROLE_STUDENT") : false,
     login: loginHandler,
     logout: logoutHandler,
+    webexIntegrationHandler : webexIntegrationHandler
   };
 
   return (
