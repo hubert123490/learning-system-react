@@ -59,6 +59,11 @@ const MainNavigation = () => {
               <Link to="/teacher/check-courses">Sprawdź egzaminy</Link>
             </li>
           )}
+          {isLoggedIn && authCtx.isTeacher && (
+            <li>
+              <a href="https://webexapis.com/v1/authorize?client_id=Cb469f9350d574789b2363b5e7b9553e56cd40283bb7d9234ec9f3c13b64b41dd&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fteacher%2Fwebex-integration&scope=spark%3Akms%20meeting%3Aparticipants_write%20meeting%3Aschedules_write&state=set_state_here">Spotkania</a>
+            </li>
+          )}
            {isLoggedIn && authCtx.isTeacher && (
             <li>
               <Link to="/teacher/grades">Oceny</Link>
@@ -67,6 +72,11 @@ const MainNavigation = () => {
           {isLoggedIn && authCtx.isStudent && (
             <li>
               <Link to="/student/my-courses">Moje kursy</Link>
+            </li>
+          )}
+           {isLoggedIn && authCtx.isStudent && (
+            <li>
+              <Link to="/student/grades">Moje oceny</Link>
             </li>
           )}
           {isLoggedIn && authCtx.isStudent && (
