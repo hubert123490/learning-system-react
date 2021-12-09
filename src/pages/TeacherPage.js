@@ -10,11 +10,17 @@ import CheckExams from "../components/Teacher/Exams/CheckExams";
 import CheckCourses from "../components/Teacher/Courses/CheckCourses";
 import GradeCourses from "../components/Teacher/Grades/GradeCourses";
 import GradeTable from "../components/Teacher/Grades/GradeTable";
+import Meeting from "../components/Teacher/Webex/Meeting";
+import MeetingCourses from "../components/Teacher/Webex/MeetingCourses";
+import Integration from "../components/Teacher/Webex/Integration";
 
 const TeacherPage = () => {
   return (
     <Routes>
-       <Route path="/grades/:courseId/*" element={<GradeTable />} />
+      <Route path="/webex/:courseId/create-meeting/*" element={<Meeting />} />
+      <Route path="/webex/*" element={<MeetingCourses />} />
+      <Route path="/webex-integration" element={<Integration />} />
+      <Route path="/grades/:courseId/*" element={<GradeTable />} />
       <Route path="/grades/*" element={<GradeCourses />} />
       <Route path="/check-courses/:courseId/exams/:examId/submissions/:submissionId/*" element={<CheckSubmissionDetails />} />
       <Route path="/check-courses/:courseId/exams/:examId/submissions/*" element={<CheckSubmissions />} />
