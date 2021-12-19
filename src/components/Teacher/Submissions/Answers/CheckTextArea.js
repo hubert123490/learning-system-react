@@ -27,7 +27,8 @@ const CheckTextArea = (props) => {
     <form onSubmit={(e) => props.rateAnswerFormHandler(e, props.answer.id, renderRateAnswerFormInputs()[0].props.value)} className={classes.rateAnswerForm}>
       {renderRateAnswerFormInputs()}
       <div style={{marginBottom: "1rem"}}>Maksymalna liczba punktów: {props.answer.maxPoints}</div>
-      <button type="submit">Oceń</button>
+      <div className={classes["error"]}>{props.children}</div>
+      <button type="submit" disabled={!isRateAnswerFormValid()}>Oceń</button>
     </form>
     </>
   );

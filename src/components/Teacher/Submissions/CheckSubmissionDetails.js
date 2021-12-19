@@ -23,6 +23,8 @@ const CheckSubmissionDetails = () => {
     });
   }, [getUncheckedAnswersRequest, params, rateAnswerStatus]);
 
+  console.log(rateAnswerData)
+
   const handleTextArea = (event, id, setState) => {
     setState(event.target.value);
   };
@@ -55,7 +57,7 @@ const CheckSubmissionDetails = () => {
                     handleTextArea={handleTextArea}
                     answer={item}
                     rateAnswerFormHandler={rateAnswerFormHandler}
-                  />
+                  >{rateAnswerData && rateAnswerData.status == "ERROR" && rateAnswerData.message}</CheckTextArea>
                 )}
               </Card>
             </div>

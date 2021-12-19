@@ -15,8 +15,6 @@ const CheckSubmissions = () => {
     error: findSubmissionsError,
   } = useHttp(findUncheckedSubmissions, true);
 
-  console.log(findSubmissionsData);
-
   useEffect(() => {
     findSubmissionsRequest({
       courseId: params.courseId,
@@ -27,44 +25,41 @@ const CheckSubmissions = () => {
   }, [findSubmissionsRequest, params]);
 
   const submissionDetailsHandler = (submissionId) => {
-    navigate(
-      `/teacher/check-courses/${params.courseId}/exams/${params.examId}/submissions/${submissionId}`
-    );
+    navigate(`${submissionId}`);
   };
 
   return (
-    <section className={classes.submissions}>
+    <section className={classes["submissions"]}>
       <h1>Sprawdź uczniów!</h1>
       {findSubmissionsData && findSubmissionsData.length === 0 && (
-        <Card>
-          <div>
-            <h3>Brak uczniów do sprawdzenia</h3>
-            <div>Sprawdzono wszystkich uczniów</div>
-          </div>
-        </Card>
+        <div className={classes["submission"]}>
+          <h3>Brak uczniów do sprawdzenia</h3>
+          <div>Sprawdzono wszystkich uczniów</div>
+        </div>
       )}
       {findSubmissionsData ? (
         findSubmissionsData.map((item) => (
-          <div key={item.id} className={classes.submission}>
-            <Card>
-              <div onClick={() => submissionDetailsHandler(item.id)}>
-                <h3>
-                  {item.studentFirstName} {item.studentLastName}
-                </h3>
-                <div>
-                  Rozpoczął {item.startDate.split("T")[0]} o godzinie:{" "}
-                  {item.startDate.split("T")[1]}
-                </div>
-                <div>
-                  Zakończył {item.endDate.split("T")[0]} o godzinie:{" "}
-                  {item.endDate.split("T")[1]}
-                </div>
+          <div key={item.id}>
+            <div
+              onClick={() => submissionDetailsHandler(item.id)}
+              className={classes["submission"]}
+            >
+              <h3>
+                {item.studentFirstName} {item.studentLastName}
+              </h3>
+              <div>
+                Rozpoczął {item.startDate.split("T")[0]} o godzinie:{" "}
+                {item.startDate.split("T")[1]}
               </div>
-            </Card>
+              <div>
+                Zakończył {item.endDate.split("T")[0]} o godzinie:{" "}
+                {item.endDate.split("T")[1]}
+              </div>
+            </div>
           </div>
         ))
       ) : findSubmissionsError ? (
-        <div className={classes.error}>
+        <div className={classes["error"]}>
           <h1>{findSubmissionsError}</h1>
         </div>
       ) : (

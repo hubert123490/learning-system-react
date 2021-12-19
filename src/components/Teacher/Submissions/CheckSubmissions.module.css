@@ -1,46 +1,42 @@
 .submissions {
-    margin: 3rem auto;
-    text-align: center;
-  }
-  
-  .submissions h1 {
-    font-size: 3rem;
-  }
+  margin: 3rem auto;
+  text-align: center;
+}
 
-  .submission {
-    cursor: pointer;
-  }
-  
-  button {
-    padding: 10px 15px;
-    border-radius: 4px;
-    border: none;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-    width: 150px;
-    background: blueviolet;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background: #eee;
-    color: #999;
-    box-shadow: none;
-  }
+.submissions h1 {
+  font-size: 3rem;
+}
 
- .failed {
-   color: red;
-   margin: 1em;
-   font-size: large;
-   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
- }
-  
- .error {
-   margin-bottom: 1em;
-   color: red;
- }
+.submission {
+  background-color: white;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  width: 50%;
+  min-width: 20rem;
+}
 
- .success {
-   color: green;
-   margin-bottom: 1em;
- }
+.submission:hover {
+  box-shadow: 0 2px 8px #38015c;
+}
+
+.failed {
+  color: red;
+  margin: 1em;
+  font-size: large;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.error {
+  margin-bottom: 1em;
+  color: red;
+}
+
+.success {
+  color: green;
+  margin-bottom: 1em;
+}
