@@ -1,0 +1,12 @@
+.side-navigation {
+    padding: 1rem;
+    margin: 1rem auto;
+    position: fixed;
+    left: 0;
+    top: 5rem;
+    width: 15%;
+    text-align: start;
+    background-color: lightgray;
+    height: 100%;
+    z-index: 1;
+}
