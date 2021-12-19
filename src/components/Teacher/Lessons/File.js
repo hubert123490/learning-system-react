@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import classes from "./File.module.css";
 
 const File = (props) => {
   const params = useParams();
@@ -18,39 +19,37 @@ const File = (props) => {
       courseId: params.courseId,
       lessonId: params.lessonId,
       contentId: props.contentId,
-      file : formData,
+      file: formData,
     });
   };
 
   const showFileHandler = () => {
-    setShowFile(!showFile)
-  }
+    setShowFile((prevState) => {
+      return !prevState;
+    });
+  };
 
   return (
-    <div>
-          <button onClick={showFileHandler}>
+    <div className={classes["file-content"]}>
+      <button onClick={showFileHandler}>
         {!showFile ? "Dodaj plik" : "Zamknij formularz"}
       </button>
-      {showFile && <div>
-        <input type="file" onChange={onFileChange} /><br/>
-        <button onClick={onFileUpload} disabled={!file ? true : false}>Wyślij!</button>
-      </div>}
+      {showFile && (
+        <div className={classes["add-file"]}>
+          <input type="file" onChange={onFileChange} />
+          <br />
+          <button onClick={onFileUpload} disabled={!file ? true : false}>
+            Wyślij!
+          </button>
+        </div>
+      )}
       {file && showFile ? (
         <div>
           <h2>Szczegóły pliku:</h2>
-
           <p>Nazwa pliku: {file.name}</p>
-
           <p>Typ pliku: {file.type}</p>
-
-          <p>Ostatnio modyfikowany: {file.lastModifiedDate.toDateString()}</p>
         </div>
-      ) : (
-        <div>
-          <br />
-          <h4>Nie wybrano jeszcze pliku</h4>
-        </div>
-      )}
+      ) : ""}
     </div>
   );
 };

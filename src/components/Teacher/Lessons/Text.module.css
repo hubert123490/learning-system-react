@@ -1,0 +1,12 @@
+.textarea {
+    width: 100%;
+    height: 5rem;
+}
+
+.add-text {
+    margin: 1rem 0;
+}
+
+.add-text__form {
+    margin: 1rem;
+}
