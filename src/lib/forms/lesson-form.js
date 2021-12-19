@@ -9,4 +9,11 @@ export const createLessonForm = {
         minLengthRule("Nazwa lekcji", 3),
       ],
     },
+    lessonDescription: {
+      ...createFormFieldConfig("Opis lekcji", "lessonDescription", "text"),
+      validationRules: [
+        requiredRule("Opis lekcji"),
+        minLengthRule("Opis lekcji", 3)
+      ]
+    }
   };

@@ -7,7 +7,6 @@ import ExamDetails from "../components/Teacher/Exams/ExamDetails";
 import CheckSubmissions from "../components/Teacher/Submissions/CheckSubmissions";
 import CheckSubmissionDetails from "../components/Teacher/Submissions/CheckSubmissionDetails";
 import CheckExams from "../components/Teacher/Exams/CheckExams";
-import CheckCourses from "../components/Teacher/Courses/CheckCourses";
 import GradeCourses from "../components/Teacher/Grades/GradeCourses";
 import GradeTable from "../components/Teacher/Grades/GradeTable";
 import Meeting from "../components/Teacher/Webex/Meeting";
@@ -22,16 +21,30 @@ const TeacherPage = () => {
       <Route path="/webex-integration" element={<Integration />} />
       <Route path="/grades/:courseId/*" element={<GradeTable />} />
       <Route path="/grades/*" element={<GradeCourses />} />
-      <Route path="/check-courses/:courseId/exams/:examId/submissions/:submissionId/*" element={<CheckSubmissionDetails />} />
-      <Route path="/check-courses/:courseId/exams/:examId/submissions/*" element={<CheckSubmissions />} />
-      <Route path="/check-courses/:courseId/exams/*" element={<CheckExams />} />
-      <Route path="/check-courses/*" element={<CheckCourses />} />
-      <Route path="/courses/:courseId/exams/:examId/submissions/*" element={<CheckSubmissions />} />
-      <Route path="/courses/:courseId/lessons/:lessonId/*" element={<LessonDetails />} />
-      <Route path="/courses/:courseId/exams/:examId/*" element={<ExamDetails />} />
+      <Route
+        path="/check-exams/courses/:courseId/exams/:examId/submissions/:submissionId/*"
+        element={<CheckSubmissionDetails />}
+      />
+      <Route
+        path="/check-exams/courses/:courseId/exams/:examId/submissions/*"
+        element={<CheckSubmissions />}
+      />
+      <Route path="/check-exams/*" element={<CheckExams />} />
+      <Route
+        path="/courses/:courseId/exams/:examId/submissions/*"
+        element={<CheckSubmissions />}
+      />
+      <Route
+        path="/courses/:courseId/lessons/:lessonId/*"
+        element={<LessonDetails />}
+      />
+      <Route
+        path="/courses/:courseId/exams/:examId/*"
+        element={<ExamDetails />}
+      />
       <Route path="/courses/:courseId/*" element={<CourseDetails />} />
-      <Route path="/my-courses" element={<MyCourses />} />
-      <Route path="/" element={<TeacherPanel />} />
+      <Route path="/courses" element={<MyCourses />} />
+      <Route path="/teacher-panel" element={<TeacherPanel />} />
     </Routes>
   );
 };

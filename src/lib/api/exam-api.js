@@ -43,9 +43,9 @@ export async function deleteExam(examData) {
   return data;
 }
 
-export async function getUncheckedExams(examData) {
+export async function getUncheckedExams() {
   const response = await fetch(
-    `${SERVER_DOMAIN}/api/courses/${examData.courseId}/exams`,
+    `${SERVER_DOMAIN}/api/courses/unchecked-exams`,
     {
       method: "GET",
       headers: {
