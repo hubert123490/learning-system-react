@@ -1,56 +1,78 @@
 import { useParams } from "react-router";
-import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import useHttp from "../../../hooks/use-http";
 import { useEffect } from "react";
-import classes from "./CheckExams.module.css"
+import classes from "./CheckExams.module.css";
 import { getUncheckedExams } from "../../../lib/api/exam-api";
 import Card from "../../UI/Card";
+import image from "../../../assets/exam.jpg";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const CheckExams = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const params = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
 
-    const {
-        sendRequest: getDetailsRequest,
-        data: getDetailsData,
-        status: getDetailsStatus,
-        error: getDetailsError,
-      } = useHttp(getUncheckedExams, true);
+  const {
+    sendRequest: getExamsRequest,
+    data: getExamsData,
+    error: getExamsError,
+  } = useHttp(getUncheckedExams, true);
 
-      useEffect(() => {
-        if (params.courseId) {
-          getDetailsRequest({courseId: params.courseId});
-        }
-        return getDetailsRequest;
-      }, [
-        getDetailsRequest,
-        params.courseId,
-      ]);
+  useEffect(() => {
+    getExamsRequest();
+    return getExamsRequest;
+  }, [getExamsRequest, params.courseId]);
 
-      console.log(params.courseId)
+  const checkDetailsHandler = (courseId, examId) => {
+    navigate(`courses/${courseId}/exams/${examId}/submissions`);
+  };
 
-      const checkDetailsHandler = (examId) => {
-        if (location.pathname) navigate(`${location.pathname}/${examId}/submissions`);
-      };
-
-      return (
-        <div className={classes.checkExam}>
-          {(!getDetailsData || getDetailsData.length === 0) && <div>pusto</div>}
-            {getDetailsData && 
-              getDetailsData.sort((a, b) => a.id - b.id)
-              .map((item) => (
-                <div key={item.id} className={classes.exam}>
-                  <div onClick={() => checkDetailsHandler(item.id)} >
-                  <Card>
-                    <h3>{item.description}</h3>
-                  </Card>
+  return (
+    <section className={classes["check-exams"]}>
+      <h1>Wybierz egzamin!</h1>
+      <div className={classes["exams"]}>
+        {getExamsData && getExamsData.length == 0 && <div className={classes["notification"]}>Brak egzaminów do sprawdzenia</div>}
+        {getExamsData ? (
+          getExamsData.map((item) => (
+            <div key={item.id} className={classes["exam"]}>
+              <div>
+                <div
+                  onClick={() => {
+                    checkDetailsHandler(item.courseId, item.id);
+                  }}
+                >
+                  <div className={classes["exam__image-container"]}>
+                    <img src={image} alt="image" />
+                  </div>
+                  <h2 className={classes["exam-description__title-course"]}>
+                    {item.courseName}
+                  </h2>
+                  <h2 className={classes["exam-description__title-exam"]}>
+                    {item.name}
+                  </h2>
+                  <div className={classes["exam-description"]}>
+                    <span className={classes["category-description__value"]}>
+                      {item.description}
+                    </span>
+                  </div>
                 </div>
-                </div>
-              ))}
-        </div>
-      );
-}
+              </div>
+            </div>
+          ))
+        ) : getExamsError ? (
+          <div className={classes["error"]}>
+            <h1>{getExamsError}</h1>
+          </div>
+        ) : (
+          <Card>
+            <div>
+              <LoadingSpinner />
+            </div>
+          </Card>
+        )}
+      </div>
+    </section>
+  );
+};
 
 export default CheckExams;
