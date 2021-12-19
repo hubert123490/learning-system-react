@@ -22,8 +22,6 @@ const MyExamsStudent = () => {
       const examDetailsHandler = (examId,courseId ) => {
         navigate(`/student/courses/${courseId}/exams/${examId}`);
       };
-    
-      console.log(getPendingExamsData)
 
       return (
         <section className={classes.myExams}>

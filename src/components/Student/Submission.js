@@ -54,6 +54,7 @@ const Submission = () => {
               {checkSubmissionData && checkSubmissionData.status === "ERROR" && <div><h3>Test zakończony pomyślnie</h3><div>{checkSubmissionData.message}</div></div>}
               {checkSubmissionData && checkSubmissionData.status === "PENDING" && <div><h3>Test jest w trakcie sprawdzania</h3><div>{checkSubmissionData.message}</div></div>}
               {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <div><h3>Test jest w trakcie sprawdzania</h3><div>{checkSubmissionData.message}</div></div>}
+              {checkSubmissionData && checkSubmissionData.status === "NOT_STARTED" && <div>Egzamin zaczyna się: {checkSubmissionData.startDate.split("T")[0]} o godzinie {checkSubmissionData.startDate.split("T")[1]}</div>}
               {checkSubmissionData && checkSubmissionData.status === "ENDED" && <div><h3>Test zakończył się</h3><div>{checkSubmissionData.message}</div></div>}
           </div>
       </Card>
