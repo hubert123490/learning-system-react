@@ -41,7 +41,7 @@ export default function AuthForm() {
   useEffect(() => {
     if (signInData) {
       authCtx.login(signInData);
-      nav("/profile");
+      nav("/");
     }
   }, [authCtx, signInData, nav]);
 
