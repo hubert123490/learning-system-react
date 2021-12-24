@@ -44,6 +44,7 @@ export const AuthContextProvider = (props) => {
     isLoggedIn: userIsLoggedIn,
     isTeacher: (user && user !== undefined) ? user.roles.includes("ROLE_TEACHER") : false,
     isStudent: (user && user !== undefined) ? user.roles.includes("ROLE_STUDENT") : false,
+    roles: (roles && roles !== undefined) ? roles : [],
     login: loginHandler,
     logout: logoutHandler,
     webexIntegrationHandler : webexIntegrationHandler
