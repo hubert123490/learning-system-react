@@ -1,5 +1,5 @@
 import classes from "./TeacherPanel.module.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const TeacherPanel = () => {
   return (
