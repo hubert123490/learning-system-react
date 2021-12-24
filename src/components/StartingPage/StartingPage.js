@@ -2,18 +2,18 @@ import classes from "./StartingPage.module.css";
 import useHttp from "../../hooks/use-http";
 import { getAllCourses } from "../../lib/api/course-api";
 import { useEffect, useState } from "react";
-import LoadingSpinner from "../UI/LoadingSpinner";
-import Card from "../UI/Card";
 import { useNavigate } from "react-router";
 import useForm from "../../hooks/use-form";
 import { getCoursesForm } from "../../lib/forms/course-form";
 import { useSearchParams } from "react-router-dom";
-import image from "../../assets/course_image.jpg";
+import Courses from "./Courses";
+import Pagination from "../Pagination/Pagination";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const StartingPageContent = () => {
   const navigate = useNavigate();
   //for timeout in useEffect
-  let identifier;
+
   const [searchParams, setSearchParams] = useSearchParams({
     name: "",
     category: "",
@@ -21,7 +21,9 @@ const StartingPageContent = () => {
   });
   const [showFilter, setShowFilter] = useState(true);
   const { renderFormInputs: renderGetCoursesInputs } = useForm(getCoursesForm);
-  const { sendRequest, data } = useHttp(getAllCourses, true);
+  const { sendRequest, data, status } = useHttp(getAllCourses, true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [coursesPerPage] = useState(12);
 
   const getTitle = (title) => {
     if (title === "Bachelor") return "inz.";
@@ -29,6 +31,7 @@ const StartingPageContent = () => {
   };
 
   useEffect(() => {
+    let identifier;
     identifier = setTimeout(() => {
       sendRequest({
         name: searchParams.get("name"),
@@ -57,13 +60,13 @@ const StartingPageContent = () => {
     let courseName = searchParams.name ? searchParams.name : "";
     let courseCategory = searchParams.category ? searchParams.category : "";
     let teacherLastName = searchParams.lastName ? searchParams.lastName : "";
-    if (event.target.name == "courseName") {
+    if (event.target.name === "courseName") {
       courseName = event.target.value;
     }
-    if (event.target.name == "courseCategory") {
+    if (event.target.name === "courseCategory") {
       courseCategory = event.target.value;
     }
-    if (event.target.name == "teacherLastName") {
+    if (event.target.name === "teacherLastName") {
       teacherLastName = event.target.value;
     }
     setSearchParams({
@@ -71,6 +74,18 @@ const StartingPageContent = () => {
       category: courseCategory,
       lastName: teacherLastName,
     });
+  };
+
+  // Get current course
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  let currentCourses = [];
+  if (data)
+    currentCourses = data.courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+  //Change page (pagination)
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -86,8 +101,10 @@ const StartingPageContent = () => {
           </div>
         </div>
       </section>
+     
       <section className={classes["starting"]}>
         <h1>Aktualnie prowadzone kursy!</h1>
+        {data && status === "completed" && <>
         <button onClick={showFilterHandler}>
           {showFilter ? "Zamknji filter" : "Filtruj"}
         </button>
@@ -97,57 +114,20 @@ const StartingPageContent = () => {
           </form>
         )}
         <div>
-          <div className={classes["courses"]}>
-            {data ? (
-              data.courses.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => courseDetailsHandler(item.id)}
-                  className={classes["course"]}
-                >
-                  <div>
-                    <div
-                      className={classes["course-description__image-container"]}
-                    >
-                      <img src={image} alt="image" />
-                    </div>
-                    <h2 className={classes["course-description__title"]}>
-                      {item.name}
-                    </h2>
-                    <div
-                      className={
-                        classes["course-description__category-container"]
-                      }
-                    >
-                      <span className={classes["category-title"]}></span>
-                      <span className={classes["category-value"]}>
-                        {item.category}
-                      </span>
-                    </div>
-                    {item.person.map((person) => (
-                      <div
-                        className={
-                          classes["course-description__teacher-container"]
-                        }
-                        key={person.id}
-                      >
-                        {getTitle(person.title)} {person.lastName}{" "}
-                        {person.firstName}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <Card>
-                <div>
-                  <LoadingSpinner />
-                </div>
-              </Card>
-            )}
-          </div>
-        </div>
-        {!data && <h3>Nic nie znaleziono</h3>}
+          <Courses
+            data={currentCourses}
+            courseDetailsHandler={courseDetailsHandler}
+            getTitle={getTitle}
+          />
+          <Pagination
+            postsPerPage={coursesPerPage}
+            totalPosts={data ? data.courses.length : 1}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div></>}
+        {status === "pending" && <LoadingSpinner />}
+        {!data && status === "completed" && <h3>Nic nie znaleziono</h3>}
       </section>
     </>
   );
