@@ -48,12 +48,22 @@ const CheckSubmissions = () => {
                 {item.studentFirstName} {item.studentLastName}
               </h3>
               <div>
-                Rozpoczął {item.startDate.split("T")[0]} o godzinie:{" "}
-                {item.startDate.split("T")[1]}
+                Rozpoczął{" "}
+                {item.startDate.split("T")[0].split("-")[2] +
+                  "-" +
+                  item.startDate.split("T")[0].split("-")[1] +
+                  "-" +
+                  item.startDate.split("T")[0].split("-")[0]}{" "}
+                o godzinie: {item.startDate.split("T")[1]}
               </div>
               <div>
-                Zakończył {item.endDate.split("T")[0]} o godzinie:{" "}
-                {item.endDate.split("T")[1]}
+                Zakończył{" "}
+                {item.endDate.split("T")[0].split("-")[2] +
+                  "-" +
+                  item.endDate.split("T")[0].split("-")[1] +
+                  "-" +
+                  item.endDate.split("T")[0].split("-")[0]}{" "}
+                o godzinie: {item.endDate.split("T")[1]}
               </div>
             </div>
           </div>
