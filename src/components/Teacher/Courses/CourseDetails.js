@@ -57,14 +57,13 @@ const CourseDetails = () => {
     if (params.courseId) {
       getDetailsRequest(params.courseId);
     }
-    return getDetailsRequest;
   }, [
     getDetailsRequest,
-    params.courseId,
     deleteLessonStatus,
     deleteExamStatus,
     createdLessonStatus,
     createdExamStatus,
+    params
   ]);
 
   const lessonDetailsHandler = (lessonId) => {
@@ -256,7 +255,7 @@ const CourseDetails = () => {
                   <div
                     className={classes["content-container__image-container"]}
                   >
-                    <img src={lessonImage} alt="image" />
+                    <img src={lessonImage} alt="lesson" />
                   </div>
                   <div className={classes["content-container__description"]}>{item.description}</div>
                 </div>
@@ -297,7 +296,7 @@ const CourseDetails = () => {
                   <div
                     className={classes["content-container__image-container"]}
                   >
-                    <img src={examImage} alt="image" />
+                    <img src={examImage} alt="exam" />
                   </div>
                   <div className={classes["content-container__description"]}>{item.description}</div>
                 </div>

@@ -40,8 +40,6 @@ const MyCourses = () => {
 
   useEffect(() => {
     getAllCourses();
-
-    return getAllCourses;
   }, [getAllCourses, deleteStatus, createdStatus]);
 
   const courseDetailsHandler = (courseId) => {
@@ -133,7 +131,7 @@ const MyCourses = () => {
                     }}
                   >
                     <div className={classes["course__image-container"]}>
-                      <img src={image} alt="image" />
+                      <img src={image} alt="course" />
                     </div>
                     <h2 className={classes["course-description__title"]}>
                       {item.name}
@@ -151,18 +149,6 @@ const MyCourses = () => {
                       </span>
                     </div>
                   </div>
-                  {/* <button
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Czy napewno chcesz usunąć ${item.name}?`
-                        )
-                      )
-                        deleteCourseRequest(item.id);
-                    }}
-                  >
-                    Usuń kurs
-                  </button> */}
                 </div>
               </div>
             ))
