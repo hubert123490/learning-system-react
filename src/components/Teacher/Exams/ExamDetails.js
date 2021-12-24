@@ -9,14 +9,10 @@ import {
   getQuestions,
   addQuestionRadio,
   addQuestionText,
-  addQuestionTextArea
+  addQuestionTextArea,
 } from "../../../lib/api/question-api";
 import classes from "./ExamDetails.module.css";
-import Card from "../../UI/Card";
-import { Form } from "react-bootstrap";
-import QuestionRadio from "./QuestionRadio";
-import QuestionText from "./QuestionText";
-import QuestionTextArea from "./QuestionTextArea";
+import ExamDetailsItem from "./ExamDetailsItem"
 
 const ExamDetails = () => {
   const params = useParams();
@@ -32,32 +28,25 @@ const ExamDetails = () => {
   );
   const {
     sendRequest: addQuestionRequest,
-    data: addQuestionData,
     status: addQuestionStatus,
   } = useHttp(addQuestion);
   const {
     sendRequest: deleteQuestionRequest,
-    data: deleteQuestionData,
     status: deleteQuestionStatus,
   } = useHttp(deleteQuestion);
   const {
     sendRequest: addQuestionRadioRequest,
-    data: addQuestionRadioData,
-    error: addQuestionRadioError,
     status: addQuestionRadioStatus,
   } = useHttp(addQuestionRadio);
   const {
     sendRequest: addQuestionTextRequest,
-    data: addQuestionTextData,
-    error: addQuestionTextError,
     status: addQuestionTextStatus,
   } = useHttp(addQuestionText);
   const {
     sendRequest: addQuestionTextAreaRequest,
-    data: addQuestionTextAreaData,
-    error: addQuestionTextAreaError,
     status: addQuestionTextAreaStatus,
   } = useHttp(addQuestionTextArea);
+
 
   useEffect(() => {
     getQuestionsRequest({
@@ -82,7 +71,7 @@ const ExamDetails = () => {
       request: {
         description: renderAddQuestionInputs()[0].props.value,
         type: questionType,
-        maxPoints: renderAddQuestionInputs()[1].props.value
+        maxPoints: renderAddQuestionInputs()[1].props.value,
       },
     });
     setShowAddQuestionForm(!showAddQuestionForm);
@@ -96,20 +85,19 @@ const ExamDetails = () => {
     setQuestionType(event.target.value);
   };
 
-
   return (
-    <div className={classes.questionDetails}>
+    <div className={classes["exam-details"]}>
       <button onClick={showAddQuestionFormHandler}>
         {showAddQuestionForm ? "Zamknji formularz" : "Dodaj pytanie"}{" "}
       </button>
       {showAddQuestionForm && (
         <form
-          className={classes.createQuestionForm}
+          className={classes["create-question__form"]}
           onSubmit={addQuestionHandler}
         >
           {renderAddQuestionInputs()}
           <label htmlFor="type-select">Wybierz formę pytania:</label>
-          <Form.Select
+          <select
             value={questionType}
             onChange={handleQuestionTypeChange}
             name="types"
@@ -121,7 +109,7 @@ const ExamDetails = () => {
             <option value="textarea">
               Długie zadanie otwarte (sprawozdanie, kod itp.)
             </option>
-          </Form.Select>
+          </select>
           <br />
           <button type="submit" disabled={!isAddQuestionFormValid()}>
             Dodaj pytanie
@@ -133,28 +121,46 @@ const ExamDetails = () => {
         getQuestionsData
           .sort((a, b) => b.id - a.id)
           .map((item) => (
-            <div key={item.id} className={classes.question}>
-              <Card>
-                <h3>{item.description}</h3>
-                {item.type === "radio" && <QuestionRadio question={item} addQuestionRadioRequest={addQuestionRadioRequest} />}
-                {item.type === "text" && <QuestionText question={item} addQuestionTextRequest={addQuestionTextRequest} />}
-                {item.type === "textarea" && <QuestionTextArea question={item} addQuestionTextAreaRequest={addQuestionTextAreaRequest} />}
-                <hr />
-                <button
-                  onClick={() => {
-                    if (window.confirm(`Czy napewno chcesz usunąć?`)) {
-                      deleteQuestionRequest({
-                        courseId: params.courseId,
-                        examId: params.examId,
-                        questionId: item.id,
-                      });
-                    }
-                  }}
-                >
-                  Usuń pytanie
-                </button>
-              </Card>
-            </div>
+            <ExamDetailsItem 
+              item={item}
+              addQuestionRadioRequest={addQuestionRadioRequest}
+              addQuestionTextRequest={addQuestionTextRequest}
+              addQuestionTextAreaRequest={addQuestionTextAreaRequest}
+              deleteQuestionRequest={deleteQuestionRequest}
+              key={item.id}
+            />
+            // <div key={item.id}>
+            //   <div className={`${classes["question"]}`}>
+            //     <h3>{item.description}</h3>
+            //     {item.type === "radio" && (
+            //       <QuestionRadio
+            //         question={item}
+            //         addQuestionRadioRequest={addQuestionRadioRequest}
+            //       />
+            //     )}
+            //     {item.type === "text" && (
+            //       <QuestionText
+            //         question={item}
+            //         addQuestionTextRequest={addQuestionTextRequest}
+            //       />
+            //     )}
+            //     {item.type === "textarea" && (
+            //       <QuestionTextArea
+            //         question={item}
+            //         addQuestionTextAreaRequest={addQuestionTextAreaRequest}
+            //       />
+            //     )}
+            //     <FaTimes size={20} onClick={() => {
+            //           if (window.confirm(`Czy napewno chcesz usunąć?`)) {
+            //             deleteQuestionRequest({
+            //               courseId: params.courseId,
+            //               examId: params.examId,
+            //               questionId: item.id,
+            //             });
+            //           }
+            //         }} className={classes["delete-icon"]} />
+            //   </div>
+            // </div>
           ))}
     </div>
   );

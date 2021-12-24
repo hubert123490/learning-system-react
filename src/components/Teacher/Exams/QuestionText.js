@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useForm from "../../../hooks/use-form";
 import { addQuestionTextForm } from "../../../lib/forms/question-form";
 import classes from "./QuestionText.module.css"
@@ -13,6 +13,11 @@ const QuestionText = (props) => {
     const showFormHandler = () => {
         setShowForm(!showForm);
       };
+
+      useEffect(() => {
+        if (props.question.correctAnswer == null)
+          props.unfilledQuestionHandler(true);
+      }, [props]);
 
       const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -29,15 +34,14 @@ const QuestionText = (props) => {
           setAnswer(event.target.value);
       }
 
-      const textForm = (item) => {
-        {
+      const textForm = () => {
           return (
-            <form>
+            <form className={classes["text-preview"]}>
                 <label htmlFor="answer">Podaj odpowiedź </label><br/>
                 <input type="text" id="answer" name="answer" value={answer} onChange={onAnswerChange} />
+                <div>Prawidłowa odpowiedź: <span>{props.question.correctAnswer ? props.question.correctAnswer : ""}</span></div>
             </form>
           );
-        }
       };
 
       return <>
@@ -49,7 +53,7 @@ const QuestionText = (props) => {
       </button>}
       {showForm  &&(
         <form
-          className={classes.createQuestionTextForm}
+          className={classes["create-question-text__form"]}
           onSubmit={handleFormSubmit}
         >
           {renderFormInputs()}

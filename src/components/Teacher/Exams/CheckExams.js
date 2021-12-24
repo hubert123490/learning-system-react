@@ -31,7 +31,7 @@ const CheckExams = () => {
     <section className={classes["check-exams"]}>
       <h1>Wybierz egzamin!</h1>
       <div className={classes["exams"]}>
-        {getExamsData && getExamsData.length == 0 && <div className={classes["notification"]}>Brak egzaminów do sprawdzenia</div>}
+        {getExamsData && getExamsData.length === 0 && <div className={classes["notification"]}>Brak egzaminów do sprawdzenia</div>}
         {getExamsData ? (
           getExamsData.map((item) => (
             <div key={item.id} className={classes["exam"]}>
@@ -42,7 +42,7 @@ const CheckExams = () => {
                   }}
                 >
                   <div className={classes["exam__image-container"]}>
-                    <img src={image} alt="image" />
+                    <img src={image} alt="exam" />
                   </div>
                   <h2 className={classes["exam-description__title-course"]}>
                     {item.courseName}

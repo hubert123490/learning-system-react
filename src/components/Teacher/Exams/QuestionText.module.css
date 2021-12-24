@@ -1,9 +1,13 @@
-.createQuestionTextForm {
+.create-question-text__form {
     max-width: 400px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     margin: 20px auto;
     padding: 20px;
   }
+
+.text-preview {
+  margin-bottom: 0.5rem;
+}
 
   .failed {
     color: red;

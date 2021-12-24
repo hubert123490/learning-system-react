@@ -1,9 +1,33 @@
-.createQuestionRadioForm {
-    max-width: 400px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    margin: 20px auto;
-    padding: 20px;
-  }
+.radio-question__form {
+  max-width: 25rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  margin: 1.2rem auto;
+  padding: 0.5rem;
+  background-color: white;
+  position: relative;
+}
+
+.radio-question__form-elements {
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+.radio-question__form-elements input{
+  width: 2rem;
+  margin: 0;
+  margin-right: 0.5rem;
+  height: 1.5rem;
+}
+
+.radio-question__form-elements label{
+  margin: 0;
+  vertical-align: middle;
+}
+
+.radio-question__form select {
+  width: 100%;
+  margin-bottom: 1rem;
+}
 
   .failed {
     color: red;
