@@ -124,7 +124,7 @@ export async function enrollInCourse(courseData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Nie można zapisać się do kursu.");
+    throw new Error(data.message || "Nieprawidłowe hasło.");
   }
 
   return data;
