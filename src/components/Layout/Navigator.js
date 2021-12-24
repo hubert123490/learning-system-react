@@ -1,4 +1,3 @@
-import { Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
@@ -15,7 +14,7 @@ const Navigator = () => {
   let paths = new Map();
   let path = "/";
   urls.forEach((element) => {
-    if (element == "/") {
+    if (element === "/") {
       paths.set(element, path);
       return;
     }
@@ -28,7 +27,7 @@ const Navigator = () => {
     <div>
       <div>
         {urls.map((item, index) => {
-          if (item == "/") {
+          if (item === "/") {
             return (
               <span key={index}>
                 <NavLink to={paths.get(item)}> home </NavLink>/

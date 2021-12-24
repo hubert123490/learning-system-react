@@ -1,33 +1,19 @@
 import classes from "./MainNavigation.module.css";
 import { NavLink } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import AuthContext from "../../store/auth-context";
 import logo from "../../assets/logo.png";
 
 const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [showStudentContent, setShowStudentContent] = useState(false);
-  const [showTeacherContent, setShowTeacherContent] = useState(false);
-
   const isLoggedIn = authCtx.isLoggedIn;
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     authCtx.logout();
-  };
+  }, [authCtx]);
 
   useEffect(() => {
-    if (user) {
-      if (user.roles.includes("ROLE_STUDENT")) {
-        setShowStudentContent(true);
-      } else if (user.roles.includes("ROLE_TEACHER")) {
-        setShowTeacherContent(true);
-      }
-    }
   }, [
-    user,
-    showStudentContent,
-    showTeacherContent,
     isLoggedIn,
     logoutHandler,
     authCtx.user,

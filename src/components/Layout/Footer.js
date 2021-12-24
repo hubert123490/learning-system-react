@@ -5,10 +5,10 @@ const Footer = () => {
     <nav>
         <ul className={classes["main-footer__links"]}>
             <li className={classes["main-footer__link"]}>
-                <a href="#">Wsparcie</a>
+                <a href="test">Wsparcie</a>
             </li>
             <li className={classes["main-footer__link"]}>
-                <a href="#">Warunki korzystania</a>
+                <a href="test">Warunki korzystania</a>
             </li>
         </ul>
     </nav>
