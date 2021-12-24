@@ -1,15 +1,25 @@
-.lessonDetails {
+.lesson-details {
     margin: 3rem auto;
     text-align: center;
   }
   
-  .lessonDetails h1 {
+  .lesson-details h1 {
     font-size: 3rem;
   }
 
   .course {
     cursor: pointer;
   }
+
+  .lesson-details__files-container {
+    margin: 1rem auto;
+  }
+
+  .lesson-details__video {
+    width: 50%;
+    height: 15rem;
+  }
+
   
   .card {
     padding: 1rem;
@@ -22,13 +32,6 @@
   .text {
     padding: 1rem;
     margin: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     text-align: left;
   }
 
-  .createContentForm {
-    max-width: 400px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    margin: 20px auto;
-    padding: 20px;
-  }

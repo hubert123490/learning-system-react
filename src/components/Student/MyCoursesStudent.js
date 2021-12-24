@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import Card from "../UI/Card"
 import { useNavigate } from "react-router";
+import image from "../../assets/course_image.jpg"
 
 const MyCourses = () => {
   const navigate = useNavigate();
@@ -17,8 +18,6 @@ const MyCourses = () => {
 
   useEffect(() => {
     getAllCourses();
-
-    return getAllCourses;
   }, [getAllCourses]);
 
   const courseDetailsHandler = (courseId) => {
@@ -26,31 +25,53 @@ const MyCourses = () => {
   };
 
   return (
-    <section className={classes.myCourses}>
-      <h1>Twoje kursy!</h1>
-      {coursesData ? (
-        coursesData.courses.map((item) => (
-          <div key={item.id} className={classes.course}>
+    <section className={classes["my-courses"]}>
+        <h1>Twoje kursy!</h1>
+        <div className={classes["courses"]}>
+          {coursesData ? (
+            coursesData.courses.map((item) => (
+              <div key={item.id} className={classes["course"]}>
+                <div>
+                  <div
+                    onClick={() => {
+                      courseDetailsHandler(item.id);
+                    }}
+                  >
+                    <div className={classes["course__image-container"]}>
+                      <img src={image} alt="course" />
+                    </div>
+                    <h2 className={classes["course-description__title"]}>
+                      {item.name}
+                    </h2>
+                    <div
+                      className={
+                        classes["course-description__category-container"]
+                      }
+                    >
+                      <span className={classes["category-title"]}>
+                        
+                      </span>
+                      <span className={classes["category-value"]}>
+                        {item.category}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : courseError ? (
+            <div className={classes["error"]}>
+              <h1>{courseError}</h1>
+            </div>
+          ) : (
             <Card>
-              <div
-                onClick={() => {
-                  courseDetailsHandler(item.id);
-                }}
-              >
-                <h2>{item.name}</h2>
-                <div>{item.category}</div>
+              <div>
+                <LoadingSpinner />
               </div>
             </Card>
-          </div>
-        ))
-      ) : ( courseError ? <div className={classes.error}><h1>{courseError}</h1></div> :
-        <Card>
-          <div>
-            <LoadingSpinner />
-          </div>
-        </Card>
-      )}
-    </section>
+          )}
+        </div>
+      </section>
   );
 };
 

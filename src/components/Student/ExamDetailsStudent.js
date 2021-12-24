@@ -4,7 +4,6 @@ import useHttp from "../../hooks/use-http";
 import { getQuestions } from "../../lib/api/question-api";
 import { useEffect } from "react";
 import Card from "../UI/Card";
-import { Form } from "react-bootstrap";
 import AnswerText from "./Answers/AnswerText";
 import AnswerTextArea from "./Answers/AnswerTextArea";
 import { submitAnswers } from "../../lib/api/answer-api";
@@ -20,7 +19,6 @@ const ExamDetailsStudent = () => {
     sendRequest: checkSubmissionRequest,
     data: checkSubmissionData,
     error: checkSubmissionError,
-    status: checkSubmissionStatus,
   } = useHttp(checkSubmission, true);
   const {
     sendRequest: submitAnswersRequest,
@@ -77,27 +75,26 @@ const ExamDetailsStudent = () => {
   };
 
   const radioForm = (item) => {
-    {
       return (
-        <Form className={classes.radioForm}>
-          <div key={`default-radio`} className="mb-3">
+        <form className={classes["radio-question__form"]}>
+          <div>
             {item.queries.map((query) => {
               return (
-                <Form.Check
-                  type="radio"
-                  id={query.id}
-                  label={query.text}
-                  value={query.text}
-                  name="radio"
-                  key={query.id}
-                  onChange={(e) => handleRadio(e, item.id)}
-                />
+                <div className={classes["radio-question__form-elements"]}>
+                  <input
+                    type="radio"
+                    id={query.id}
+                    name="radio"
+                    value={query.text}
+                    onChange={(e) => handleRadio(e, item.id)}
+                  />
+                  <label for={query.id}>{query.text}</label>
+                </div>
               );
             })}
           </div>
-        </Form>
+          </form>
       );
-    }
   };
 
   return (
@@ -131,6 +128,7 @@ const ExamDetailsStudent = () => {
       {submitAnswersError && <div>{submitAnswersError}</div>}
       {checkSubmissionData && checkSubmissionData.status === "ERROR" && <Card><h3>Test zakończony</h3><div>{checkSubmissionData.message}</div></Card>}
       {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <Card><h3>Egzamin wymaga sprawdzenia przez nauczyciela</h3><div>{checkSubmissionData.message}</div></Card>}
+      {checkSubmissionError && <Card><h3>{checkSubmissionError}</h3></Card>}
     </div>
   );
 };

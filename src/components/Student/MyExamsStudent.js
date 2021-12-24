@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import classes from "./MyExamsStudent.module.css"
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import image from "../../assets/exam.jpg"
 
 const MyExamsStudent = () => {
     const navigate = useNavigate();
@@ -19,35 +20,56 @@ const MyExamsStudent = () => {
         return getPendingExamsRequest;
       }, [getPendingExamsRequest]);
     
-      const examDetailsHandler = (examId,courseId ) => {
+      const examDetailsHandler = (courseId , examId ) => {
         navigate(`/student/courses/${courseId}/exams/${examId}`);
       };
 
+      console.log(getPendingExamsData)
+
       return (
-        <section className={classes.myExams}>
-          <h1>Twoje kursy!</h1>
-          {getPendingExamsData ? (
-            getPendingExamsData.map((item) => (
-              <div key={item.id} className={classes.exam}>
-                <Card>
-                  <div
-                    onClick={() => {
-                        examDetailsHandler(item.id, item.courseId);
-                    }}
-                  >
-                    <h2>{item.name}</h2>
-                    <div>{item.category}</div>
-                  </div>
-                </Card>
-              </div>
-            ))
-          ) : ( getPendingExamsError ? <div className={classes.error}><h1>{getPendingExamsError}</h1></div> :
-            <Card>
+        <section className={classes["my-exams"]}>
+          <h1>Wybierz egzamin!</h1>
+      <div className={classes["exams"]}>
+        {getPendingExamsData && getPendingExamsData.length === 0 && <div className={classes["notification"]}>Brak egzaminów do wyświetlenia</div>}
+        {getPendingExamsData ? (
+          getPendingExamsData.map((item) => (
+            <div key={item.id} className={classes["exam"]}>
               <div>
-                <LoadingSpinner />
+                <div
+                  onClick={() => {
+                    examDetailsHandler(item.courseId, item.id);
+                  }}
+                >
+                  <div className={classes["exam__image-container"]}>
+                    <img src={image} alt="exam" />
+                  </div>
+                  <h2 className={classes["exam-description__title-course"]}>
+                    {item.courseName}
+                  </h2>
+                  <h2 className={classes["exam-description__title-exam"]}>
+                    {item.name}
+                  </h2>
+                  <div className={classes["exam-description"]}>
+                    <span className={classes["category-description__value"]}>
+                      {item.description}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </Card>
-          )}
+            </div>
+          ))
+        ) : getPendingExamsError ? (
+          <div className={classes["error"]}>
+            <h1>{getPendingExamsError}</h1>
+          </div>
+        ) : (
+          <Card>
+            <div>
+              <LoadingSpinner />
+            </div>
+          </Card>
+        )}
+      </div>
         </section>
       );
 }

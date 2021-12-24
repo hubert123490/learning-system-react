@@ -1,8 +1,6 @@
-import { useParams } from "react-router";
 import { useState } from "react";
 
 const AnswerTextArea = (props) => {
-    const params = useParams();
     const [answer, setAnswer] = useState("");
 
     return (
