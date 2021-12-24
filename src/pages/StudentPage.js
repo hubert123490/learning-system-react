@@ -26,7 +26,7 @@ const StudentPage = () => {
       element={<ExamDetailsStudent />}
       />
       <Route
-      path="/pending-exams*"
+      path="/pending-exams/*"
       element={<MyExamsStudent />}
       />
     </Routes>
