@@ -11,34 +11,39 @@ const Integration = () => {
   const nav = useNavigate();
   const authCtx = useContext(AuthContext);
   const queryParams = new URLSearchParams(location.search);
-  const { sendRequest: integrationRequest, data: integrationData, error: integrationError, status: integrationStatus } =
-  useHttp(webexIntegration);
+  const {
+    sendRequest: integrationRequest,
+    data: integrationData,
+    error: integrationError,
+    status: integrationStatus,
+  } = useHttp(webexIntegration);
 
+  const integrationHandler = (event) => {
+    event.preventDefault();
+    integrationRequest({
+      code: queryParams.get("code"),
+    });
+  };
 
-    const integrationHandler = (event) => {
-        event.preventDefault();
-        integrationRequest({
-            code: queryParams.get("code")
-        })
+  useEffect(() => {
+    if (integrationData) {
+      authCtx.webexIntegrationHandler(integrationData);
+      nav("/teacher/webex");
     }
+  }, [authCtx, integrationData, nav, integrationStatus]);
 
-    useEffect(() => {
-        if (integrationData) {
-          authCtx.webexIntegrationHandler(integrationData);
-          nav("/teacher/webex");
-        }
-      }, [authCtx, integrationData, nav]);
-
-
-    console.log(integrationData)
-    console.log(integrationError)
+  console.log(integrationData)
+  console.log(integrationError)
 
   return (
-    <div className={classes.integration}>
-      <h1>Integracja</h1>
-      <form className={classes.form} onSubmit={integrationHandler}>
-        <button type="submit">Przejdź do kursów</button>
-      </form>
+    <div className={classes["integration"]}>
+      <div className={classes["card"]}>
+        <h1>Integracja</h1>
+        {integrationError && <><div className={classes["error"]}>{integrationError}</div><div>Spróbuj ponownie</div></>}
+        <form className={classes["form"]} onSubmit={integrationHandler}>
+          <button type="submit">Przejdź do kursów</button>
+        </form>
+      </div>
     </div>
   );
 };

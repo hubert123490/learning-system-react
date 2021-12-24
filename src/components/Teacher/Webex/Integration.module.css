@@ -7,6 +7,14 @@
     font-size: 3rem;
   }
 
+  .card {
+    padding: 1rem;
+    margin: 1rem auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 50%;
+  }
+
  .failed {
    color: red;
    margin: 1em;
@@ -23,10 +31,3 @@
    color: green;
    margin-bottom: 1em;
  }
-
- .form {
-    max-width: 400px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    margin: 20px auto;
-    padding: 20px;
-  }
