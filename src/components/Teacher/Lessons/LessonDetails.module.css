@@ -7,10 +7,6 @@
   font-size: 3rem;
 }
 
-.lesson {
-  cursor: pointer;
-}
-
 .card {
   position: relative;
   padding: 1rem;
@@ -50,6 +46,11 @@
 .lesson-content__file-delete {
   text-decoration: underline;
   color: #0d6efd;
+  cursor: pointer;
+}
+
+.lesson-content__file-delete:hover {
+  color: blueviolet;
 }
 
 .delete-icon {

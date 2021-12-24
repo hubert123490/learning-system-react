@@ -10,7 +10,6 @@ import {
   addFileToContent,
   deleteFileFromContent,
 } from "../../../lib/api/content-api";
-import Card from "../../UI/Card";
 import Text from "./Text";
 import File from "./File";
 import { createAddContentForm } from "../../../lib/forms/content-form";
@@ -103,7 +102,7 @@ const LessonDetails = () => {
       )}
 
       {/* main content preview starts from here */}
-      {(!getContentData || getContentData.length === 0) && <div>pusto</div>}
+      {(!getContentData || getContentData.length === 0) && <div className={classes["card"]}>pusto</div>}
       {getContentData &&
         getContentData
           .sort((a, b) => a.id - b.id)
@@ -139,7 +138,7 @@ const LessonDetails = () => {
                       >
                         {file.fileName}
                       </a>{" "}
-                      <a
+                      <span
                         onClick={(e) => {
                           if (
                             window.confirm(
@@ -155,7 +154,7 @@ const LessonDetails = () => {
                       >
                         {" "}
                         usuń
-                      </a>
+                      </span>
                     </div>
                   </div>
                 ))}
