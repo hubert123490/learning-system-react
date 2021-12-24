@@ -2,7 +2,6 @@ import { getGrades } from "../../../lib/api/student-api";
 import useHttp from "../../../hooks/use-http";
 import { useEffect } from "react";
 import classes from "./GradeStudent.module.css"
-import Card from "../../UI/Card";
 import GradeDetailsStudent from "./GradeDetailsStudent";
 
 const GradeTable = () => {
@@ -18,12 +17,11 @@ const GradeTable = () => {
     return getGradesRequest;
   }, [getGradesRequest]);
 
-  console.log(getGradesData);
-
   return (
-    <section className={classes.main}>
+    <section className={classes["grades"]}>
       <h1>Twoje oceny!</h1>
-      <Card>
+      {getGradesError && <div><h3>{getGradesError}</h3></div>}
+      <div className={classes["card"]}>
         <table>
           <thead>
             <tr>
@@ -47,11 +45,11 @@ const GradeTable = () => {
                   return 0;
                 })
                 .map((item) => (
-                  <GradeDetailsStudent item={item} key={item.studentId}/>
+                  <GradeDetailsStudent item={item} key={item.courseId}/>
                 ))}
           </tbody>
         </table>
-      </Card>
+      </div>
     </section>
   );
 };

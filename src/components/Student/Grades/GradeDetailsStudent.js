@@ -14,7 +14,7 @@ const GradeDetailsStudent = (props) => {
           <td>{props.item.courseName}</td>
           <td>{props.item.studentPoints}</td>
           <td>{props.item.coursePoints}</td>
-          <td>{props.item.grade}</td>
+          <td>{props.item.grade === -1 ? "-" : props.item.grade}</td>
           <td>
             <button onClick={showDetailsHandler}>
               {showDetails ? "Zamknji" : "Szczegóły"}
@@ -35,7 +35,7 @@ const GradeDetailsStudent = (props) => {
                 </thead>
                 <tbody>
                   {props.item.exams.map((exam) => (
-                    <tr key={exam.examId} className={`${exam.status == "NOT_SUBMITTED" ? classes.error : ""}`}>
+                    <tr key={exam.examId} className={`${exam.status === "NOT_SUBMITTED" ? classes["error"] : ""}`}>
                       <td>{exam.examName}</td>
                       <td>{exam.studentPoints}</td>
                       <td>{exam.maxPoints}</td>

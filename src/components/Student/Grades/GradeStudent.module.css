@@ -1,11 +1,25 @@
-.main {
-    margin: 3rem auto;
-    text-align: center;
-  }
-  
-  .main h1 {
-    font-size: 3rem;
-  }
+.grades {
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.grades h1 {
+  font-size: 3rem;
+}
+
+.card {
+  padding: 1rem;
+  margin: 1rem auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  width: 50%;
+  position: relative;
+  overflow-x: auto;
+}
+
+.grade-table {
+  width: 100%;
+}
 
  .failed {
    color: red;
