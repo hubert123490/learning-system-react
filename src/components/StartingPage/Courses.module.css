@@ -6,6 +6,7 @@
   margin: 0 auto;
   margin-top: 1rem;
   background-color: lightgray;
+  min-height: 20rem;
 }
 
 .course {
@@ -55,4 +56,12 @@
   text-align: end;
   padding-right: 1.7rem;
   color: #999;
+}
+
+.nothing-found {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 1rem;
+  background-color: lightgray;
+  min-height: 20rem;
 }
