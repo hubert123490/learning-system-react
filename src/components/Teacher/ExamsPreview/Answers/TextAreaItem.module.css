@@ -1,0 +1,33 @@
+.rate-answer__form {
+    max-width: 250rem;
+    width: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .textarea-display {
+      margin-bottom: 1rem;
+  }
+
+  .textarea-display textarea{
+    width: 100%;
+    height: 5rem;
+  }
+
+  .failed {
+    color: red;
+    margin: 1em;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+   
+  .error {
+    margin-bottom: 1em;
+    color: red;
+  }
+ 
+  .success {
+    color: green;
+    margin-bottom: 1em;
+  }
