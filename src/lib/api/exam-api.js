@@ -80,3 +80,19 @@ export async function getPendingExams() {
 
   return data;
 }
+
+export async function getCourseExams(examData) {
+  const response = await fetch(`${SERVER_DOMAIN}/api/courses/${examData.courseId}/exams`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: authHeader(),
+    },
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Nie można pobrać egzaminów.");
+  }
+
+  return data;
+}

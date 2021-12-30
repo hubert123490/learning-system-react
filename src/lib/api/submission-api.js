@@ -52,3 +52,20 @@ export async function checkSubmission(submissionData) {
   
     return data;
   }
+
+  export async function findAllSubmissions(submissionData) {
+    const response = await fetch(`${SERVER_DOMAIN}/api/courses/${submissionData.courseId}/exams/${submissionData.examId}/submissions/find-all-submissions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : authHeader()
+      },
+    });
+    const data = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(data.message || "Coś poszło nie tak.");
+    }
+  
+    return data;
+  }
