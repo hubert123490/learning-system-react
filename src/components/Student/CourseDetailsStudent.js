@@ -9,6 +9,7 @@ import useForm from "../../hooks/use-form";
 import { enrollInCourseForm } from "../../lib/forms/course-form";
 import lessonImage from "../../assets/lesson.jpg";
 import examImage from "../../assets/exam.jpg";
+import assignmentImage from "../../assets/assignment.jpg"
 
 const CourseDetails = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const CourseDetails = () => {
   const params = useParams();
   const [showLessons, setShowLessons] = useState(true);
   const [showExams, setShowExams] = useState(true);
+  const [showAssignments, setShowAssignments] = useState(true);
   const {
     sendRequest: getCourseDetailsRequest,
     data: getCourseDetailsData,
@@ -45,6 +47,10 @@ const CourseDetails = () => {
     if (location.pathname) navigate(`${location.pathname}/exams/${examId}`);
   };
 
+  const assignmentDetailsHandler = assignmentId => {
+    navigate(`assignments/${assignmentId}`)
+  }
+
   const onEnrollInCourseSubmit = (event) => {
     event.preventDefault();
     if (params.courseId){
@@ -69,6 +75,10 @@ const CourseDetails = () => {
     });
   };
 
+  const showAssignmentsHandler = () => {
+    setShowAssignments(prevState => !prevState)
+  }
+
   return (
     <section className={classes["course-details"]}>
       <h1>{getCourseDetailsError ? "Zapisz się na kurs" : "Witaj"}</h1>
@@ -85,6 +95,12 @@ const CourseDetails = () => {
             className={!showExams ? classes["button-active"] : ""}
           >
             {showExams ? "Ukryj egzaminy" : "Pokaż egzaminy"}
+          </button>
+          <button
+            onClick={showAssignmentsHandler}
+            className={!showAssignments ? classes["button-active"] : ""}
+          >
+            {showExams ? "Ukryj prace" : "Pokaż prace"}
           </button>
         </div>
       )}
@@ -150,6 +166,41 @@ const CourseDetails = () => {
             ))}
         </div>
       )}
+      {!getCourseDetailsError && (
+        <hr className={classes["content-container__horizontal"]} />
+      )}
+      {!getCourseDetailsError && (
+        <div className={classes["content-container"]}>
+          {getCourseDetailsData &&
+            showAssignments &&
+            getCourseDetailsStatus === "completed" &&
+            getCourseDetailsData.assignments.map((item) => (
+              <div
+                key={item.id}
+                className={`${classes["content-container__item"]} ${classes["assignment"]}`}
+              >
+                <div
+                  onClick={() => {
+                    assignmentDetailsHandler(item.id);
+                  }}
+                >
+                  <h2 className={classes["content-container__title"]}>
+                    {item.name}
+                  </h2>
+                  <div
+                    className={classes["content-container__image-container"]}
+                  >
+                    <img src={assignmentImage} alt="assignment" />
+                  </div>
+                  <div className={classes["content-container__description"]}>
+                    {item.description}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      )}
+
       {getCourseDetailsStatus !== "completed" && !getCourseDetailsData && (
         <Card>
           <div>
@@ -160,10 +211,11 @@ const CourseDetails = () => {
       {getCourseDetailsData &&
         getCourseDetailsData.exams.length === 0 &&
         getCourseDetailsData.lessons.length === 0 &&
+        getCourseDetailsData.assignments.length === 0 &&
         !getCourseDetailsError &&
         getCourseDetailsStatus === "completed" && (
           <h2 className={classes["error"]}>
-            Brak egzaminów i lekcji do wyświetlenia
+            Brak egzaminów lekcji i prac do wyświetlenia
           </h2>
         )}
 
