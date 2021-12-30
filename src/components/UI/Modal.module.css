@@ -1,0 +1,36 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+    position: fixed;
+    z-index: 200;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+    background: white;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal__title {
+    text-align: center;
+    margin: 0 0 1rem 0;
+  }
+  
+  .modal__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-actions__buttons {
+    margin: 0 1rem;
+  }
