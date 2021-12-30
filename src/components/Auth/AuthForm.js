@@ -41,7 +41,11 @@ export default function AuthForm() {
   useEffect(() => {
     if (signInData) {
       authCtx.login(signInData);
-      nav("/");
+      if (authCtx.isTeacher)
+        nav("teacher/courses")
+      else if (authCtx.isStudent)
+        nav("/")
+      
     }
   }, [authCtx, signInData, nav]);
 
