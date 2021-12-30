@@ -1,0 +1,25 @@
+.lesson-content__files-video {
+    width: 50%;
+    height: 100%;
+    max-height: 20rem;
+  }
+  
+  .lesson-content__file {
+    display: flex;
+    align-items: center;
+    text-align: start;
+  }
+  
+  .lesson-content__file_a {
+    margin-right: 1rem;
+  }
+  
+  .lesson-content__file-delete {
+    text-decoration: underline;
+    color: #0d6efd;
+    cursor: pointer;
+  }
+  
+  .lesson-content__file-delete:hover {
+    color: blueviolet;
+  }
