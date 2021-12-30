@@ -14,7 +14,7 @@ const GradeDetailsStudent = (props) => {
           <td>{props.item.courseName}</td>
           <td>{props.item.studentPoints}</td>
           <td>{props.item.coursePoints}</td>
-          <td>{props.item.grade === -1 ? "-" : props.item.grade}</td>
+          <td className={`${props.item.grade === 2 ? classes["error"] : ""}`}>{props.item.grade === -1 ? "-" : props.item.grade}</td>
           <td>
             <button onClick={showDetailsHandler}>
               {showDetails ? "Zamknji" : "Szczegóły"}
