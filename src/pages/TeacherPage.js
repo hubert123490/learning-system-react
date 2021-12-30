@@ -12,6 +12,11 @@ import GradeTable from "../components/Teacher/Grades/GradeTable";
 import Meeting from "../components/Teacher/Webex/Meeting";
 import MeetingCourses from "../components/Teacher/Webex/MeetingCourses";
 import Integration from "../components/Teacher/Webex/Integration";
+import AssignmentDetails from "../components/Teacher/Assignments/AssignmentDetails";
+import ExamsPreviewCourses from "../components/Teacher/ExamsPreview/ExamsPreviewCourses";
+import ExamsPreviewExams from "../components/Teacher/ExamsPreview/ExamsPreviewExams";
+import ExamsPreviewSubmissions from "../components/Teacher/ExamsPreview/ExamsPreviewSubmissions";
+import ExamsPreviewSubmissionDetails from "../components/Teacher/ExamsPreview/ExamsPreviewSubmissionDetails";
 
 const TeacherPage = () => {
   return (
@@ -41,6 +46,26 @@ const TeacherPage = () => {
       <Route
         path="/courses/:courseId/exams/:examId/*"
         element={<ExamDetails />}
+      />
+      <Route
+        path="/courses/:courseId/assignments/:assignmentId/*"
+        element={<AssignmentDetails />}
+      />
+       <Route
+        path="/exams-preview/courses/*"
+        element={<ExamsPreviewCourses />}
+      />
+      <Route
+        path="/exams-preview/courses/:courseId/exams/*"
+        element={<ExamsPreviewExams />}
+      />
+      <Route
+        path="/exams-preview/courses/:courseId/exams/:examId/submissions/*"
+        element={<ExamsPreviewSubmissions />}
+      />
+      <Route
+        path="/exams-preview/courses/:courseId/exams/:examId/submissions/:submissionId/*"
+        element={<ExamsPreviewSubmissionDetails />}
       />
       <Route path="/courses/:courseId/*" element={<CourseDetails />} />
       <Route path="/courses" element={<MyCourses />} />
