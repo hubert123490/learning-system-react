@@ -11,8 +11,7 @@ import Card from "../../UI/Card";
 import { useNavigate } from "react-router";
 import useForm from "../../../hooks/use-form";
 import { createCourseForm } from "../../../lib/forms/course-form";
-import image from "./../../../assets/course_image.jpg";
-import { FaTimes } from "react-icons/fa";
+import MyCourse from "./MyCourse";
 
 const MyCourses = () => {
   const navigate = useNavigate();
@@ -106,6 +105,7 @@ const MyCourses = () => {
   return (
     <>
       {/* <SideNavigation /> */}
+     
       <section className={classes["my-courses"]}>
         <h1>Twoje kursy!</h1>
         <button onClick={showCreateFormHandler}>
@@ -115,42 +115,7 @@ const MyCourses = () => {
         <div className={classes["courses"]}>
           {coursesData ? (
             coursesData.courses.map((item) => (
-              <div key={item.id} className={classes["course"]}>
-                <div>
-                  <FaTimes size={25} onClick={() => {
-                      if (
-                        window.confirm(
-                          `Czy napewno chcesz usunąć ${item.name}?`
-                        )
-                      )
-                        deleteCourseRequest(item.id);
-                    }} className={classes["delete-icon"]} />
-                  <div
-                    onClick={() => {
-                      courseDetailsHandler(item.id);
-                    }}
-                  >
-                    <div className={classes["course__image-container"]}>
-                      <img src={image} alt="course" />
-                    </div>
-                    <h2 className={classes["course-description__title"]}>
-                      {item.name}
-                    </h2>
-                    <div
-                      className={
-                        classes["course-description__category-container"]
-                      }
-                    >
-                      <span className={classes["category-title"]}>
-                        
-                      </span>
-                      <span className={classes["category-value"]}>
-                        {item.category}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <MyCourse key={item.id} item={item} deleteCourseRequest={deleteCourseRequest} courseDetailsHandler={courseDetailsHandler} />
             ))
           ) : courseError ? (
             <div className={classes["error"]}>
