@@ -10,17 +10,24 @@ import { useNavigate, useParams } from "react-router";
 import { createLessonForm } from "../../../lib/forms/lesson-form";
 import useForm from "../../../hooks/use-form";
 import { createExamForm } from "../../../lib/forms/exam-form";
-import { FaTimes } from "react-icons/fa";
-import lessonImage from "../../../assets/lesson.jpg";
-import examImage from "../../../assets/exam.jpg";
+import Lesson from "./Lesson";
+import Exam from "./Exam";
+import { createAssignmentForm } from "../../../lib/forms/assignment-form";
+import {
+  createAssignment,
+  deleteAssignment,
+} from "../../../lib/api/assignment-api";
+import Assignment from "./Assignment";
 
 const CourseDetails = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [showCreateLesson, setShowCreateLesson] = useState(false);
   const [showCreateExam, setShowCreateExam] = useState(false);
+  const [showCreateAssignment, setShowCreateAssignment] = useState(false);
   const [showLessons, setShowLessons] = useState(true);
   const [showExams, setShowExams] = useState(true);
+  const [showAssignments, setShowAssignments] = useState(true);
   const {
     renderFormInputs: renderCreateLessonFormInputs,
     isFormValid: isCreateLessonFormValid,
@@ -29,6 +36,10 @@ const CourseDetails = () => {
     renderFormInputs: renderCreateExamFormInputs,
     isFormValid: isCreateExamFormValid,
   } = useForm(createExamForm);
+  const {
+    renderFormInputs: renderCreateAssignmentFormInputs,
+    isFormValid: isCreateAssignmentFormValid,
+  } = useForm(createAssignmentForm);
 
   const {
     sendRequest: getDetailsRequest,
@@ -41,6 +52,10 @@ const CourseDetails = () => {
   const { sendRequest: deleteExamRequest, status: deleteExamStatus } =
     useHttp(deleteExam);
   const {
+    sendRequest: deleteAssignmentRequest,
+    status: deleteAssignmentStatus,
+  } = useHttp(deleteAssignment);
+  const {
     sendRequest: createLessonRequest,
     data: createdLessonData,
     error: createdLessonError,
@@ -52,6 +67,12 @@ const CourseDetails = () => {
     error: createdExamError,
     status: createdExamStatus,
   } = useHttp(createExam);
+  const {
+    sendRequest: createAssignmentRequest,
+    data: createdAssignmentData,
+    error: createdAssignmentError,
+    status: createdAssignmentStatus,
+  } = useHttp(createAssignment);
 
   useEffect(() => {
     if (params.courseId) {
@@ -61,9 +82,11 @@ const CourseDetails = () => {
     getDetailsRequest,
     deleteLessonStatus,
     deleteExamStatus,
+    deleteAssignmentStatus,
     createdLessonStatus,
     createdExamStatus,
-    params
+    createdAssignmentStatus,
+    params,
   ]);
 
   const lessonDetailsHandler = (lessonId) => {
@@ -72,6 +95,10 @@ const CourseDetails = () => {
 
   const examDetailsHandler = (examId) => {
     navigate(`exams/${examId}`);
+  };
+
+  const assignmentDetailsHandler = (assignmentId) => {
+    navigate(`assignments/${assignmentId}`);
   };
 
   const submitCreateFormHandler = (event) => {
@@ -94,6 +121,19 @@ const CourseDetails = () => {
     });
   };
 
+  const submitCreateAssignmentFormHandler = (event) => {
+    event.preventDefault();
+    createAssignmentRequest({
+      courseId: params.courseId,
+      request: {
+        name: renderCreateAssignmentFormInputs()[0].props.value,
+        description: renderCreateAssignmentFormInputs()[1].props.value,
+        startDate: renderCreateAssignmentFormInputs()[2].props.value,
+        endDate: renderCreateAssignmentFormInputs()[3].props.value,
+      },
+    });
+  };
+
   const showCreateFormHandler = () => {
     setShowCreateLesson((prevState) => {
       return !prevState;
@@ -106,12 +146,22 @@ const CourseDetails = () => {
     });
   };
 
+  const showCreateAssignmentFormHandler = () => {
+    setShowCreateAssignment((prevState) => {
+      return !prevState;
+    });
+  };
+
   const createLessonRedirectHandler = () => {
     navigate(`lessons/${createdLessonData.id}`);
   };
 
   const createExamRedirectHandler = () => {
     navigate(`exams/${createdExamData.id}`);
+  };
+
+  const createAssignmentRedirectHandler = () => {
+    navigate(`assignments/${createdAssignmentData.id}`);
   };
 
   const showExamsHandler = () => {
@@ -122,6 +172,12 @@ const CourseDetails = () => {
 
   const showLessonsHandler = () => {
     setShowLessons((prevState) => {
+      return !prevState;
+    });
+  };
+
+  const showAssignmentsHandler = () => {
+    setShowAssignments((prevState) => {
       return !prevState;
     });
   };
@@ -191,6 +247,42 @@ const CourseDetails = () => {
     </form>
   );
 
+  const createAssignmentsFormJSX = (
+    <form
+      className={classes["create-form"]}
+      onSubmit={submitCreateAssignmentFormHandler}
+    >
+      {!createdExamData && <h1>Stwórz nową pracę domową</h1>}
+      {createdExamData && <h1>Utworzono pracę domową</h1>}
+      {!createdExamData && renderCreateAssignmentFormInputs()}
+      {createdExamStatus === "completed" && createdAssignmentError ? (
+        <div className={classes["error"]}>{createdAssignmentError}</div>
+      ) : (
+        ""
+      )}
+      {createdAssignmentStatus === "completed" && createdAssignmentData ? (
+        <div className={classes["success"]}>
+          {createdAssignmentData.message}
+        </div>
+      ) : (
+        ""
+      )}
+      {createdAssignmentStatus === "pending" && !createdAssignmentData && (
+        <LoadingSpinner />
+      )}
+      {!createdAssignmentData && (
+        <button type="submit" disabled={!isCreateAssignmentFormValid()}>
+          Stwórz pracę domową{" "}
+        </button>
+      )}
+      {createdAssignmentStatus === "completed" && createdAssignmentData && (
+        <button onClick={createAssignmentRedirectHandler}>
+          Przejdź do nowo utworzonej pracy domowej
+        </button>
+      )}
+    </form>
+  );
+
   return (
     <div className={classes["course-details"]}>
       <h1 style={{ fontSize: "3rem" }}>Witaj!</h1>
@@ -209,6 +301,13 @@ const CourseDetails = () => {
           </button>
           {showCreateExam && createExamFormJSX}
         </div>
+        <br />
+        <div>
+          <button onClick={showCreateAssignmentFormHandler}>
+            {showCreateAssignment ? "Zamknij" : "Dodaj prace"}
+          </button>
+          {showCreateAssignment && createAssignmentsFormJSX}
+        </div>
         <hr />
         <div className={classes["filter-container"]}>
           <button
@@ -223,43 +322,24 @@ const CourseDetails = () => {
           >
             {showExams ? "Ukryj egzaminy" : "Pokaż egzaminy"}
           </button>
+          <button
+            onClick={showAssignmentsHandler}
+            className={!showAssignments ? classes["button-active"] : ""}
+          >
+            {showExams ? "Ukryj prace" : "Pokaż prace"}
+          </button>
         </div>
         <div className={classes["content-container"]}>
           {getDetailsData &&
             showLessons &&
             getDetailsStatus === "completed" &&
             getDetailsData.lessons.map((item) => (
-              <div key={item.id} className={classes["content-container__item"]}>
-                <FaTimes
-                  size={25}
-                  onClick={() => {
-                    if (
-                      window.confirm(`Czy napewno chcesz usunąć ${item.name}?`)
-                    )
-                      deleteLessonRequest({
-                        courseId: params.courseId,
-                        lessonId: item.id,
-                      });
-                  }}
-                  className={classes["delete-icon"]}
-                />
-
-                <div
-                  onClick={() => {
-                    lessonDetailsHandler(item.id);
-                  }}
-                >
-                  <h2 className={classes["content-container__title"]}>
-                    {item.name}
-                  </h2>
-                  <div
-                    className={classes["content-container__image-container"]}
-                  >
-                    <img src={lessonImage} alt="lesson" />
-                  </div>
-                  <div className={classes["content-container__description"]}>{item.description}</div>
-                </div>
-              </div>
+              <Lesson
+                key={item.id}
+                item={item}
+                deleteLessonRequest={deleteLessonRequest}
+                lessonDetailsHandler={lessonDetailsHandler}
+              />
             ))}
         </div>
         <hr className={classes["content-container__horizontal"]} />
@@ -268,39 +348,26 @@ const CourseDetails = () => {
             showExams &&
             getDetailsStatus === "completed" &&
             getDetailsData.exams.map((item) => (
-              <div
+              <Exam
                 key={item.id}
-                className={`${classes["content-container__item"]} ${classes["exam"]}`}
-              >
-                <FaTimes
-                  size={25}
-                  onClick={() => {
-                    if (
-                      window.confirm(`Czy napewno chcesz usunąć ${item.name}?`)
-                    )
-                      deleteExamRequest({
-                        courseId: params.courseId,
-                        examId: item.id,
-                      });
-                  }}
-                  className={classes["delete-icon"]}
-                />
-                <div
-                  onClick={() => {
-                    examDetailsHandler(item.id);
-                  }}
-                >
-                  <h2 className={classes["content-container__title"]}>
-                    {item.name}
-                  </h2>
-                  <div
-                    className={classes["content-container__image-container"]}
-                  >
-                    <img src={examImage} alt="exam" />
-                  </div>
-                  <div className={classes["content-container__description"]}>{item.description}</div>
-                </div>
-              </div>
+                item={item}
+                deleteExamRequest={deleteExamRequest}
+                examDetailsHandler={examDetailsHandler}
+              />
+            ))}
+        </div>
+        <hr className={classes["content-container__horizontal"]} />
+        <div className={classes["content-container"]}>
+          {getDetailsData &&
+            showAssignments &&
+            getDetailsStatus === "completed" &&
+            getDetailsData.assignments.map((item) => (
+              <Assignment
+                key={item.id}
+                item={item}
+                deleteAssignmentRequest={deleteAssignmentRequest}
+                assignmentDetailsHandler={assignmentDetailsHandler}
+              />
             ))}
         </div>
         {getDetailsStatus !== "completed" && !getDetailsData && (

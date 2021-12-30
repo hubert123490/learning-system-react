@@ -10,12 +10,12 @@
 .filter-container {
   display: flex;
   font-weight: bold;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .filter-container button {
   font: inherit;
-  width: 50%;
+  flex-grow: 1;
   color: white;
   font-weight: bold;
   padding: 0.5rem 1.5rem;
