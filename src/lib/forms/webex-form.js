@@ -2,12 +2,6 @@ import { createFormFieldConfig } from "../../utils/formConig";
 import { requiredRule } from "../../utils/inputValidationRules";
 
 export const createWebexMeetingForm = {
-    title: {
-      ...createFormFieldConfig("Tytuł spotkania", "title", "text"),
-      validationRules: [
-        requiredRule("Tytuł spotkania"),
-      ],
-    },
     start: {
       ...createFormFieldConfig(
         "Czas rozpoczęcia spotkania",
