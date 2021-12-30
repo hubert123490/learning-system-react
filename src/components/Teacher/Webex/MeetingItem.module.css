@@ -1,0 +1,58 @@
+.content-container__item {
+    background-color: white;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 1rem;
+    padding: 0.5rem;
+    padding-top: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 20%;
+    min-width: 20rem;
+    text-align: center;
+  }
+
+  .content-container__item:hover {
+    box-shadow: 0 2px 8px #38015c;
+  }
+  
+  .content-container__image-container img {
+    height: 80%;
+    width: 80%;
+    vertical-align: middle;
+  }
+  
+  .content-container__title {
+    color: #38015c;
+    font-size: 2rem;
+  }
+  
+  .delete-icon {
+    position: absolute;
+    color: red;
+    right: 0;
+    top: 0;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .content-container__start-date {
+    justify-content: space-between;
+  }
+
+  .content-container__end-date {
+    justify-content: space-between;
+  }
+  
+  .delete-icon:hover {
+    color: black;
+  }
+
+  .content-container__horizontal {
+    padding: 0;
+    margin: 0;
+    border: 3px solid black;
+  }
+
+  

@@ -15,7 +15,6 @@ const Integration = () => {
     sendRequest: integrationRequest,
     data: integrationData,
     error: integrationError,
-    status: integrationStatus,
   } = useHttp(webexIntegration);
 
   const integrationHandler = (event) => {
@@ -30,10 +29,11 @@ const Integration = () => {
       authCtx.webexIntegrationHandler(integrationData);
       nav("/teacher/webex");
     }
-  }, [authCtx, integrationData, nav, integrationStatus]);
+  }, [authCtx, integrationData, nav]);
 
   console.log(integrationData)
   console.log(integrationError)
+  console.log(queryParams.get("code"))
 
   return (
     <div className={classes["integration"]}>

@@ -7,6 +7,13 @@
     font-size: 3rem;
   }
 
+  .content-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: lightgray;
+  }
+
   .card {
     padding: 1rem;
     margin: 1rem auto;
@@ -27,6 +34,10 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     margin: 20px auto;
     padding: 20px;
+  }
+
+  .spinner {
+    text-align: center;
   }
 
   .failed {
