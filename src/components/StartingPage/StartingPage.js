@@ -8,11 +8,9 @@ import { getCoursesForm } from "../../lib/forms/course-form";
 import { useSearchParams } from "react-router-dom";
 import Courses from "./Courses";
 import Pagination from "../Pagination/Pagination";
-import LoadingSpinner from "../UI/LoadingSpinner";
 
 const StartingPageContent = () => {
   const navigate = useNavigate();
-  //for timeout in useEffect
 
   const [searchParams, setSearchParams] = useSearchParams({
     name: "",
@@ -24,6 +22,7 @@ const StartingPageContent = () => {
   const { sendRequest, data, status } = useHttp(getAllCourses, true);
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(12);
+  
 
   const getTitle = (title) => {
     if (title === "Bachelor") return "inz.";
@@ -54,6 +53,7 @@ const StartingPageContent = () => {
       return !prevState;
     });
   };
+
 
   const filterFunction = (event) => {
     event.preventDefault();
@@ -104,7 +104,6 @@ const StartingPageContent = () => {
      
       <section className={classes["starting"]}>
         <h1>Aktualnie prowadzone kursy!</h1>
-        {data && status === "completed" && <>
         <button onClick={showFilterHandler}>
           {showFilter ? "Zamknji filter" : "Filtruj"}
         </button>
@@ -118,16 +117,15 @@ const StartingPageContent = () => {
             data={currentCourses}
             courseDetailsHandler={courseDetailsHandler}
             getTitle={getTitle}
+            status={status}
           />
-          <Pagination
+          {data && <Pagination
             postsPerPage={coursesPerPage}
             totalPosts={data ? data.courses.length : 1}
             paginate={paginate}
             currentPage={currentPage}
-          />
-        </div></>}
-        {status === "pending" && <LoadingSpinner />}
-        {!data && status === "completed" && <h3>Nic nie znaleziono</h3>}
+          />}
+        </div>
       </section>
     </>
   );
