@@ -53,8 +53,6 @@ const Submission = () => {
     redirectToPendingExam()
   }
 
-  console.log(checkSubmissionData)
-
   return <div className={classes["submission"]}>
       <Card>
           <div>
