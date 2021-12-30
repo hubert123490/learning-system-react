@@ -129,38 +129,6 @@ const ExamDetails = () => {
               deleteQuestionRequest={deleteQuestionRequest}
               key={item.id}
             />
-            // <div key={item.id}>
-            //   <div className={`${classes["question"]}`}>
-            //     <h3>{item.description}</h3>
-            //     {item.type === "radio" && (
-            //       <QuestionRadio
-            //         question={item}
-            //         addQuestionRadioRequest={addQuestionRadioRequest}
-            //       />
-            //     )}
-            //     {item.type === "text" && (
-            //       <QuestionText
-            //         question={item}
-            //         addQuestionTextRequest={addQuestionTextRequest}
-            //       />
-            //     )}
-            //     {item.type === "textarea" && (
-            //       <QuestionTextArea
-            //         question={item}
-            //         addQuestionTextAreaRequest={addQuestionTextAreaRequest}
-            //       />
-            //     )}
-            //     <FaTimes size={20} onClick={() => {
-            //           if (window.confirm(`Czy napewno chcesz usunąć?`)) {
-            //             deleteQuestionRequest({
-            //               courseId: params.courseId,
-            //               examId: params.examId,
-            //               questionId: item.id,
-            //             });
-            //           }
-            //         }} className={classes["delete-icon"]} />
-            //   </div>
-            // </div>
           ))}
     </div>
   );
