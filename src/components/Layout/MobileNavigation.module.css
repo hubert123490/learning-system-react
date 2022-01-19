@@ -1,0 +1,45 @@
+.mobile-nav {
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  background: #c291e2;
+  width: 80%;
+  height: 100vh;
+}
+
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-nav__item {
+  margin: 1rem 0;
+}
+
+.mobile-nav__item button {
+    background-color: #4f2869;
+}
+
+.mobile-nav__item button:hover {
+    background-color: white;
+    color: #4f2869;
+}
+
+.mobile-nav__item a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  font-size: 1.5rem;
+}
+
+  .mobile-nav__item a:hover {
+    color: #38015c !important;
+  }

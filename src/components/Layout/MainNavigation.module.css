@@ -12,6 +12,26 @@
   align-items: center;
 }
 
+.backdrop {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hamburger {
+  cursor: pointer;
+  color: white;
+}
+
+.hamburger:hover {
+  color: #c291e2;
+}
+
 .header__brand {
   color: #0e4f1f;
   text-decoration: none;
@@ -21,6 +41,10 @@
 .header__brand img {
   height: 5rem;
   vertical-align: middle;
+}
+
+.main-nav {
+  display: none;
 }
 
 .main-nav__items {
@@ -60,4 +84,14 @@
 .header button:hover {
   background-color: #c291e2;
   color: #38015c;
+}
+
+@media (min-width: 50rem) {
+  .hamburger {
+    display: none;
+  }
+
+  .main-nav {
+    display: block;
+  }
 }
