@@ -26,8 +26,8 @@ const CourseDetails = () => {
   const [showCreateExam, setShowCreateExam] = useState(false);
   const [showCreateAssignment, setShowCreateAssignment] = useState(false);
   const [showLessons, setShowLessons] = useState(true);
-  const [showExams, setShowExams] = useState(true);
-  const [showAssignments, setShowAssignments] = useState(true);
+  const [showExams, setShowExams] = useState(false);
+  const [showAssignments, setShowAssignments] = useState(false);
   const {
     renderFormInputs: renderCreateLessonFormInputs,
     isFormValid: isCreateLessonFormValid,
@@ -252,10 +252,10 @@ const CourseDetails = () => {
       className={classes["create-form"]}
       onSubmit={submitCreateAssignmentFormHandler}
     >
-      {!createdExamData && <h1>Stwórz nową pracę domową</h1>}
-      {createdExamData && <h1>Utworzono pracę domową</h1>}
-      {!createdExamData && renderCreateAssignmentFormInputs()}
-      {createdExamStatus === "completed" && createdAssignmentError ? (
+      {!createdAssignmentData && <h1>Stwórz nową pracę domową</h1>}
+      {createdAssignmentData && <h1>Utworzono pracę domową</h1>}
+      {!createdAssignmentData && renderCreateAssignmentFormInputs()}
+      {createdAssignmentStatus === "completed" && createdAssignmentError ? (
         <div className={classes["error"]}>{createdAssignmentError}</div>
       ) : (
         ""
@@ -326,7 +326,7 @@ const CourseDetails = () => {
             onClick={showAssignmentsHandler}
             className={!showAssignments ? classes["button-active"] : ""}
           >
-            {showExams ? "Ukryj prace" : "Pokaż prace"}
+            {showAssignments ? "Ukryj prace" : "Pokaż prace"}
           </button>
         </div>
         <div className={classes["content-container"]}>
