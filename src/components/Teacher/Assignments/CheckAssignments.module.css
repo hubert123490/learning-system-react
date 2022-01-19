@@ -1,0 +1,101 @@
+.check-assignments {
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .check-assignments h1 {
+    font-size: 3rem;
+  }
+  
+  .assignments {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: lightgray;
+    margin-top: 1rem;
+  }
+  
+  .assignment {
+    background-color: white;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 1rem;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 20%;
+    min-width: 20rem;
+  }
+  
+  .notification {
+    background-color: white;
+    display: inline-block;
+    margin: 1rem;
+    padding: 1rem;
+    width: 50%;
+    min-width: 20rem;
+    border-radius: 6px;
+    font-size: 2rem;
+    color: green;
+  
+  }
+  
+  .assignment:hover {
+    box-shadow: 0 2px 8px #38015c;
+  }
+  
+  .assignment__image-container img {
+    height: 80%;
+    width: 80%;
+    vertical-align: middle;
+  }
+  
+  .assignment-description__title-course {
+    margin: 0.2rem;
+      color: #38015c;
+      font-size: 2rem;
+  }
+  
+  .assignment-description__title-assignment {
+    margin: 0.2rem;
+      color: #38015c;
+      font-size: 1.5rem;
+  }
+  
+  .assignment-description {
+    margin-top: 0.5rem;
+    color: black;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  
+  .assignment-description__value {
+    padding-left: 0.5rem;
+  }
+  
+  .assignment-description__date-container {
+    font-size: 0.9rem;
+    text-align: end;
+    padding-right: 1.7rem;
+    color: #999;
+  }
+  
+  .failed {
+    color: red;
+    margin: 1em;
+    font-size: large;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  }
+  
+  .error {
+    margin-bottom: 1em;
+    color: red;
+  }
+  
+  .success {
+    color: green;
+    margin-bottom: 1em;
+  }
+  
