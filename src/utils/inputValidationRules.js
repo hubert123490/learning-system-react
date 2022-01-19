@@ -17,7 +17,7 @@ function createValidationRule(ruleName, errorMessage, validateFunc) {
 export function requiredRule(inputName) {
   return createValidationRule(
     "required",
-    `${inputName} wymagane`,
+    `Pole ${inputName} wymagane`,
     (inputValue, formObj) => inputValue.length !== 0
   );
 }
@@ -25,7 +25,7 @@ export function requiredRule(inputName) {
 export function minLengthRule(inputName, minCharacters) {
   return createValidationRule(
     "minLength",
-    `${inputName} powinno zawierać przynajmniej ${minCharacters} znaków`,
+    `Pole ${inputName} powinno zawierać przynajmniej ${minCharacters} znaków`,
     (inputValue, formObj) => inputValue.length >= minCharacters
   );
 }
@@ -33,7 +33,7 @@ export function minLengthRule(inputName, minCharacters) {
 export function maxLengthRule(inputName, maxCharacters) {
   return createValidationRule(
     "minLength",
-    `${inputName} nie może zawierać więcej niż ${maxCharacters} znaków`,
+    `Pole ${inputName} nie może zawierać więcej niż ${maxCharacters} znaków`,
     (inputValue, formObj) => inputValue.length <= maxCharacters
   );
 }
@@ -41,7 +41,7 @@ export function maxLengthRule(inputName, maxCharacters) {
 export function passwordMatchRule() {
   return createValidationRule(
     "passwordMatch",
-    `hasło nie jest takie samo`,
+    `Hasło nie jest takie samo`,
     (inputValue, formObj) => inputValue === formObj.password.value
   );
 }
