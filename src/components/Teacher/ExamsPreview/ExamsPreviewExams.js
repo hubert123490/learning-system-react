@@ -2,35 +2,40 @@ import { useNavigate } from "react-router";
 import { getCourseExams } from "../../../lib/api/exam-api";
 import useHttp from "../../../hooks/use-http";
 import { useEffect } from "react";
-import classes from "./ExamsPreviewExams.module.css"
+import classes from "./ExamsPreviewExams.module.css";
 import Card from "../../UI/Card";
 import LoadingSpinner from "../../UI/LoadingSpinner";
-import image from "../../../assets/exam.jpg"
+import image from "../../../assets/exam.jpg";
 import { useParams } from "react-router-dom";
 
 const ExamsPreviewExams = () => {
-    const params = useParams();
-    const navigate = useNavigate();
-    const { sendRequest: getPendingExamsRequest, data: getPendingExamsData, error : getPendingExamsError } = useHttp(
-        getCourseExams,
-        true
-      );
-    
-      useEffect(() => {
-        getPendingExamsRequest({
-            courseId : params.courseId
-        });
-      }, [getPendingExamsRequest, params]);
-    
-      const examDetailsHandler = (examId ) => {
-        navigate(`${examId}/submissions`);
-      };
+  const params = useParams();
+  const navigate = useNavigate();
+  const {
+    sendRequest: getPendingExamsRequest,
+    data: getPendingExamsData,
+    error: getPendingExamsError,
+  } = useHttp(getCourseExams, true);
 
-      return (
-        <section className={classes["my-exams"]}>
-          <h1>Wybierz egzamin!</h1>
+  useEffect(() => {
+    getPendingExamsRequest({
+      courseId: params.courseId,
+    });
+  }, [getPendingExamsRequest, params]);
+
+  const examDetailsHandler = (examId) => {
+    navigate(`${examId}/submissions`);
+  };
+
+  return (
+    <section className={classes["my-exams"]}>
+      <h1>Wybierz egzamin!</h1>
       <div className={classes["exams"]}>
-        {getPendingExamsData && getPendingExamsData.length === 0 && <div className={classes["notification"]}>Brak egzaminów do wyświetlenia</div>}
+        {getPendingExamsData && getPendingExamsData.length === 0 && (
+          <div className={classes["notification"]}>
+            Brak egzaminów do wyświetlenia
+          </div>
+        )}
         {getPendingExamsData ? (
           getPendingExamsData.map((item) => (
             <div key={item.id} className={classes["exam"]}>
@@ -54,6 +59,24 @@ const ExamsPreviewExams = () => {
                       {item.description}
                     </span>
                   </div>
+                  <div className={classes["exam-description__date-container"]}>
+                    Od:{" "}
+                    {item.startDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[0]}{" "}
+                    {item.startDate.split("T")[1]}
+                  </div>
+                  <div className={classes["exam-description__date-container"]}>
+                    Do:{" "}
+                    {item.endDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[0]}{" "}
+                    {item.endDate.split("T")[1]}
+                  </div>
                 </div>
               </div>
             </div>
@@ -70,8 +93,8 @@ const ExamsPreviewExams = () => {
           </Card>
         )}
       </div>
-        </section>
-      );
-}
+    </section>
+  );
+};
 
 export default ExamsPreviewExams;
