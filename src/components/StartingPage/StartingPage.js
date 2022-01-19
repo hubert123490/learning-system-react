@@ -21,17 +21,19 @@ const StartingPageContent = () => {
   const { renderFormInputs: renderGetCoursesInputs } = useForm(getCoursesForm);
   const { sendRequest, data, status } = useHttp(getAllCourses, true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [coursesPerPage] = useState(12);
+  const [coursesPerPage] = useState(4);
+  const [loading, setLoading] = useState(false);
   
 
   const getTitle = (title) => {
     if (title === "Bachelor") return "inz.";
     else if (title === "Master") return "dr";
+    else if (title === "Professor") return "prof."
   };
 
   useEffect(() => {
-    let identifier;
-    identifier = setTimeout(() => {
+    let identifier = setTimeout(() => {
+      setLoading(false);
       sendRequest({
         name: searchParams.get("name"),
         category: searchParams.get("category"),
@@ -74,6 +76,7 @@ const StartingPageContent = () => {
       category: courseCategory,
       lastName: teacherLastName,
     });
+    setLoading(true);
   };
 
   // Get current course
@@ -81,7 +84,11 @@ const StartingPageContent = () => {
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   let currentCourses = [];
   if (data)
-    currentCourses = data.courses.slice(indexOfFirstCourse, indexOfLastCourse);
+    currentCourses = data.courses.sort((a, b) => {
+      var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    }).slice(indexOfFirstCourse, indexOfLastCourse);
 
   //Change page (pagination)
   const paginate = (pageNumber) => {
@@ -118,6 +125,7 @@ const StartingPageContent = () => {
             courseDetailsHandler={courseDetailsHandler}
             getTitle={getTitle}
             status={status}
+            loading={loading}
           />
           {data && <Pagination
             postsPerPage={coursesPerPage}

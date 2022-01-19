@@ -2,8 +2,7 @@ import classes from "./Courses.module.css";
 import image from "../../assets/course_image.jpg";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
-const Courses = ({ data, courseDetailsHandler, getTitle, status }) => {
-  console.log(status);
+const Courses = ({ data, courseDetailsHandler, getTitle, status, error, loading }) => {
 
   return (
     <>
@@ -54,13 +53,13 @@ const Courses = ({ data, courseDetailsHandler, getTitle, status }) => {
       )}
       {data && data.length === 0 && (
         <div className={classes["nothing-found"]}>
-          {status === "completed" && (
+          {!loading && (
             <div>
               <h1>Nic nie znaleziono</h1>
             </div>
           )}
           <br/>
-          <LoadingSpinner />
+          {loading && <LoadingSpinner />}
         </div>
       )}
     </>
