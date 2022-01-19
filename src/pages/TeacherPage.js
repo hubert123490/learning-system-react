@@ -17,6 +17,13 @@ import ExamsPreviewCourses from "../components/Teacher/ExamsPreview/ExamsPreview
 import ExamsPreviewExams from "../components/Teacher/ExamsPreview/ExamsPreviewExams";
 import ExamsPreviewSubmissions from "../components/Teacher/ExamsPreview/ExamsPreviewSubmissions";
 import ExamsPreviewSubmissionDetails from "../components/Teacher/ExamsPreview/ExamsPreviewSubmissionDetails";
+import AssignmentsPreviewCourses from "../components/Teacher/AssignmentsPreview/AssignmentsPreviewCourses";
+import AssignmentsPreviewAssignments from "../components/Teacher/AssignmentsPreview/AssignmentsPreviewAssignments";
+import AssignmentsPreviewSubmissions from "../components/Teacher/AssignmentsPreview/AssignmentsPreviewSubmissions";
+import AssignmentsPreviewSubmissionDetails from "../components/Teacher/AssignmentsPreview/AssignmentsPreviewSubmissionDetails";
+import CheckAssignments from "../components/Teacher/Assignments/CheckAssignments";
+import CheckTaskSubmissions from "../components/Teacher/TaskSubmissions/CheckTaskSubmissions";
+import CheckTaskSubmissionDetails from "../components/Teacher/TaskSubmissions/CheckTaskSubmissionDetails";
 
 const TeacherPage = () => {
   return (
@@ -51,7 +58,7 @@ const TeacherPage = () => {
         path="/courses/:courseId/assignments/:assignmentId/*"
         element={<AssignmentDetails />}
       />
-       <Route
+      <Route
         path="/exams-preview/courses/*"
         element={<ExamsPreviewCourses />}
       />
@@ -66,6 +73,31 @@ const TeacherPage = () => {
       <Route
         path="/exams-preview/courses/:courseId/exams/:examId/submissions/:submissionId/*"
         element={<ExamsPreviewSubmissionDetails />}
+      />
+      <Route
+        path="/assignments-preview/courses/*"
+        element={<AssignmentsPreviewCourses />}
+      />
+      <Route
+        path="/assignments-preview/courses/:courseId/assignments/*"
+        element={<AssignmentsPreviewAssignments />}
+      />
+      <Route
+        path="/assignments-preview/courses/:courseId/assignments/:assignmentId/submissions/*"
+        element={<AssignmentsPreviewSubmissions />}
+      />
+      <Route
+        path="/assignments-preview/courses/:courseId/assignments/:assignmentId/submissions/:taskSubmissionId/*"
+        element={<AssignmentsPreviewSubmissionDetails />}
+      />
+       <Route path="/check-assignments/*" element={<CheckAssignments />} />
+       <Route
+        path="/check-assignments/courses/:courseId/assignments/:assignmentId/submissions/*"
+        element={<CheckTaskSubmissions />}
+      />
+       <Route
+        path="/check-assignments/courses/:courseId/assignments/:assignmentId/submissions/:taskSubmissionId/*"
+        element={<CheckTaskSubmissionDetails />}
       />
       <Route path="/courses/:courseId/*" element={<CourseDetails />} />
       <Route path="/courses" element={<MyCourses />} />

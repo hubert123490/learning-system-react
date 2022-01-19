@@ -7,6 +7,7 @@ import Submission from "../components/Student/Submission";
 import MyExamsStudent from "../components/Student/MyExamsStudent";
 import GradeStudent from "../components/Student/Grades/GradeStudent"
 import AssignmentDetailsStudent from "../components/Student/Assignments/AssignmentDetailsStudent";
+import MyAssignmentsStudent from "../components/Student/MyAssignmentsStudent";
 
 const StudentPage = () => {
   return (
@@ -33,6 +34,10 @@ const StudentPage = () => {
       <Route
       path="/pending-exams/*"
       element={<MyExamsStudent />}
+      />
+      <Route
+      path="pending-assignments/*"
+      element={<MyAssignmentsStudent />}
       />
     </Routes>
   );
