@@ -29,6 +29,13 @@
     font-size: 1.1rem;
     text-align: center;
   }
+
+  .content-container__date-container {
+    font-size: 0.9rem;
+    text-align: end;
+    padding-right: 1.7rem;
+    color: #999;
+  }
   
   .delete-icon {
     position: absolute;

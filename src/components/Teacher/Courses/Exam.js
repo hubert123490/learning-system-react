@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import examImage from "../../../assets/exam.jpg";
 import { useState } from "react";
-import Modal from "../../UI/Modal"
+import Modal from "../../UI/Modal";
 
 const Exam = (props) => {
   const params = useParams();
@@ -57,6 +57,24 @@ const Exam = (props) => {
           </div>
           <div className={classes["content-container__description"]}>
             {props.item.description}
+          </div>
+          <div className={classes["content-container__date-container"]}>
+            Od: {" "}
+            {props.item.startDate.split("T")[0].split("-")[2] +
+              "-" +
+              props.item.startDate.split("T")[0].split("-")[1] +
+              "-" +
+              props.item.startDate.split("T")[0].split("-")[0]}{" "}
+            {props.item.startDate.split("T")[1]}
+          </div>
+          <div className={classes["content-container__date-container"]}>
+          Do: {" "}
+            {props.item.endDate.split("T")[0].split("-")[2] +
+              "-" +
+              props.item.endDate.split("T")[0].split("-")[1] +
+              "-" +
+              props.item.endDate.split("T")[0].split("-")[0]}{" "}
+            {props.item.endDate.split("T")[1]}
           </div>
         </div>
       </div>
