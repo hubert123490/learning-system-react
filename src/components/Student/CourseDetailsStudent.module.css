@@ -81,6 +81,13 @@
   text-align: center;
 }
 
+.content-container__date-container {
+  font-size: 0.9rem;
+  text-align: end;
+  padding-right: 1.7rem;
+  color: #999;
+}
+
 .content-container__item:hover {
   box-shadow: 0 2px 8px #38015c;
 }
@@ -97,24 +104,6 @@
 
 .assignment {
   background-color: lightcyan;
-}
-
-
-button {
-  padding: 10px 15px;
-  border-radius: 4px;
-  border: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-  width: 150px;
-  background: blueviolet;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #eee;
-  color: #999;
-  box-shadow: none;
 }
 
 .card {

@@ -9,7 +9,7 @@ import useForm from "../../hooks/use-form";
 import { enrollInCourseForm } from "../../lib/forms/course-form";
 import lessonImage from "../../assets/lesson.jpg";
 import examImage from "../../assets/exam.jpg";
-import assignmentImage from "../../assets/assignment.jpg"
+import assignmentImage from "../../assets/assignment.jpg";
 
 const CourseDetails = () => {
   const navigate = useNavigate();
@@ -29,9 +29,8 @@ const CourseDetails = () => {
     status: enrollInCourseStatus,
     error: enrollInCourseError,
   } = useHttp(enrollInCourse);
-  const {
-    renderFormInputs: renderEnrollFormInputs,
-  } = useForm(enrollInCourseForm);
+  const { renderFormInputs: renderEnrollFormInputs } =
+    useForm(enrollInCourseForm);
 
   useEffect(() => {
     if (params.courseId) {
@@ -47,13 +46,13 @@ const CourseDetails = () => {
     if (location.pathname) navigate(`${location.pathname}/exams/${examId}`);
   };
 
-  const assignmentDetailsHandler = assignmentId => {
-    navigate(`assignments/${assignmentId}`)
-  }
+  const assignmentDetailsHandler = (assignmentId) => {
+    navigate(`assignments/${assignmentId}`);
+  };
 
   const onEnrollInCourseSubmit = (event) => {
     event.preventDefault();
-    if (params.courseId){
+    if (params.courseId) {
       enrollInCourseRequest({
         password: renderEnrollFormInputs()[0].props.value
           ? renderEnrollFormInputs()[0].props.value
@@ -76,8 +75,8 @@ const CourseDetails = () => {
   };
 
   const showAssignmentsHandler = () => {
-    setShowAssignments(prevState => !prevState)
-  }
+    setShowAssignments((prevState) => !prevState);
+  };
 
   return (
     <section className={classes["course-details"]}>
@@ -161,6 +160,24 @@ const CourseDetails = () => {
                   <div className={classes["content-container__description"]}>
                     {item.description}
                   </div>
+                  <div className={classes["content-container__date-container"]}>
+                    Od:{" "}
+                    {item.startDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[0]}{" "}
+                    {item.startDate.split("T")[1]}
+                  </div>
+                  <div className={classes["content-container__date-container"]}>
+                    Do:{" "}
+                    {item.endDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[0]}{" "}
+                    {item.endDate.split("T")[1]}
+                  </div>
                 </div>
               </div>
             ))}
@@ -195,6 +212,24 @@ const CourseDetails = () => {
                   <div className={classes["content-container__description"]}>
                     {item.description}
                   </div>
+                  <div className={classes["content-container__date-container"]}>
+                    Od:{" "}
+                    {item.startDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[0]}{" "}
+                    {item.startDate.split("T")[1]}
+                  </div>
+                  <div className={classes["content-container__date-container"]}>
+                    Do:{" "}
+                    {item.endDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[0]}{" "}
+                    {item.endDate.split("T")[1]}
+                  </div>
                 </div>
               </div>
             ))}
@@ -215,29 +250,35 @@ const CourseDetails = () => {
         !getCourseDetailsError &&
         getCourseDetailsStatus === "completed" && (
           <h2 className={classes["error"]}>
-            Brak egzaminów lekcji i prac do wyświetlenia
+            Brak egzaminów, lekcji i prac do wyświetlenia
           </h2>
         )}
 
-{getCourseDetailsError && <div className={classes["card"]}>
       {getCourseDetailsError && (
-        <div className={classes["error"]}><h3>{getCourseDetailsError}</h3></div>
+        <div className={classes["card"]}>
+          {getCourseDetailsError && (
+            <div className={classes["error"]}>
+              <h3>{getCourseDetailsError}</h3>
+            </div>
+          )}
+          {getCourseDetailsError ===
+            "Wygląda na to że nie posiadasz dostępu do kursu" && (
+            <form
+              onSubmit={onEnrollInCourseSubmit}
+              className={classes["enroll-form"]}
+            >
+              {renderEnrollFormInputs()}
+              {enrollInCourseError && (
+                <div className={classes["error"]}>{enrollInCourseError}</div>
+              )}
+              <button type="submit">Zapisz się na kurs</button>
+            </form>
+          )}
+          {!getCourseDetailsData &&
+            getCourseDetailsStatus === "completed" &&
+            !getCourseDetailsError && <h2>Pusto</h2>}
+        </div>
       )}
-      {getCourseDetailsError ===
-        "Wygląda na to że nie posiadasz dostępu do kursu" && (
-        <form
-          onSubmit={onEnrollInCourseSubmit}
-          className={classes["enroll-form"]}
-        >
-          {renderEnrollFormInputs()}
-          {enrollInCourseError && <div className={classes["error"]}>{enrollInCourseError}</div>}
-          <button type="submit">Zapisz się na kurs</button>
-        </form>
-      )}
-      {!getCourseDetailsData &&
-        getCourseDetailsStatus === "completed" &&
-        !getCourseDetailsError && <h2>Pusto</h2>}
-        </div>}
     </section>
   );
 };
