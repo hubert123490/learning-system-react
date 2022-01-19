@@ -8,8 +8,16 @@ import AnswerText from "./Answers/AnswerText";
 import AnswerTextArea from "./Answers/AnswerTextArea";
 import { submitAnswers } from "../../lib/api/answer-api";
 import { checkSubmission } from "../../lib/api/submission-api";
+import CountdownTimer from "../UI/CountdownTimer";
+import { useState } from "react";
+import { usePrompt } from "../../hooks/use-blocker";
 
 const ExamDetailsStudent = () => {
+  let [isBlocking] = useState(true);
+
+  usePrompt("Czy napewno chcesz wyjść?",
+     isBlocking);
+
   const params = useParams();
   const { sendRequest: getQuestionsRequest, data: getQuestionsData } = useHttp(
     getQuestions,
@@ -80,7 +88,7 @@ const ExamDetailsStudent = () => {
           <div>
             {item.queries.map((query) => {
               return (
-                <div className={classes["radio-question__form-elements"]}>
+                <div className={classes["radio-question__form-elements"]} key={query.id}>
                   <input
                     type="radio"
                     id={query.id}
@@ -88,7 +96,7 @@ const ExamDetailsStudent = () => {
                     value={query.text}
                     onChange={(e) => handleRadio(e, item.id)}
                   />
-                  <label for={query.id}>{query.text}</label>
+                  <label htmlFor={query.id}>{query.text}</label>
                 </div>
               );
             })}
@@ -97,8 +105,11 @@ const ExamDetailsStudent = () => {
       );
   };
 
+  console.log(checkSubmissionData)
+
   return (
     <div className={classes.questionDetails}>
+      {checkSubmissionData && checkSubmissionData.status === "PENDING" && <CountdownTimer date={checkSubmissionData.endDate}/>}
       {(!getQuestionsData || getQuestionsData.length === 0) && <div>pusto</div>}
       {getQuestionsData && checkSubmissionData && checkSubmissionData.status === "PENDING" &&
         getQuestionsData
