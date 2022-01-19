@@ -17,6 +17,8 @@ const GradeTable = () => {
     return getGradesRequest;
   }, [getGradesRequest]);
 
+  console.log(getGradesData)
+
   return (
     <section className={classes["grades"]}>
       <h1>Twoje oceny!</h1>
@@ -26,10 +28,14 @@ const GradeTable = () => {
           <thead>
             <tr>
               <th>Nazwa kursu</th>
-              <th>Uzyskana liczba punktów</th>
-              <th>Maksymalna liczba punktów</th>
-              <th>Ocena</th>
-              <th>Szczegóły</th>
+              <th>Uzyskana liczba punktów (egzaminy)</th>
+              <th>Maksymalna liczba punktów (egzaminy)</th>
+              <th>Ocena (egzaminy)</th>
+              <th>Uzyskana liczba punktów (prace)</th>
+              <th>Maksymalna liczba punktów (prace)</th>
+              <th>Ocena (prace)</th>
+              <th>Szczegóły (egzaminy)</th>
+              <th>Szczegóły (prace)</th>
             </tr>
           </thead>
           <tbody>
