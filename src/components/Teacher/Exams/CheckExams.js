@@ -31,7 +31,11 @@ const CheckExams = () => {
     <section className={classes["check-exams"]}>
       <h1>Wybierz egzamin!</h1>
       <div className={classes["exams"]}>
-        {getExamsData && getExamsData.length === 0 && <div className={classes["notification"]}>Brak egzaminów do sprawdzenia</div>}
+        {getExamsData && getExamsData.length === 0 && (
+          <div className={classes["notification"]}>
+            Brak egzaminów do sprawdzenia
+          </div>
+        )}
         {getExamsData ? (
           getExamsData.map((item) => (
             <div key={item.id} className={classes["exam"]}>
@@ -54,6 +58,24 @@ const CheckExams = () => {
                     <span className={classes["category-description__value"]}>
                       {item.description}
                     </span>
+                  </div>
+                  <div className={classes["exam-description__date-container"]}>
+                    Od:{" "}
+                    {item.startDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.startDate.split("T")[0].split("-")[0]}{" "}
+                    {item.startDate.split("T")[1]}
+                  </div>
+                  <div className={classes["exam-description__date-container"]}>
+                    Do:{" "}
+                    {item.endDate.split("T")[0].split("-")[2] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[1] +
+                      "-" +
+                      item.endDate.split("T")[0].split("-")[0]}{" "}
+                    {item.endDate.split("T")[1]}
                   </div>
                 </div>
               </div>

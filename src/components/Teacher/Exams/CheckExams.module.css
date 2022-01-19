@@ -70,6 +70,12 @@
   margin-bottom: 0.5rem;
 }
 
+.exam-description__date-container {
+  font-size: 0.9rem;
+    text-align: end;
+    padding-right: 1.7rem;
+    color: #999;
+}
 
 .exam-description__value {
   padding-left: 0.5rem;
