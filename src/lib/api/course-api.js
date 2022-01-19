@@ -14,7 +14,7 @@ export async function getAllCourses(courseData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Nie można pobrać kursów.");
+    throw new Error(data.message || "Brak kursów do wyświetlenia.");
   }
 
   return data;
@@ -33,7 +33,7 @@ export async function getMyCourses() {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Nie można pobrać kursów.");
+    throw new Error(data.message || "Brak kursów do wyświetlenia.");
   }
 
   return data;
@@ -52,7 +52,7 @@ export async function getMyCoursesStudent() {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Nie można pobrać kursów.");
+    throw new Error(data.message || "Brak kursów do wyświetlenia.");
   }
 
   return data;

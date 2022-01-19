@@ -17,7 +17,7 @@ export async function createExam(examData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Nie udało się stworzyć egzaminu.");
+    throw new Error(data.message || "Sprawdź przedział czasowy.");
   }
 
   return data;
@@ -38,6 +38,27 @@ export async function deleteExam(examData) {
 
   if (!response.ok) {
     throw new Error(data.message || "Nie udało się usunąć egzaminu.");
+  }
+
+  return data;
+}
+
+export async function changeExamDates(examData) {
+  const response = await fetch(
+    `${SERVER_DOMAIN}/api/courses/${examData.courseId}/exams/${examData.examId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(examData.request),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader(),
+      },
+    }
+  );
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Nie udało się zmienić czasu rozpoczęcia i zakończenia. Sprawdź poprawność danych.");
   }
 
   return data;

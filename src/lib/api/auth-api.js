@@ -28,7 +28,7 @@ export async function signIn(authData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Logowanie nie powiodło się.");
+    throw new Error(data.message || "Niepoprawny login lub hasło.");
   }
 
   return data;
