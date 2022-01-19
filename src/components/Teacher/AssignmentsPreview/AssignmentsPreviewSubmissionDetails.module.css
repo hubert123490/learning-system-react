@@ -1,0 +1,25 @@
+.assignment-details {
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .assignment-details h1 {
+    font-size: 3rem;
+  }
+  
+  .card {
+    position: relative;
+    padding: 1rem;
+    margin: 1rem auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 50%;
+  }
+  
+  .text {
+    padding: 1rem;
+    margin: 0;
+    text-align: left;
+  }
+  
+  
