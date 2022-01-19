@@ -12,41 +12,43 @@ import {
   addQuestionTextArea,
 } from "../../../lib/api/question-api";
 import classes from "./ExamDetails.module.css";
-import ExamDetailsItem from "./ExamDetailsItem"
+import ExamDetailsItem from "./ExamDetailsItem";
+import { changeExamDatesForm } from "../../../lib/forms/exam-form";
+import { changeExamDates } from "../../../lib/api/exam-api";
 
 const ExamDetails = () => {
   const params = useParams();
   const [questionType, setQuestionType] = useState("radio");
   const [showAddQuestionForm, setShowAddQuestionForm] = useState(false);
+  const [showChangeDatesForm, setShowChangeDatesForm] = useState(false);
   const {
     renderFormInputs: renderAddQuestionInputs,
     isFormValid: isAddQuestionFormValid,
   } = useForm(addQuestionForm);
+  const {
+    renderFormInputs: renderChangeExamDatesInputs,
+    isFormValid: isChangeExamDatesFormValid,
+  } = useForm(changeExamDatesForm);
   const { sendRequest: getQuestionsRequest, data: getQuestionsData } = useHttp(
     getQuestions,
     true
   );
-  const {
-    sendRequest: addQuestionRequest,
-    status: addQuestionStatus,
-  } = useHttp(addQuestion);
-  const {
-    sendRequest: deleteQuestionRequest,
-    status: deleteQuestionStatus,
-  } = useHttp(deleteQuestion);
+  const { sendRequest: changeExamDatesRequest, data: changeExamDatesData, status: changeExamDatesStatus, error: changeExamDatesError } =
+    useHttp(changeExamDates);
+  const { sendRequest: addQuestionRequest, status: addQuestionStatus } =
+    useHttp(addQuestion);
+  const { sendRequest: deleteQuestionRequest, status: deleteQuestionStatus } =
+    useHttp(deleteQuestion);
   const {
     sendRequest: addQuestionRadioRequest,
     status: addQuestionRadioStatus,
   } = useHttp(addQuestionRadio);
-  const {
-    sendRequest: addQuestionTextRequest,
-    status: addQuestionTextStatus,
-  } = useHttp(addQuestionText);
+  const { sendRequest: addQuestionTextRequest, status: addQuestionTextStatus } =
+    useHttp(addQuestionText);
   const {
     sendRequest: addQuestionTextAreaRequest,
     status: addQuestionTextAreaStatus,
   } = useHttp(addQuestionTextArea);
-
 
   useEffect(() => {
     getQuestionsRequest({
@@ -60,7 +62,8 @@ const ExamDetails = () => {
     deleteQuestionStatus,
     addQuestionRadioStatus,
     addQuestionTextStatus,
-    addQuestionTextAreaStatus
+    addQuestionTextAreaStatus,
+    changeExamDatesStatus,
   ]);
 
   const addQuestionHandler = (event) => {
@@ -77,8 +80,24 @@ const ExamDetails = () => {
     setShowAddQuestionForm(!showAddQuestionForm);
   };
 
+  const changeExamDatesHandler = (event) => {
+    event.preventDefault();
+    changeExamDatesRequest({
+      courseId: params.courseId,
+      examId: params.examId,
+      request: {
+        startDate: renderChangeExamDatesInputs()[0].props.value,
+        endDate: renderChangeExamDatesInputs()[1].props.value,
+      },
+    });
+  };
+
   const showAddQuestionFormHandler = () => {
     setShowAddQuestionForm(!showAddQuestionForm);
+  };
+
+  const showChangeExamDatesFormHandler = () => {
+    setShowChangeDatesForm((prevState) => !prevState);
   };
 
   const handleQuestionTypeChange = (event) => {
@@ -87,9 +106,11 @@ const ExamDetails = () => {
 
   return (
     <div className={classes["exam-details"]}>
-      <button onClick={showAddQuestionFormHandler}>
-        {showAddQuestionForm ? "Zamknji formularz" : "Dodaj pytanie"}{" "}
-      </button>
+      <div className={classes["button-container"]}>
+        <button onClick={showAddQuestionFormHandler}>
+          {showAddQuestionForm ? "Zamknji formularz" : "Dodaj pytanie"}{" "}
+        </button>
+      </div>
       {showAddQuestionForm && (
         <form
           className={classes["create-question__form"]}
@@ -116,12 +137,28 @@ const ExamDetails = () => {
           </button>
         </form>
       )}
+      <div className={classes["button-container"]}>
+        <button onClick={showChangeExamDatesFormHandler}>
+          {showChangeDatesForm ? "Zamknij formularz" : "Zmień datę"}
+        </button>
+      </div>
+      {showChangeDatesForm && (
+        <form className={classes["create-question__form"]}
+        onSubmit={changeExamDatesHandler} >
+          {renderChangeExamDatesInputs()}
+          <button type="submit" disabled={!isChangeExamDatesFormValid()}>
+            Zmień czas
+          </button>
+          {changeExamDatesError && <div style={{color : "red"}}>{changeExamDatesError}</div>}
+          {changeExamDatesData && <div style={{color: "green"}}>{changeExamDatesData.message}</div>}
+        </form>
+      )}
       {(!getQuestionsData || getQuestionsData.length === 0) && <div>pusto</div>}
       {getQuestionsData &&
         getQuestionsData
           .sort((a, b) => b.id - a.id)
           .map((item) => (
-            <ExamDetailsItem 
+            <ExamDetailsItem
               item={item}
               addQuestionRadioRequest={addQuestionRadioRequest}
               addQuestionTextRequest={addQuestionTextRequest}
