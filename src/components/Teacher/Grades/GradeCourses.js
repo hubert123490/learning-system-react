@@ -16,12 +16,10 @@ const GradeCourses = () => {
 
   useEffect(() => {
     getAllCourses();
-
-    return getAllCourses;
   }, [getAllCourses]);
 
-  const courseDetailsHandler = (courseId) => {
-    navigate(`${courseId}`);
+  const courseDetailsHandler = (courseId, courseName) => {
+    navigate(`${courseId}`, {state: {courseName: courseName}});
   };
 
   return (
@@ -34,7 +32,7 @@ const GradeCourses = () => {
                 <div>
                   <div
                     onClick={() => {
-                      courseDetailsHandler(item.id);
+                      courseDetailsHandler(item.id, item.courseName);
                     }}
                   >
                     <div className={classes["course__image-container"]}>

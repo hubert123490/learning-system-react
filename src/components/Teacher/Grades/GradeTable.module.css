@@ -12,9 +12,29 @@
   margin: 1rem auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
-  width: 50%;
   position: relative;
   overflow-x: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: lightgray;
+  margin-top: 1rem;
+}
+
+.notification {
+  background-color: white;
+  display: inline-block;
+  margin: 1rem;
+  padding: 1rem;
+  width: 50%;
+  min-width: 20rem;
+  border-radius: 6px;
+  font-size: 2rem;
+  color: red;
+
 }
 
 .grade-table {
