@@ -30,3 +30,22 @@ export const createAssignmentForm = {
     validationRules: [requiredRule("Czas zakończenia")],
   },
 };
+
+export const changeAssignmentDatesForm = {
+  startDate: {
+    ...createFormFieldConfig(
+      "Czas rozpoczęcia pracy",
+      "startDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Czas rozpoczęcia")],
+  },
+  endDate: {
+    ...createFormFieldConfig(
+      "Czas zakończenia pracy",
+      "endDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Czas zakończenia")],
+  },
+}
