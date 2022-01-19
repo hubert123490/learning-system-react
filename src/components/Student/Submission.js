@@ -42,8 +42,9 @@ const Submission = () => {
   }
 
 
+  console.log(checkSubmissionData)
+
   const redirectToPendingExam = (id) => {
-    console.log(id)
     if(checkSubmissionData.submissionId)
     navigate(`submissions/${checkSubmissionData.submissionId}`);
   }
