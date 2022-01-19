@@ -177,7 +177,7 @@ export default function AuthForm() {
             onClick={switchAuthModeHandler}
             style={{ width: "100%", marginTop: "1em" }}
           >
-            {isLogin ? "Stwórz nowe konto" : "Zaloguj się"}
+            {isLogin ? "Stwórz nowe konto" : "Powrót do logowania"}
           </button>
         </div>
       </form>
