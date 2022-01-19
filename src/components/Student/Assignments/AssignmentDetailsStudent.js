@@ -2,8 +2,9 @@ import { useParams } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
 import { getTasks } from "../../../lib/api/task-api";
 import { useEffect } from "react";
-import classes from "./AssignmentDetailsStudent.module.css"
+import classes from "./AssignmentDetailsStudent.module.css";
 import Section from "./Section";
+import { addFileToTaskAnswer, deleteTaskAnswerFile } from "../../../lib/api/task-answer-api";
 
 const AssignmentDetailsStudent = () => {
   const params = useParams();
@@ -11,6 +12,15 @@ const AssignmentDetailsStudent = () => {
     getTasks,
     true
   );
+  const {
+    sendRequest: addFileToTaskAnswerRequest,
+    data: getAddFileToTaskAnswerData,
+  } = useHttp(addFileToTaskAnswer);
+  const {
+    sendRequest: deleteFileFromTaskAnswerRequest,
+    data: getDeleteFromTaskAnswerData,
+    error: deleteFileFromTaskAnswerError
+  } = useHttp(deleteTaskAnswerFile);
 
   useEffect(() => {
     getTaskRequest({
@@ -18,7 +28,8 @@ const AssignmentDetailsStudent = () => {
       assignmentId: params.assignmentId,
     });
     return getTaskRequest;
-  }, [getTaskRequest, params]);
+  }, [getTaskRequest, params, getAddFileToTaskAnswerData, getDeleteFromTaskAnswerData]);
+
 
   return (
     <div className={classes["assignment-details"]}>
@@ -32,6 +43,9 @@ const AssignmentDetailsStudent = () => {
             <Section
               key={item.id}
               item={item}
+              addFileToTaskAnswer={addFileToTaskAnswerRequest}
+              deleteTaskAnswerFile={deleteFileFromTaskAnswerRequest}
+              deleteFileFromTaskAnswerError={deleteFileFromTaskAnswerError}
             />
           ))}
     </div>

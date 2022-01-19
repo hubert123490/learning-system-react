@@ -1,9 +1,41 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import classes from "./FileItem.module.css"
+import Modal from "../../UI/Modal";
 
 const FileItem = (props) => {
+  const params = useParams();
+  const [showModal, setShowModal] = useState(false);
+
+  const showModalHandler = () => {
+    setShowModal((prevState) => {
+      return !prevState;
+    });
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const deleteItem = (fileId) => {
+    props.deleteTaskAnswerFile({
+      courseId: params.courseId,
+      assignmentId: params.assignmentId,
+      taskId: props.taskId,
+      fileId: fileId,
+    });
+    setShowModal(false);
+  };
 
   return (
     <>
+    {showModal && (
+        <Modal
+          item={props.file}
+          closeModal={closeModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {props.file.fileType.split("/")[0] === "video" && (
         <video className={classes["task-content__files-video"]} controls>
           <source src={props.file.downloadUrl} type={props.file.type} />
@@ -19,6 +51,13 @@ const FileItem = (props) => {
         >
           {props.file.fileName}
         </a>{" "}
+        <span
+                  onClick={showModalHandler}
+                  className={classes["task-content__file-delete"]}
+                >
+                  {" "}
+                  usuń
+                </span>
       </div>
     </>
   );

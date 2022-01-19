@@ -1,5 +1,7 @@
 import classes from "./Section.module.css";
 import FileItem from "./FileItem";
+import File from "./File"
+import FileItemDisplay from "./FileItemDisplay";
 
 const Section = (props) => {
   return (
@@ -15,15 +17,22 @@ const Section = (props) => {
         <h3>Materiały pomocnicze</h3>
         {props.item.files.map((file) => (
           <div key={file.id} className={classes["lesson-content__files"]}>
-            <FileItem file={file} />
+            <FileItemDisplay file={file} />
           </div>
         ))}
         <hr />
+        <h3>Załączone pliki</h3>
+        {props.item.submissionFiles.map((file) => (
+          <div key={file.id} className={classes["lesson-content__files"]}>
+            <FileItem file={file} deleteTaskAnswerFile={props.deleteTaskAnswerFile} taskId={props.item.id}/>
+          </div>
+        ))}
         <div>
-          {/* <File
+          {props.deleteFileFromTaskAnswerError && <div style={{color: "red"}}>{props.deleteFileFromTaskAnswerError}</div>}
+           <File
               taskId={props.item.id}
-              addFileTaskRequest={props.addFileTaskRequest}
-            />   */}
+              addFileRequest={props.addFileToTaskAnswer}
+            />   
         </div>
       </div>
     </div>
