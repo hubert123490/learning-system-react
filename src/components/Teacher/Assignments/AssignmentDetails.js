@@ -13,18 +13,27 @@ import {
 import useHttp from "../../../hooks/use-http";
 import classes from "./AssignmentDetails.module.css";
 import Section from "./Section";
+import { changeAssignmentDatesForm } from "../../../lib/forms/assignment-form";
+import { changeAssignmentDates } from "../../../lib/api/assignment-api";
 
 const AssignmentDetails = () => {
   const params = useParams();
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
+  const [showChangeDatesForm, setShowChangeDatesForm] = useState(false);
   const {
     renderFormInputs: renderAddTaskInputs,
     isFormValid: isAddTaskFormValid,
   } = useForm(createAddTaskForm);
+  const {
+    renderFormInputs: renderChangeAssignmentDatesInputs,
+    isFormValid: isChangeAssignmentDatesFormValid,
+  } = useForm(changeAssignmentDatesForm);
   const { sendRequest: getTaskRequest, data: getTaskData } = useHttp(
     getTasks,
     true
   );
+  const { sendRequest: changeAssignmentDatesRequest, data: changeAssignmentDatesData, status: changeAssignmentDatesStatus, error: changeAssignmentDatesError } =
+  useHttp(changeAssignmentDates);
   const { sendRequest: addTaskRequest, status: addTaskStatus } =
     useHttp(addTask);
   const { sendRequest: deleteTaskRequest, status: deleteTaskStatus } =
@@ -43,7 +52,6 @@ const AssignmentDetails = () => {
       courseId: params.courseId,
       assignmentId: params.assignmentId,
     });
-    return getTaskRequest;
   }, [
     getTaskRequest,
     params,
@@ -52,6 +60,7 @@ const AssignmentDetails = () => {
     updateTaskDescriptionStatus,
     addFileTaskStatus,
     deleteFileTaskStatus,
+    changeAssignmentDatesStatus
   ]);
 
   const addTaskHandler = (event) => {
@@ -68,17 +77,36 @@ const AssignmentDetails = () => {
     });
   };
 
+  const changeAssignmentDatesHandler = (event) => {
+    event.preventDefault();
+    changeAssignmentDatesRequest({
+      courseId: params.courseId,
+      assignmentId: params.assignmentId,
+      request: {
+        startDate: renderChangeAssignmentDatesInputs()[0].props.value,
+        endDate: renderChangeAssignmentDatesInputs()[1].props.value,
+      },
+    });
+  };
+
   const showAddTaskFormHandler = () => {
     setShowAddTaskForm((prevState) => {
       return !prevState;
     });
   };
 
+  const showChangeAssignmentDatesFormHandler = () => {
+    setShowChangeDatesForm((prevState) => !prevState);
+  };
+
+
   return (
     <div className={classes["assignment-details"]}>
+      <div className={classes["button-container"]}>
       <button onClick={showAddTaskFormHandler}>
         {showAddTaskForm ? "Zamknji formularz" : "Dodaj zadanie"}{" "}
       </button>
+      </div>
       {showAddTaskForm && (
         <form
           className={classes["create-task__form"]}
@@ -88,6 +116,22 @@ const AssignmentDetails = () => {
           <button type="submit" disabled={!isAddTaskFormValid()}>
             Dodaj zadanie
           </button>
+        </form>
+      )}
+      <div className={classes["button-container"]}>
+        <button onClick={showChangeAssignmentDatesFormHandler}>
+          {showChangeDatesForm ? "Zamknij formularz" : "Zmień datę"}
+        </button>
+      </div>
+      {showChangeDatesForm && (
+        <form className={classes["create-task__form"]}
+        onSubmit={changeAssignmentDatesHandler} >
+          {renderChangeAssignmentDatesInputs()}
+          <button type="submit" disabled={!isChangeAssignmentDatesFormValid()}>
+            Zmień czas
+          </button>
+          {changeAssignmentDatesError && <div style={{color : "red"}}>{changeAssignmentDatesError}</div>}
+          {changeAssignmentDatesData && <div style={{color: "green"}}>{changeAssignmentDatesData.message}</div>}
         </form>
       )}
 

@@ -29,6 +29,9 @@
     padding: 20px;
   }
   
+  .button-container {
+    margin-top: 1rem;
+  }
   
   .delete-icon {
     position: absolute;
