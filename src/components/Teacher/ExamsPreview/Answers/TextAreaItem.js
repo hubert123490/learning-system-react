@@ -4,7 +4,7 @@ import useForm from "../../../../hooks/use-form";
 import { rateAnswerForm } from "../../../../lib/forms/answer-form";
 
 const TextAreaItem = (props) => {
-    const [answer, setAnswer] = useState(props.answer.givenAnswer);
+    const [answer] = useState(props.answer.givenAnswer);
     const [showForm, setShowForm] = useState(false)
     const {
         renderFormInputs: renderRateAnswerFormInputs,

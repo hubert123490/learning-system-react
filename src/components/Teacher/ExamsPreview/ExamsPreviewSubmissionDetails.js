@@ -38,8 +38,6 @@ const ExamsPreviewSubmissionDetails = () => {
         });
       };
 
-      console.log(getAnswersData)
-
     return (
         <div className={classes["submission-details"]}>
       {getAnswersData &&
