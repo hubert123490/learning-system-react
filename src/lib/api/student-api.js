@@ -1,5 +1,5 @@
 import authHeader from "../auth-header";
-const SERVER_DOMAIN = "http://localhost:8080";
+const SERVER_DOMAIN = "https://nameless-caverns-34277.herokuapp.com";
 
 export async function getGrades() {
     const response = await fetch(

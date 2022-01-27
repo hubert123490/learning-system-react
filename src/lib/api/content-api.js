@@ -1,5 +1,5 @@
 import authHeader from "../auth-header";
-const SERVER_DOMAIN = "http://localhost:8080";
+const SERVER_DOMAIN = "https://nameless-caverns-34277.herokuapp.com";
 
 export async function getContents(contentData) {
     const response = await fetch(`${SERVER_DOMAIN}/api/courses/${contentData.courseId}/lessons/${contentData.lessonId}/contents`, {
