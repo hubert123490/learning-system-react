@@ -28,6 +28,10 @@
     color: #c291e2;
   }
 
+  .copyright {
+    color: white;
+  }
+
   @media (min-width: 40rem) {
     .main-footer__link {
       margin: 0 1rem;
