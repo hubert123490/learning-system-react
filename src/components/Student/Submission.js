@@ -65,7 +65,7 @@ const Submission = () => {
               {checkSubmissionData && checkSubmissionData.status === "PENDING" && <div><h3>Test jest w trakcie sprawdzania</h3><div>{checkSubmissionData.message}</div></div>}
               {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <div><h3>Test jest w trakcie sprawdzania</h3><div>{checkSubmissionData.message}</div></div>}
               {checkSubmissionData && checkSubmissionData.status === "NOT_STARTED" && <div>Egzamin zaczyna się: {checkSubmissionData.startDate.split("T")[0]} o godzinie {checkSubmissionData.startDate.split("T")[1]}</div>}
-              {checkSubmissionData && checkSubmissionData.status === "ENDED" && <div><h3>Egzamin zakończył się</h3><div>{checkSubmissionData.message}</div></div>}
+              {checkSubmissionData && checkSubmissionData.status === "ENDED" && <div><h3>Nie można przystąpić</h3><div>{checkSubmissionData.message}</div></div>}
               {checkSubmissionData && checkSubmissionData.status === "PENDING"  && <form onSubmit={(event) => redirectHandler(event, checkSubmissionData.submissionId)}><button>Powrót do egzaminu</button></form>}
               {checkSubmissionError && <div className={classes["error"]}><h3>{checkSubmissionError}</h3></div>}
               {makeSubmissionError && <div className={classes["error"]}><h3>{makeSubmissionError}</h3></div>}

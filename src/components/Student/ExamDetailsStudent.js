@@ -135,7 +135,7 @@ const ExamDetailsStudent = () => {
       <form onSubmit={saveExamHandler}>
         <button type="submit">Zapisz</button>
       </form></div>}
-      {submitAnswersData && <div>{submitAnswersData.message}</div>}
+      {/* {submitAnswersData && <div>{submitAnswersData.message}</div>} */}
       {submitAnswersError && <div>{submitAnswersError}</div>}
       {checkSubmissionData && checkSubmissionData.status === "ERROR" && <Card><h3>Test zakończony</h3><div>{checkSubmissionData.message}</div></Card>}
       {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <Card><h3>Egzamin wymaga sprawdzenia przez nauczyciela</h3><div>{checkSubmissionData.message}</div></Card>}

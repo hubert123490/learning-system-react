@@ -108,7 +108,11 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showLessons &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.lessons.map((item) => (
+            getCourseDetailsData.lessons.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <div key={item.id} className={classes["content-container__item"]}>
                 <div
                   onClick={() => {
@@ -139,7 +143,11 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showExams &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.exams.map((item) => (
+            getCourseDetailsData.exams.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <div
                 key={item.id}
                 className={`${classes["content-container__item"]} ${classes["exam"]}`}
@@ -191,7 +199,11 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showAssignments &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.assignments.map((item) => (
+            getCourseDetailsData.assignments.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <div
                 key={item.id}
                 className={`${classes["content-container__item"]} ${classes["assignment"]}`}

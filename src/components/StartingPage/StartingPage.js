@@ -8,6 +8,7 @@ import { getCoursesForm } from "../../lib/forms/course-form";
 import { useSearchParams } from "react-router-dom";
 import Courses from "./Courses";
 import Pagination from "../Pagination/Pagination";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const StartingPageContent = () => {
   const navigate = useNavigate();
@@ -19,14 +20,14 @@ const StartingPageContent = () => {
   });
   const [showFilter, setShowFilter] = useState(true);
   const { renderFormInputs: renderGetCoursesInputs } = useForm(getCoursesForm);
-  const { sendRequest, data, status } = useHttp(getAllCourses, true);
+  const { sendRequest, data, status, error } = useHttp(getAllCourses, true);
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(4);
   const [loading, setLoading] = useState(false);
   
 
   const getTitle = (title) => {
-    if (title === "Bachelor") return "inz.";
+    if (title === "Bachelor") return "mgr";
     else if (title === "Master") return "dr";
     else if (title === "Professor") return "prof."
   };
@@ -59,9 +60,9 @@ const StartingPageContent = () => {
 
   const filterFunction = (event) => {
     event.preventDefault();
-    let courseName = searchParams.name ? searchParams.name : "";
-    let courseCategory = searchParams.category ? searchParams.category : "";
-    let teacherLastName = searchParams.lastName ? searchParams.lastName : "";
+    let courseName = searchParams.get("name") ? searchParams.get("name") : "";
+    let courseCategory = searchParams.get("category") ? searchParams.get("category") : "";
+    let teacherLastName = searchParams.get("lastName") ? searchParams.get("lastName") : "";
     if (event.target.name === "courseName") {
       courseName = event.target.value;
     }
@@ -83,12 +84,12 @@ const StartingPageContent = () => {
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   let currentCourses = [];
-  if (data)
+  if (data) {
     currentCourses = data.courses.sort((a, b) => {
       var textA = a.name.toUpperCase();
     var textB = b.name.toUpperCase();
     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    }).slice(indexOfFirstCourse, indexOfLastCourse);
+    }).slice(indexOfFirstCourse, indexOfLastCourse);}
 
   //Change page (pagination)
   const paginate = (pageNumber) => {
@@ -120,12 +121,14 @@ const StartingPageContent = () => {
           </form>
         )}
         <div>
+          {status === "pending" && <LoadingSpinner />}
           <Courses
             data={currentCourses}
             courseDetailsHandler={courseDetailsHandler}
             getTitle={getTitle}
             status={status}
             loading={loading}
+            error={error}
           />
           {data && <Pagination
             postsPerPage={coursesPerPage}

@@ -67,3 +67,17 @@
   background-color: lightgray;
   min-height: 20rem;
 }
+
+.error-section {
+  text-align: center;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  background-color: lightgray;
+  min-height: 20rem;
+}
+
+.error {
+  margin-bottom: 1em;
+  color: red;
+}

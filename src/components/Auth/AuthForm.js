@@ -137,8 +137,8 @@ export default function AuthForm() {
                     >
                       <option value="">Wybierz tytuł naukowy:</option>
                       {/* <option value="Student">Student</option> */}
-                      <option value="Bachelor">Inżynier</option>
-                      <option value="Master">Magister</option>
+                      <option value="Bachelor">Magister</option>
+                      <option value="Master">Doktor</option>
                       <option value="Professor">Profesor</option>
                     </Form.Select>
                   </>

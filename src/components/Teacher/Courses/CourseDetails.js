@@ -89,6 +89,8 @@ const CourseDetails = () => {
     params,
   ]);
 
+  console.log(renderCreateLessonFormInputs())
+
   const lessonDetailsHandler = (lessonId) => {
     navigate(`lessons/${lessonId}`);
   };
@@ -333,7 +335,11 @@ const CourseDetails = () => {
           {getDetailsData &&
             showLessons &&
             getDetailsStatus === "completed" &&
-            getDetailsData.lessons.map((item) => (
+            getDetailsData.lessons.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <Lesson
                 key={item.id}
                 item={item}
@@ -347,7 +353,11 @@ const CourseDetails = () => {
           {getDetailsData &&
             showExams &&
             getDetailsStatus === "completed" &&
-            getDetailsData.exams.map((item) => (
+            getDetailsData.exams.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <Exam
                 key={item.id}
                 item={item}
@@ -361,7 +371,11 @@ const CourseDetails = () => {
           {getDetailsData &&
             showAssignments &&
             getDetailsStatus === "completed" &&
-            getDetailsData.assignments.map((item) => (
+            getDetailsData.assignments.sort((a, b) => {
+              var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }).map((item) => (
               <Assignment
                 key={item.id}
                 item={item}

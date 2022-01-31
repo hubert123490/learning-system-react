@@ -2,11 +2,17 @@ import classes from "./Courses.module.css";
 import image from "../../assets/course_image.jpg";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
-const Courses = ({ data, courseDetailsHandler, getTitle, status, error, loading }) => {
-
+const Courses = ({
+  data,
+  courseDetailsHandler,
+  getTitle,
+  status,
+  error,
+  loading,
+}) => {
   return (
     <>
-      {data && data.length !== 0 && status === "completed" && (
+      {data && data.length > 0 && status === "completed" && (
         <div className={classes["courses"]}>
           {data &&
             status === "completed" &&
@@ -51,16 +57,28 @@ const Courses = ({ data, courseDetailsHandler, getTitle, status, error, loading 
             ))}
         </div>
       )}
-      {data && data.length === 0 && (
+      {!error && data && data.length === 0 ? (
         <div className={classes["nothing-found"]}>
-          {!loading && (
+          {!loading && data && (
             <div>
               <h1>Nic nie znaleziono</h1>
             </div>
           )}
-          <br/>
+          <br />
           {loading && <LoadingSpinner />}
         </div>
+      ) : (
+        error && (
+          <div className={classes["error-section"]}>
+            {!loading && error && (
+              <div className={classes["error"]}>
+                <h1>{error}</h1>
+              </div>
+            )}
+             <br />
+          {loading && <LoadingSpinner />}
+          </div>
+        )
       )}
     </>
   );
