@@ -9,12 +9,12 @@ import AuthContext from "./store/auth-context";
 import AuthFormPage from "./pages/AuthFormPage";
 import TeacherPage from "./pages/TeacherPage";
 import StudentPage from "./pages/StudentPage";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 function App() {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <Layout>
