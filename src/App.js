@@ -13,6 +13,7 @@ import StudentPage from "./pages/StudentPage";
 function App() {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
+  const { t } = useTranslation();
 
   return (
     <Layout>
