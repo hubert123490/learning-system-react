@@ -10,9 +10,6 @@ const Footer = () => {
               &copy; Copyright 2022, Bubex Corporation
             </span>
           </li>
-          {/* <li className={classes["main-footer__link"]}>
-            <a href="test">Warunki korzystania</a>
-          </li> */}
         </ul>
       </nav>
     </footer>

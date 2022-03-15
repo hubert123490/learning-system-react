@@ -4,11 +4,13 @@ import { getAllCourses } from "../../lib/api/course-api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useForm from "../../hooks/use-form";
-import { getCoursesForm } from "../../lib/forms/course-form";
+import { getCoursesForm, getCoursesFormEn } from "../../lib/forms/course-form";
 import { useSearchParams } from "react-router-dom";
 import Courses from "./Courses";
 import Pagination from "../Pagination/Pagination";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const StartingPageContent = () => {
   const navigate = useNavigate();
@@ -19,17 +21,19 @@ const StartingPageContent = () => {
     lastName: "",
   });
   const [showFilter, setShowFilter] = useState(true);
-  const { renderFormInputs: renderGetCoursesInputs } = useForm(getCoursesForm);
+  const { renderFormInputs: renderGetCoursesInputsPl } = useForm(getCoursesForm);
+  const { renderFormInputs: renderGetCoursesInputsEn } = useForm(getCoursesFormEn);
   const { sendRequest, data, status, error } = useHttp(getAllCourses, true);
   const [currentPage, setCurrentPage] = useState(1);
   const [coursesPerPage] = useState(4);
   const [loading, setLoading] = useState(false);
-  
+  const { t } = useTranslation();
+  console.log(t)
 
   const getTitle = (title) => {
     if (title === "Bachelor") return "mgr";
     else if (title === "Master") return "dr";
-    else if (title === "Professor") return "prof."
+    else if (title === "Professor") return "prof.";
   };
 
   useEffect(() => {
@@ -57,12 +61,15 @@ const StartingPageContent = () => {
     });
   };
 
-
   const filterFunction = (event) => {
     event.preventDefault();
     let courseName = searchParams.get("name") ? searchParams.get("name") : "";
-    let courseCategory = searchParams.get("category") ? searchParams.get("category") : "";
-    let teacherLastName = searchParams.get("lastName") ? searchParams.get("lastName") : "";
+    let courseCategory = searchParams.get("category")
+      ? searchParams.get("category")
+      : "";
+    let teacherLastName = searchParams.get("lastName")
+      ? searchParams.get("lastName")
+      : "";
     if (event.target.name === "courseName") {
       courseName = event.target.value;
     }
@@ -85,11 +92,14 @@ const StartingPageContent = () => {
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   let currentCourses = [];
   if (data) {
-    currentCourses = data.courses.sort((a, b) => {
-      var textA = a.name.toUpperCase();
-    var textB = b.name.toUpperCase();
-    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    }).slice(indexOfFirstCourse, indexOfLastCourse);}
+    currentCourses = data.courses
+      .sort((a, b) => {
+        var textA = a.name.toUpperCase();
+        var textB = b.name.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      })
+      .slice(indexOfFirstCourse, indexOfLastCourse);
+  }
 
   //Change page (pagination)
   const paginate = (pageNumber) => {
@@ -100,24 +110,27 @@ const StartingPageContent = () => {
     <>
       <section className={classes["main-page-overview"]}>
         <div className={classes["main-page-overview__content"]}>
-          <h1>Powodzenia!</h1>
+          <h1>{t("StartingPage__GoodLuck")}</h1>
           <div className={classes["main-page-overview__content-text"]}>
-            Jest tylko jeden sposób nauki. Poprzez działanie.
+            {t("StartingPage__Text")}
           </div>
           <div className={classes["main-page-overview__content-author"]}>
-            Paulo Coelho
+            {t("StartingPage__Author")}
           </div>
         </div>
       </section>
-     
+
       <section className={classes["starting"]}>
-        <h1>Aktualnie prowadzone kursy!</h1>
+        <h1>{t("StartingPage__ActualCourses")}</h1>
         <button onClick={showFilterHandler}>
-          {showFilter ? "Zamknji filter" : "Filtruj"}
+          {showFilter
+            ? t("StartingPage__CloseFilter")
+            : t("StartingPage__Filter")}
         </button>
         {showFilter && (
           <form className={classes["form"]} onChange={filterFunction}>
-            {renderGetCoursesInputs()}
+           {i18next.language === "en" && renderGetCoursesInputsEn()}
+           {i18next.language === "pl" && renderGetCoursesInputsPl()}
           </form>
         )}
         <div>
@@ -130,12 +143,14 @@ const StartingPageContent = () => {
             loading={loading}
             error={error}
           />
-          {data && <Pagination
-            postsPerPage={coursesPerPage}
-            totalPosts={data ? data.courses.length : 1}
-            paginate={paginate}
-            currentPage={currentPage}
-          />}
+          {data && (
+            <Pagination
+              postsPerPage={coursesPerPage}
+              totalPosts={data ? data.courses.length : 1}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          )}
         </div>
       </section>
     </>

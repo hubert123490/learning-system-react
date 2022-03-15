@@ -84,9 +84,16 @@
 .header button:hover {
   background-color: #c291e2;
   color: #38015c;
+  border: 1px solid white;
 }
 
-@media (min-width: 50rem) {
+select {
+  background-color: #38015c;
+  color: white;
+  cursor: pointer;
+}
+
+@media (min-width: 62rem) {
   .hamburger {
     display: none;
   }

@@ -1,6 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import useForm from "../../hooks/use-form";
-import { signinForm, signupForm } from "../../lib/forms/auth-form";
+import {
+  signinForm,
+  signupForm,
+  signupFormEn,
+  signinFormEn,
+} from "../../lib/forms/auth-form";
 import useHttp from "../../hooks/use-http";
 import { signUp, signIn } from "../../lib/api/auth-api";
 import LoadingSpinner from "../UI/LoadingSpinner";
@@ -8,6 +13,8 @@ import classes from "./AuthForm.module.css";
 import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router";
 import { Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 export default function AuthForm() {
   const nav = useNavigate();
@@ -15,14 +22,23 @@ export default function AuthForm() {
   const [degree, setDegree] = useState("");
   const [systemRole, setSystemRole] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const { t } = useTranslation();
   const {
     renderFormInputs: renderSignupFormInputs,
     isFormValid: isSignupFormValid,
   } = useForm(signupForm);
   const {
+    renderFormInputs: renderSignupFormInputsEn,
+    isFormValid: isSignupFormValidEn,
+  } = useForm(signupFormEn);
+  const {
     renderFormInputs: renderSigninFormInputs,
     isFormValid: isSigninFormValid,
   } = useForm(signinForm);
+  const {
+    renderFormInputs: renderSigninFormInputsEn,
+    isFormValid: isSigninFormValidEn,
+  } = useForm(signinFormEn);
 
   const {
     sendRequest: signUpRequest,
@@ -41,11 +57,8 @@ export default function AuthForm() {
   useEffect(() => {
     if (signInData) {
       authCtx.login(signInData);
-      if (authCtx.isTeacher)
-        nav("teacher/courses")
-      else if (authCtx.isStudent)
-        nav("/")
-      
+      if (authCtx.isTeacher) nav("teacher/courses");
+      else if (authCtx.isStudent) nav("/");
     }
   }, [authCtx, signInData, nav]);
 
@@ -55,31 +68,64 @@ export default function AuthForm() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (isLogin) {
-      if (!isSigninFormValid) {
-        return;
-      }
+    if (i18next.language === "pl") {
+      if (isLogin) {
+        if (!isSigninFormValid) {
+          return;
+        }
 
-      signInRequest({
-        email: renderSigninFormInputs()[0].props.value,
-        password: renderSigninFormInputs()[1].props.value,
-      });
-      if (signInData) {
-        authCtx.login(signInData.token);
+        signInRequest({
+          email: renderSigninFormInputs()[0].props.value,
+          password: renderSigninFormInputs()[1].props.value,
+          error: t("Auth__ErrorSignIn")
+        });
+        if (signInData) {
+          authCtx.login(signInData.token);
+        }
+      } else {
+        if (!isSignupFormValid) {
+          return;
+        }
+        let role = systemRole === "student" ? "student" : systemRole;
+        signUpRequest({
+          firstName: renderSignupFormInputs()[0].props.value,
+          lastName: renderSignupFormInputs()[1].props.value,
+          email: renderSignupFormInputs()[2].props.value,
+          password: renderSignupFormInputs()[4].props.value,
+          title: role === "student" ? "Student" : degree,
+          role: [role],
+          error: t("Auth__ErrorSignUp")
+        });
       }
-    } else {
-      if (!isSignupFormValid) {
-        return;
+    } else if (i18next.language === "en") {
+      if (isLogin) {
+        if (!isSigninFormValidEn) {
+          return;
+        }
+
+        signInRequest({
+          email: renderSigninFormInputsEn()[0].props.value,
+          password: renderSigninFormInputsEn()[1].props.value,
+          error: t("Auth__ErrorSignIn")
+        });
+        if (signInData) {
+          authCtx.login(signInData.token);
+        }
+      } else {
+        if (!isSignupFormValidEn) {
+          return;
+        }
+        let role = systemRole === "student" ? "student" : systemRole;
+        signUpRequest({
+          firstName: renderSignupFormInputsEn()[0].props.value,
+          lastName: renderSignupFormInputsEn()[1].props.value,
+          email: renderSignupFormInputsEn()[2].props.value,
+          password: renderSignupFormInputsEn()[4].props.value,
+          title: role === "student" ? "Student" : degree,
+          role: [role],
+          error: t("Auth__ErrorSignUp")
+        });
       }
-      let role = systemRole === "student" ? "student" : systemRole;
-      signUpRequest({
-        firstName: renderSignupFormInputs()[0].props.value,
-        lastName: renderSignupFormInputs()[1].props.value,
-        email: renderSignupFormInputs()[2].props.value,
-        password: renderSignupFormInputs()[4].props.value,
-        title: role === "student" ? "Student" : degree,
-        role: [role],
-      });
     }
   };
 
@@ -98,19 +144,32 @@ export default function AuthForm() {
     else return false;
   };
 
+  const signupFormValidationEn = () => {
+    if (systemRole === "student" && isSignupFormValidEn()) return true;
+    else if (systemRole !== "" && degree !== "" && isSignupFormValidEn())
+      return true;
+    else return false;
+  };
+
   return (
     <>
       <form className={classes.signupForm} onSubmit={submitHandler}>
-        <h1>{isLogin ? "Logowanie" : "Rejestracja"}</h1>
+        <h1>{isLogin ? t("Auth__SignInTitle") : t("Auth__SignUpTitle")}</h1>
         {!isLogin && signUpData ? (
-          <h3 className={classes.success}>Pomyślnie stworzono nowe konto</h3>
+          <h3 className={classes.success}>{t("Auth__AccountCreated")}</h3>
         ) : (
           <>
-            {isLogin && renderSigninFormInputs()}
-            {!isLogin && renderSignupFormInputs()}
+            {isLogin && i18next.language === "pl" && renderSigninFormInputs()}
+            {isLogin && i18next.language === "en" && renderSigninFormInputsEn()}
+            {!isLogin && i18next.language === "pl" && renderSignupFormInputs()}
+            {!isLogin &&
+              i18next.language === "en" &&
+              renderSignupFormInputsEn()}
             {!isLogin && (
               <div>
-                <label htmlFor="role-select">Wybierz rolę w systemie:</label>
+                <label htmlFor="role-select">
+                  {t("Auth__ChooseSystemRole")}
+                </label>
                 <Form.Select
                   value={systemRole}
                   onChange={handleSystemRoleChange}
@@ -118,15 +177,15 @@ export default function AuthForm() {
                   id="role-select"
                   required
                 >
-                  <option value="">Wybierz rolę w systemie</option>
-                  <option value="student">STUDENT</option>
-                  <option value="teacher">NAUCZYCIEL</option>
+                  <option value="">{t("Auth__ChooseSystemRole")}</option>
+                  <option value="student">{t("Auth__Student")}</option>
+                  <option value="teacher">{t("Auth__Teacher")}</option>
                 </Form.Select>
                 <br />
                 {systemRole === "teacher" && (
                   <>
                     <label htmlFor="degree-select">
-                      Wybierz tytuł naukowy:
+                      {t("Auth__ChooseAcademicTitle")}
                     </label>
                     <Form.Select
                       value={degree}
@@ -135,11 +194,11 @@ export default function AuthForm() {
                       id="degree-select"
                       required
                     >
-                      <option value="">Wybierz tytuł naukowy:</option>
+                      <option value="">{t("Auth__ChooseAcademicTitle")}</option>
                       {/* <option value="Student">Student</option> */}
-                      <option value="Bachelor">Magister</option>
-                      <option value="Master">Doktor</option>
-                      <option value="Professor">Profesor</option>
+                      <option value="Bachelor">{t("Auth__Master")}</option>
+                      <option value="Master">{t("Auth__PHD")}</option>
+                      <option value="Professor">{t("Auth__Professor")}</option>
                     </Form.Select>
                   </>
                 )}
@@ -154,13 +213,17 @@ export default function AuthForm() {
             )}
 
             {signInStatus !== "pending" && isLogin && (
-              <button type="submit" disabled={!isSigninFormValid()}>
-                {isLogin ? "Zaloguj się" : "Stwórz konto"}
+              i18next.language === "pl" ? <button type="submit" disabled={!isSigninFormValid()}>
+                {isLogin ? t("Auth__SignInTitle") : t("Auth__SignUpTitle")}
+              </button> : <button type="submit" disabled={!isSigninFormValidEn()}>
+                {isLogin ? t("Auth__SignInTitle") : t("Auth__SignUpTitle")}
               </button>
             )}
             {signUpStatus !== "pending" && !isLogin && (
-              <button type="submit" disabled={!signupFormValidation()}>
-                {isLogin ? "Zaloguj się" : "Stwórz konto"}
+              i18next.language === "pl" ? <button type="submit" disabled={!signupFormValidation()}>
+                {isLogin ? t("Auth__SignInTitle") : t("Auth__SignUpTitle")}
+              </button> : <button type="submit" disabled={!signupFormValidationEn()}>
+                {isLogin ? t("Auth__SignInTitle") : t("Auth__SignUpTitle")}
               </button>
             )}
 
@@ -177,7 +240,7 @@ export default function AuthForm() {
             onClick={switchAuthModeHandler}
             style={{ width: "100%", marginTop: "1em" }}
           >
-            {isLogin ? "Stwórz nowe konto" : "Powrót do logowania"}
+            {isLogin ? t("Auth__CreateNewAccount") : t("Auth__ReturnToSignIn")}
           </button>
         </div>
       </form>

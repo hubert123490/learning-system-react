@@ -59,11 +59,11 @@ const Courses = ({
       )}
       {!error && data && data.length === 0 ? (
         <div className={classes["nothing-found"]}>
-          {!loading && data && (
+          {/* {!loading && data && (
             <div>
               <h1>Nic nie znaleziono</h1>
             </div>
-          )}
+          )} */}
           <br />
           {loading && <LoadingSpinner />}
         </div>
