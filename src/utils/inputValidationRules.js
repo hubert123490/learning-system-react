@@ -57,3 +57,47 @@ export function emailRule(inputName) {
     }
   );
 }
+
+export function requiredRuleEn(inputName) {
+  return createValidationRule(
+    "required",
+    `Field ${inputName} is required`,
+    (inputValue, formObj) => inputValue.length !== 0
+  );
+}
+
+export function minLengthRuleEn(inputName, minCharacters) {
+  return createValidationRule(
+    "minLength",
+    `Field ${inputName} should contain atleast ${minCharacters} signs`,
+    (inputValue, formObj) => inputValue.length >= minCharacters
+  );
+}
+
+export function maxLengthRuleEn(inputName, maxCharacters) {
+  return createValidationRule(
+    "minLength",
+    `Field ${inputName} should contain no more than ${maxCharacters} signs`,
+    (inputValue, formObj) => inputValue.length <= maxCharacters
+  );
+}
+
+export function passwordMatchRuleEn() {
+  return createValidationRule(
+    "passwordMatch",
+    `Password is not the same`,
+    (inputValue, formObj) => inputValue === formObj.password.value
+  );
+}
+
+export function emailRuleEn(inputName) {
+  return createValidationRule(
+    "email",
+    `${inputName} is invalid`,
+    (inputValue) => {
+      const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(inputValue).toLowerCase());
+    }
+  );
+}

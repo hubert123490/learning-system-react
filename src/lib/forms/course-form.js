@@ -1,5 +1,4 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-
 import { requiredRule, minLengthRule } from "../../utils/inputValidationRules";
 
 export const createCourseForm = {
@@ -41,6 +40,21 @@ export const getCoursesForm = {
   },
   teacherLastName : {
     ...createFormFieldConfig("Nazwisko prowadzącego", "teacherLastName", "text"),
+    validationRules: []
+  }
+}
+
+export const getCoursesFormEn = {
+  courseName : {
+    ...createFormFieldConfig("Course name", "courseName", "text"),
+    validationRules: []
+  },
+  courseCategory : {
+    ...createFormFieldConfig("Course category", "courseCategory", "text"),
+    validationRules: []
+  },
+  teacherLastName : {
+    ...createFormFieldConfig("Course teacher surname", "teacherLastName", "text"),
     validationRules: []
   }
 }

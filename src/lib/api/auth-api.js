@@ -11,7 +11,7 @@ export async function signUp(authData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Rejestracja nie powiodła się.");
+    throw new Error(authData.error);
   }
 
   return data;
@@ -28,7 +28,7 @@ export async function signIn(authData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Niepoprawny login lub hasło.");
+    throw new Error(authData.error);
   }
 
   return data;
