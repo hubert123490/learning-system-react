@@ -1,0 +1,41 @@
+{
+    "MainNavigation__LogoAlt" : "Bubex - e-learning platform",
+    "MainNavigation__MyCourses" : "My courses",
+    "MainNavigation__MyGrades" : "My grades",
+    "MainNavigation__Grades" : "Grades",
+    "MainNavigation__Exams" : "Exams",
+    "MainNavigation__Homeworks" : "Homeworks",
+    "MainNavigation__Profile" : "Profile",
+    "MainNavigation__LogIn" : "Log in",
+    "MainNavigation__LogOut" : "Log out",
+    "MainNavigation__CheckExams" : "Check exams",
+    "MainNavigation__CheckHomeworks" : "Check homeworks",
+    "MainNavigation__Meetings" : "Meetings",
+
+    "MobileNavigation__CloseMenu" : "Close menu",
+    
+    "StartingPage__GoodLuck" : "Good luck!",
+    "StartingPage__Text" : "There is only one method of learning. Through action!",
+    "StartingPage__Author" : "Paulo Coelho",
+    "StartingPage__ActualCourses" : "Conducted courses",
+    "StartingPage__Filter" : "Filter",
+    "StartingPage__CloseFilter" : "Close filter",
+
+    "Auth__SignInTitle" : "Sign in",
+    "Auth__SignUpTitle" : "Sign up",
+    "Auth__AccountCreated" : "Successfully created new account",
+    "Auth__ChooseSystemRole" : "Choose system role:",
+    "Auth__Student" : "Student",
+    "Auth__Teacher" : "Teacher",
+    "Auth__ChooseAcademicTitle" : "Choose academic title:",
+    "Auth__Master" : "Master",
+    "Auth__PHD" : "PHD",
+    "Auth__Professor" : "Professor",
+    "Auth__CreateNewAccount" : "Create new account",
+    "Auth__ReturnToSignIn" : "Return to sign in",
+    "Auth__ErrorSignIn" : "Invalid email or password",
+    "Auth__ErrorSignUp" : "Email is propably taken."
+    
+
+    
+}

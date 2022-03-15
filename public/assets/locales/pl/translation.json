@@ -1,0 +1,38 @@
+{
+    "MainNavigation__LogoAlt" : "Bubex - platforma do nauczania zdalnego",
+    "MainNavigation__MyCourses" : "Moje kursy",
+    "MainNavigation__MyGrades" : "Moje oceny",
+    "MainNavigation__Grades" : "Oceny",
+    "MainNavigation__Exams" : "Egzaminy",
+    "MainNavigation__Homeworks" : "Prace",
+    "MainNavigation__Profile" : "Profil",
+    "MainNavigation__LogIn" : "Zaloguj się",
+    "MainNavigation__LogOut" : "Wyloguj się",
+    "MainNavigation__CheckExams" : "Sprawdź egzaminy",
+    "MainNavigation__CheckHomeworks" : "Sprawdź prace",
+    "MainNavigation__Meetings" : "Spotkania",
+
+    "MobileNavigation__CloseMenu" : "Zamknij menu",
+
+    "StartingPage__GoodLuck" : "Powodzenia!",
+    "StartingPage__Text" : "Jest tylko jedna metoda nauki. Poprzez działanie!",
+    "StartingPage__Author" : "Paulo Coelho",
+    "StartingPage__ActualCourses" : "Prowadzone kursy",
+    "StartingPage__Filter" : "Filtruj",
+    "StartingPage__CloseFilter" : "Zamknij filter",
+
+    "Auth__SignInTitle" : "Logowanie",
+    "Auth__SignUpTitle" : "Rejestracja",
+    "Auth__AccountCreated" : "Pomyślnie stworzono nowe konto",
+    "Auth__ChooseSystemRole" : "Wybierz rolę w systemie:",
+    "Auth__Student" : "Student",
+    "Auth__Teacher" : "Nauczyciel",
+    "Auth__ChooseAcademicTitle" : "Wybierz tytuł naukowy:",
+    "Auth__Master" : "Magister",
+    "Auth__PHD" : "Doktor",
+    "Auth__Professor" : "Profesor",
+    "Auth__CreateNewAccount" : "Stwórz nowe konto",
+    "Auth__ReturnToSignIn" : "Powrót do logowania",
+    "Auth__ErrorSignIn" : "Niepoprawny email lub hasło",
+    "Auth__ErrorSignUp" : "Email jest prawdopodobnie zajęty."
+}
