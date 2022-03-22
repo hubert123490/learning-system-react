@@ -1,5 +1,5 @@
 import authHeader from "../auth-header";
-const SERVER_DOMAIN = "https://nameless-caverns-34277.herokuapp.com";
+const SERVER_DOMAIN = "https://learning-system-spring.herokuapp.com";
 
 export async function getTasks(taskData) {
     const response = await fetch(`${SERVER_DOMAIN}/api/courses/${taskData.courseId}/assignments/${taskData.assignmentId}/tasks`, {

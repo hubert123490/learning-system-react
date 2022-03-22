@@ -1,6 +1,6 @@
 import authHeader from "../auth-header";
 
-const SERVER_DOMAIN = "https://nameless-caverns-34277.herokuapp.com";
+const SERVER_DOMAIN = "https://learning-system-spring.herokuapp.com";
 
 export async function createMeeting(meetingData) {
     const response = await fetch(`${SERVER_DOMAIN}/api/webex/${meetingData.courseId}/create-meeting`, {
