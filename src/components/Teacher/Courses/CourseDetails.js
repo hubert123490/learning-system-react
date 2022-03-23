@@ -7,19 +7,25 @@ import LoadingSpinner from "../../UI/LoadingSpinner";
 import { createLesson, deleteLesson } from "../../../lib/api/lesson-api";
 import { createExam, deleteExam } from "../../../lib/api/exam-api";
 import { useNavigate, useParams } from "react-router";
-import { createLessonForm } from "../../../lib/forms/lesson-form";
+import {
+  createLessonForm,
+  createLessonFormEn,
+} from "../../../lib/forms/lesson-form";
 import useForm from "../../../hooks/use-form";
-import { createExamForm } from "../../../lib/forms/exam-form";
+import { createExamForm, createExamFormEn } from "../../../lib/forms/exam-form";
 import Lesson from "./Lesson";
 import Exam from "./Exam";
-import { createAssignmentForm } from "../../../lib/forms/assignment-form";
+import { createAssignmentForm, createAssignmentFormEn } from "../../../lib/forms/assignment-form";
 import {
   createAssignment,
   deleteAssignment,
 } from "../../../lib/api/assignment-api";
 import Assignment from "./Assignment";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const CourseDetails = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
   const [showCreateLesson, setShowCreateLesson] = useState(false);
@@ -33,13 +39,25 @@ const CourseDetails = () => {
     isFormValid: isCreateLessonFormValid,
   } = useForm(createLessonForm);
   const {
+    renderFormInputs: renderCreateLessonFormInputsEn,
+    isFormValid: isCreateLessonFormValidEn,
+  } = useForm(createLessonFormEn);
+  const {
     renderFormInputs: renderCreateExamFormInputs,
     isFormValid: isCreateExamFormValid,
   } = useForm(createExamForm);
   const {
+    renderFormInputs: renderCreateExamFormInputsEn,
+    isFormValid: isCreateExamFormValidEn,
+  } = useForm(createExamFormEn);
+  const {
     renderFormInputs: renderCreateAssignmentFormInputs,
     isFormValid: isCreateAssignmentFormValid,
   } = useForm(createAssignmentForm);
+  const {
+    renderFormInputs: renderCreateAssignmentFormInputsEn,
+    isFormValid: isCreateAssignmentFormValidEn,
+  } = useForm(createAssignmentFormEn);
 
   const {
     sendRequest: getDetailsRequest,
@@ -89,7 +107,7 @@ const CourseDetails = () => {
     params,
   ]);
 
-  console.log(renderCreateLessonFormInputs())
+  console.log(renderCreateLessonFormInputs());
 
   const lessonDetailsHandler = (lessonId) => {
     navigate(`lessons/${lessonId}`);
@@ -105,35 +123,65 @@ const CourseDetails = () => {
 
   const submitCreateFormHandler = (event) => {
     event.preventDefault();
-    createLessonRequest({
-      name: renderCreateLessonFormInputs()[0].props.value,
-      description: renderCreateLessonFormInputs()[1].props.value,
-      courseId: params.courseId,
-    });
+    if (i18next.language === "pl") {
+      createLessonRequest({
+        name: renderCreateLessonFormInputs()[0].props.value,
+        description: renderCreateLessonFormInputs()[1].props.value,
+        courseId: params.courseId,
+      });
+    } else if (i18next.language === "en") {
+      createLessonRequest({
+        name: renderCreateLessonFormInputsEn()[0].props.value,
+        description: renderCreateLessonFormInputsEn()[1].props.value,
+        courseId: params.courseId,
+      });
+    }
   };
 
   const submitCreateExamFormHandler = (event) => {
     event.preventDefault();
-    createExamRequest({
-      name: renderCreateExamFormInputs()[0].props.value,
-      description: renderCreateExamFormInputs()[1].props.value,
-      startDate: renderCreateExamFormInputs()[2].props.value,
-      endDate: renderCreateExamFormInputs()[3].props.value,
-      courseId: params.courseId,
-    });
+    if (i18next.language === "pl") {
+      createExamRequest({
+        name: renderCreateExamFormInputs()[0].props.value,
+        description: renderCreateExamFormInputs()[1].props.value,
+        startDate: renderCreateExamFormInputs()[2].props.value,
+        endDate: renderCreateExamFormInputs()[3].props.value,
+        courseId: params.courseId,
+      });
+    } else if (i18next.language === "en") {
+      createExamRequest({
+        name: renderCreateExamFormInputsEn()[0].props.value,
+        description: renderCreateExamFormInputsEn()[1].props.value,
+        startDate: renderCreateExamFormInputsEn()[2].props.value,
+        endDate: renderCreateExamFormInputsEn()[3].props.value,
+        courseId: params.courseId,
+      });
+    }
   };
 
   const submitCreateAssignmentFormHandler = (event) => {
     event.preventDefault();
-    createAssignmentRequest({
-      courseId: params.courseId,
-      request: {
-        name: renderCreateAssignmentFormInputs()[0].props.value,
-        description: renderCreateAssignmentFormInputs()[1].props.value,
-        startDate: renderCreateAssignmentFormInputs()[2].props.value,
-        endDate: renderCreateAssignmentFormInputs()[3].props.value,
-      },
-    });
+    if (i18next.language === "pl") {
+      createAssignmentRequest({
+        courseId: params.courseId,
+        request: {
+          name: renderCreateAssignmentFormInputs()[0].props.value,
+          description: renderCreateAssignmentFormInputs()[1].props.value,
+          startDate: renderCreateAssignmentFormInputs()[2].props.value,
+          endDate: renderCreateAssignmentFormInputs()[3].props.value,
+        },
+      });
+    } else if (i18next.language === "en") {
+      createAssignmentRequest({
+        courseId: params.courseId,
+        request: {
+          name: renderCreateAssignmentFormInputsEn()[0].props.value,
+          description: renderCreateAssignmentFormInputsEn()[1].props.value,
+          startDate: renderCreateAssignmentFormInputsEn()[2].props.value,
+          endDate: renderCreateAssignmentFormInputsEn()[3].props.value,
+        },
+      });
+    }
   };
 
   const showCreateFormHandler = () => {
@@ -186,30 +234,48 @@ const CourseDetails = () => {
 
   const createLessonFormJSX = (
     <form className={classes["create-form"]} onSubmit={submitCreateFormHandler}>
-      {!createdLessonData && <h1>Stwórz nową lekcję</h1>}
-      {createdLessonData && <h1>Utworzono lekcję</h1>}
-      {!createdLessonData && renderCreateLessonFormInputs()}
+      {!createdLessonData && (
+        <h1>{t("Teacher__CourseDetails_CreateLesson")}</h1>
+      )}
+      {createdLessonData && (
+        <h1>{t("Teacher__CourseDetails_LessonCreated")}</h1>
+      )}
+      {!createdLessonData &&
+        i18next.language === "pl" &&
+        renderCreateLessonFormInputs()}
+      {!createdLessonData &&
+        i18next.language === "en" &&
+        renderCreateLessonFormInputsEn()}
       {createdLessonStatus === "completed" && createdLessonError ? (
         <div className={classes["error"]}>{createdLessonError}</div>
       ) : (
         ""
       )}
       {createdLessonStatus === "completed" && createdLessonData ? (
-        <div className={classes["success"]}>{createdLessonData.message}</div>
+        <div className={classes["success"]}>
+          {t("Teacher__CourseDetails_LessonSuccess")}
+        </div>
       ) : (
         ""
       )}
       {createdLessonStatus === "pending" && !createdLessonData && (
         <LoadingSpinner />
       )}
-      {!createdLessonData && (
-        <button type="submit" disabled={!isCreateLessonFormValid()}>
-          Stwórz lekcję{" "}
-        </button>
-      )}
+      {!createdLessonData &&
+        (i18next.language === "pl" ? (
+          <button type="submit" disabled={!isCreateLessonFormValid()}>
+            Stwórz lekcję{" "}
+          </button>
+        ) : (
+          i18next.language === "en" && (
+            <button type="submit" disabled={!isCreateLessonFormValidEn()}>
+              Create lesson{" "}
+            </button>
+          )
+        ))}
       {createdLessonStatus === "completed" && createdLessonData && (
         <button onClick={createLessonRedirectHandler}>
-          Przejdź do nowo utworzonej lekcji
+          {t("Teacher__CourseDetails_LessonRedirect")}
         </button>
       )}
     </form>
@@ -220,30 +286,42 @@ const CourseDetails = () => {
       className={classes["create-form"]}
       onSubmit={submitCreateExamFormHandler}
     >
-      {!createdExamData && <h1>Stwórz nowy egzamin</h1>}
-      {createdExamData && <h1>Utworzono egzamin</h1>}
-      {!createdExamData && renderCreateExamFormInputs()}
+      {!createdExamData && <h1>{t("Teacher__CourseDetails_CreateExam")}</h1>}
+      {createdExamData && <h1>{t("Teacher__CourseDetails_ExamCreated")}</h1>}
+      {!createdExamData &&
+        i18next.language === "pl" &&
+        renderCreateExamFormInputs()}
+      {!createdExamData &&
+        i18next.language === "en" &&
+        renderCreateExamFormInputsEn()}
       {createdExamStatus === "completed" && createdExamError ? (
         <div className={classes["error"]}>{createdExamError}</div>
       ) : (
         ""
       )}
       {createdExamStatus === "completed" && createdExamData ? (
-        <div className={classes["success"]}>{createdExamData.message}</div>
+        <div className={classes["success"]}>
+          {t("Teacher__CourseDetails_ExamSuccess")}
+        </div>
       ) : (
         ""
       )}
       {createdExamStatus === "pending" && !createdExamData && (
         <LoadingSpinner />
       )}
-      {!createdExamData && (
+      {!createdExamData && i18next.language === "pl" && (
         <button type="submit" disabled={!isCreateExamFormValid()}>
           Stwórz egzamin{" "}
         </button>
       )}
+      {!createdExamData && i18next.language === "en" && (
+        <button type="submit" disabled={!isCreateExamFormValidEn()}>
+          Create exam{" "}
+        </button>
+      )}
       {createdExamStatus === "completed" && createdExamData && (
         <button onClick={createExamRedirectHandler}>
-          Przejdź do nowo utworzonego egzaminu
+          {t("Teacher__CourseDetails_ExamRedirect")}
         </button>
       )}
     </form>
@@ -254,9 +332,10 @@ const CourseDetails = () => {
       className={classes["create-form"]}
       onSubmit={submitCreateAssignmentFormHandler}
     >
-      {!createdAssignmentData && <h1>Stwórz nową pracę domową</h1>}
-      {createdAssignmentData && <h1>Utworzono pracę domową</h1>}
-      {!createdAssignmentData && renderCreateAssignmentFormInputs()}
+      {!createdAssignmentData && <h1>{t("Teacher__CourseDetails_CreateAssignment")}</h1>}
+      {createdAssignmentData && <h1>{t("Teacher__CourseDetails_CreateAssignment")}</h1>}
+      {!createdAssignmentData && i18next.language === "pl" && renderCreateAssignmentFormInputs()}
+      {!createdAssignmentData && i18next.language === "en" && renderCreateAssignmentFormInputsEn()}
       {createdAssignmentStatus === "completed" && createdAssignmentError ? (
         <div className={classes["error"]}>{createdAssignmentError}</div>
       ) : (
@@ -264,7 +343,7 @@ const CourseDetails = () => {
       )}
       {createdAssignmentStatus === "completed" && createdAssignmentData ? (
         <div className={classes["success"]}>
-          {createdAssignmentData.message}
+          {t("Teacher__CourseDetails_AssignmentSuccess")}
         </div>
       ) : (
         ""
@@ -272,14 +351,19 @@ const CourseDetails = () => {
       {createdAssignmentStatus === "pending" && !createdAssignmentData && (
         <LoadingSpinner />
       )}
-      {!createdAssignmentData && (
+      {!createdAssignmentData && i18next.language === "pl" && (
         <button type="submit" disabled={!isCreateAssignmentFormValid()}>
           Stwórz pracę domową{" "}
         </button>
       )}
+      {!createdAssignmentData && i18next.language === "en" && (
+        <button type="submit" disabled={!isCreateAssignmentFormValidEn()}>
+          Create assignment{" "}
+        </button>
+      )}
       {createdAssignmentStatus === "completed" && createdAssignmentData && (
         <button onClick={createAssignmentRedirectHandler}>
-          Przejdź do nowo utworzonej pracy domowej
+          {t("Teacher__CourseDetails_AssignmentRedirect")}
         </button>
       )}
     </form>
@@ -287,26 +371,34 @@ const CourseDetails = () => {
 
   return (
     <div className={classes["course-details"]}>
-      <h1 style={{ fontSize: "3rem" }}>Witaj!</h1>
+      <h1 style={{ fontSize: "3rem" }}>
+        {t("Teacher__CourseDetails_Welcome")}
+      </h1>
 
       <section className={classes["course-details"]}>
         <div>
           <button onClick={showCreateFormHandler}>
-            {showCreateLesson ? "Zamknij" : "Dodaj lekcję"}
+            {showCreateLesson
+              ? t("Teacher__CourseDetails_HideForm")
+              : t("Teacher__CourseDetails_CreateLesson")}
           </button>
           {showCreateLesson && createLessonFormJSX}
         </div>
         <br />
         <div>
           <button onClick={showCreateExamFormHandler}>
-            {showCreateExam ? "Zamknij" : "Dodaj egzamin"}
+            {showCreateExam
+              ? t("Teacher__CourseDetails_HideForm")
+              : t("Teacher__CourseDetails_CreateExam")}
           </button>
           {showCreateExam && createExamFormJSX}
         </div>
         <br />
         <div>
           <button onClick={showCreateAssignmentFormHandler}>
-            {showCreateAssignment ? "Zamknij" : "Dodaj prace"}
+            {showCreateAssignment
+              ? t("Teacher__CourseDetails_HideForm")
+              : t("Teacher__CourseDetails_CreateAssignment")}
           </button>
           {showCreateAssignment && createAssignmentsFormJSX}
         </div>
@@ -316,73 +408,85 @@ const CourseDetails = () => {
             onClick={showLessonsHandler}
             className={!showLessons ? classes["button-active"] : ""}
           >
-            {showLessons ? "Ukryj lekcje" : "Pokaż lekcje"}
+            {showLessons
+              ? t("Teacher__CourseDetails_HideLessons")
+              : t("Teacher__CourseDetails_ShowLessons")}
           </button>
           <button
             onClick={showExamsHandler}
             className={!showExams ? classes["button-active"] : ""}
           >
-            {showExams ? "Ukryj egzaminy" : "Pokaż egzaminy"}
+            {showExams
+              ? t("Teacher__CourseDetails_HideExams")
+              : t("Teacher__CourseDetails_ShowExams")}
           </button>
           <button
             onClick={showAssignmentsHandler}
             className={!showAssignments ? classes["button-active"] : ""}
           >
-            {showAssignments ? "Ukryj prace" : "Pokaż prace"}
+            {showAssignments
+              ? t("Teacher__CourseDetails_HideAssignments")
+              : t("Teacher__CourseDetails_ShowAssignments")}
           </button>
         </div>
         <div className={classes["content-container"]}>
           {getDetailsData &&
             showLessons &&
             getDetailsStatus === "completed" &&
-            getDetailsData.lessons.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <Lesson
-                key={item.id}
-                item={item}
-                deleteLessonRequest={deleteLessonRequest}
-                lessonDetailsHandler={lessonDetailsHandler}
-              />
-            ))}
+            getDetailsData.lessons
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
+                <Lesson
+                  key={item.id}
+                  item={item}
+                  deleteLessonRequest={deleteLessonRequest}
+                  lessonDetailsHandler={lessonDetailsHandler}
+                />
+              ))}
         </div>
         <hr className={classes["content-container__horizontal"]} />
         <div className={classes["content-container"]}>
           {getDetailsData &&
             showExams &&
             getDetailsStatus === "completed" &&
-            getDetailsData.exams.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <Exam
-                key={item.id}
-                item={item}
-                deleteExamRequest={deleteExamRequest}
-                examDetailsHandler={examDetailsHandler}
-              />
-            ))}
+            getDetailsData.exams
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
+                <Exam
+                  key={item.id}
+                  item={item}
+                  deleteExamRequest={deleteExamRequest}
+                  examDetailsHandler={examDetailsHandler}
+                />
+              ))}
         </div>
         <hr className={classes["content-container__horizontal"]} />
         <div className={classes["content-container"]}>
           {getDetailsData &&
             showAssignments &&
             getDetailsStatus === "completed" &&
-            getDetailsData.assignments.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <Assignment
-                key={item.id}
-                item={item}
-                deleteAssignmentRequest={deleteAssignmentRequest}
-                assignmentDetailsHandler={assignmentDetailsHandler}
-              />
-            ))}
+            getDetailsData.assignments
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
+                <Assignment
+                  key={item.id}
+                  item={item}
+                  deleteAssignmentRequest={deleteAssignmentRequest}
+                  assignmentDetailsHandler={assignmentDetailsHandler}
+                />
+              ))}
         </div>
         {getDetailsStatus !== "completed" && !getDetailsData && (
           <Card>

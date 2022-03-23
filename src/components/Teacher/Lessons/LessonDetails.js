@@ -11,16 +11,26 @@ import {
   deleteFileFromContent,
 } from "../../../lib/api/content-api";
 import Section from "./Section";
-import { createAddContentForm } from "../../../lib/forms/content-form";
+import {
+  createAddContentForm,
+  createAddContentFormEn,
+} from "../../../lib/forms/content-form";
 import useForm from "../../../hooks/use-form";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const LessonDetails = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const [showAddContentForm, setShowAddContentForm] = useState(false);
   const {
     renderFormInputs: renderAddContentInputs,
     isFormValid: isAddContentFormValid,
   } = useForm(createAddContentForm);
+  const {
+    renderFormInputs: renderAddContentInputsEn,
+    isFormValid: isAddContentFormValidEn,
+  } = useForm(createAddContentFormEn);
   const { sendRequest: getContentRequest, data: getContentData } = useHttp(
     getContents,
     true
@@ -56,14 +66,25 @@ const LessonDetails = () => {
 
   const addContentHandler = (event) => {
     event.preventDefault();
-    addContentRequest({
-      courseId: params.courseId,
-      lessonId: params.lessonId,
-      title: renderAddContentInputs()[0].props.value,
-    });
-    setShowAddContentForm((prevState) => {
-      return !prevState;
-    });
+    if (i18next.language === "pl") {
+      addContentRequest({
+        courseId: params.courseId,
+        lessonId: params.lessonId,
+        title: renderAddContentInputs()[0].props.value,
+      });
+      setShowAddContentForm((prevState) => {
+        return !prevState;
+      });
+    } else if (i18next.language === "en") {
+      addContentRequest({
+        courseId: params.courseId,
+        lessonId: params.lessonId,
+        title: renderAddContentInputsEn()[0].props.value,
+      });
+      setShowAddContentForm((prevState) => {
+        return !prevState;
+      });
+    }
   };
 
   const showAddContentFormHandler = () => {
@@ -75,23 +96,29 @@ const LessonDetails = () => {
   return (
     <div className={classes["lesson-details"]}>
       <button onClick={showAddContentFormHandler}>
-        {showAddContentForm ? "Zamknji formularz" : "Dodaj kontent"}{" "}
+        {showAddContentForm
+          ? t("Teacher__Lessons_HideForm")
+          : t("Teacher__Lessons_AddSection")}{" "}
       </button>
       {showAddContentForm && (
         <form
           className={classes["create-content__form"]}
           onSubmit={addContentHandler}
         >
-          {renderAddContentInputs()}
-          <button type="submit" disabled={!isAddContentFormValid()}>
-            Dodaj kontent
-          </button>
+          {i18next.language === "pl" && renderAddContentInputs()}
+          {i18next.language === "pl" && <button type="submit" disabled={!isAddContentFormValid()}>
+            Dodaj sekcje
+          </button>}
+          {i18next.language === "en" && renderAddContentInputsEn()}
+          {i18next.language === "en" && <button type="submit" disabled={!isAddContentFormValidEn()}>
+            Add section
+          </button>}
         </form>
       )}
 
       {/* main content preview starts from here */}
       {(!getContentData || getContentData.length === 0) && (
-        <div className={classes["card"]}>pusto</div>
+        <div className={classes["card"]}>{t("Teacher__Lessons_Empty")}</div>
       )}
       {getContentData &&
         getContentData

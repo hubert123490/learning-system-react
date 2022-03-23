@@ -1,12 +1,15 @@
 import classes from "./Modal.module.css";
+import { useTranslation } from "react-i18next";
 
 const Modal = (props) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={classes["backdrop"]} />
       <div className={classes["modal"]}>
         <h1 className={classes["modal__title"]}>
-          Czy napewno chcesz usunąć {props.item.name}?
+        {t("Modal__DeleteConfirmation")}
         </h1>
         <div className={classes["modal__actions"]}>
           <button
@@ -15,14 +18,14 @@ const Modal = (props) => {
             }}
             className={classes["modal-cations__buttons"]}
           >
-            Tak!
+            {t("Modal__Yes")}
           </button>
           <button
             onClick={props.closeModal}
             type="button"
             className={classes["modal-actions__buttons"]}
           >
-            Nie!
+           {t("Modal__No")}
           </button>
         </div>
       </div>

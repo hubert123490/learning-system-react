@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import classes from "./Text.module.css"
@@ -33,12 +34,12 @@ const Text = (props) => {
   return (
     <div className={classes["add-text"]}>
       <button onClick={showTextAreaHandler}>
-        {!showTextArea ? "Edytuj tekst" : "Zamknij tekst"}
+        {!showTextArea ? t("Teacher__Lessons_TextAreaEdit") : t("Teacher__Lessons_TextAreaClose")}
       </button>
       {showTextArea &&
       <form className={classes["add-text__form"]} onSubmit={submitHandler}>
         <textarea className={classes["textarea"]} value={text} onChange={handleChange} />
-        <button type="submit">Zapisz</button>
+        <button type="submit">{t("Teacher__Lessons_TextAreaSave")}</button>
       </form>}
     </div>
   );

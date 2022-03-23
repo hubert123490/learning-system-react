@@ -1,5 +1,5 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule, minLengthRule } from "../../utils/inputValidationRules";
+import { requiredRule, minLengthRule, requiredRuleEn, minLengthRuleEn } from "../../utils/inputValidationRules";
 
 export const createCourseForm = {
     courseName: {
@@ -18,6 +18,27 @@ export const createCourseForm = {
     },
     password: {
       ...createFormFieldConfig("Hasło do kursu", "password", "password"),
+      validationRules: [],
+    }
+  };
+
+  export const createCourseFormEn = {
+    courseName: {
+      ...createFormFieldConfig("Course name", "courseName", "text"),
+      validationRules: [
+        requiredRuleEn("Course name"),
+        minLengthRuleEn("Course name", 3),
+      ],
+    },
+    courseCategory: {
+      ...createFormFieldConfig("Course category", "courseCategory", "text"),
+      validationRules: [
+        requiredRuleEn("Course category"),
+        minLengthRuleEn("Course category", 3),
+      ],
+    },
+    password: {
+      ...createFormFieldConfig("Course password", "password", "password"),
       validationRules: [],
     }
   };

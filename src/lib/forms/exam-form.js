@@ -1,5 +1,5 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule, minLengthRule } from "../../utils/inputValidationRules";
+import { requiredRule, minLengthRule, requiredRuleEn, minLengthRuleEn } from "../../utils/inputValidationRules";
 
 export const createExamForm = {
   examName: {
@@ -28,6 +28,36 @@ export const createExamForm = {
       "datetime-local"
     ),
     validationRules: [requiredRule("Czas zakończenia")],
+  },
+};
+
+export const createExamFormEn = {
+  examName: {
+    ...createFormFieldConfig("Exam name", "examName", "text"),
+    validationRules: [
+      requiredRuleEn("Exam name"),
+      minLengthRuleEn("Exam name", 3),
+    ],
+  },
+  examDescription: {
+    ...createFormFieldConfig("Exam description", "examDescription", "text"),
+    validationRules: [],
+  },
+  startDate: {
+    ...createFormFieldConfig(
+      "Exam starting time",
+      "startDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Exam starting time")],
+  },
+  endDate: {
+    ...createFormFieldConfig(
+      "Exam ending time",
+      "endDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Exam ending time")],
   },
 };
 

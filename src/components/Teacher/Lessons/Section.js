@@ -6,8 +6,10 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Modal from "../../UI/Modal"
 import FileItem from "./FileItem";
+import { useTranslation } from "react-i18next";
 
 const Section = (props) => {
+  const { t } = useTranslation();
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
 
@@ -55,7 +57,7 @@ const Section = (props) => {
           ))}
           <hr />
           <div>
-            <h3>Operacje</h3>
+            <h3>{t("Teacher__Lessons_Options")}</h3>
             <Text
               updateTextRequest={props.updateTextRequest}
               value={props.item.value}

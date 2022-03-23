@@ -1,5 +1,5 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule, minLengthRule } from "../../utils/inputValidationRules";
+import { requiredRule, minLengthRule, requiredRuleEn, minLengthRuleEn } from "../../utils/inputValidationRules";
 
 export const createAssignmentForm = {
   assignmentName: {
@@ -28,6 +28,36 @@ export const createAssignmentForm = {
       "datetime-local"
     ),
     validationRules: [requiredRule("Czas zakończenia")],
+  },
+};
+
+export const createAssignmentFormEn = {
+  assignmentName: {
+    ...createFormFieldConfig("Assignment name", "assignmentName", "text"),
+    validationRules: [
+      requiredRuleEn("Assignment name"),
+      minLengthRuleEn("Assignment name", 3),
+    ],
+  },
+  assignmentDescription: {
+    ...createFormFieldConfig("Assignment description", "assignmentDescription", "text"),
+    validationRules: [],
+  },
+  startDate: {
+    ...createFormFieldConfig(
+      "Assignment starting time",
+      "startDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRuleEn("Assignment starting time")],
+  },
+  endDate: {
+    ...createFormFieldConfig(
+      "Assignment ending time",
+      "endDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRuleEn("Assignment ending time")],
   },
 };
 

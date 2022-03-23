@@ -17,7 +17,7 @@ export async function createExam(examData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Sprawdź przedział czasowy.");
+    throw new Error(data.message || "Error");
   }
 
   return data;

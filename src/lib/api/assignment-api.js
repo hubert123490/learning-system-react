@@ -13,7 +13,7 @@ export async function createAssignment(assignmentData) {
     const data = await response.json();
   
     if (!response.ok) {
-      throw new Error(data.message || "Sprawdź przedział czasowy.");
+      throw new Error(data.message || "Error");
     }
   
     return data;

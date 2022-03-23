@@ -4,8 +4,10 @@ import assignmentImage from "../../../assets/assignment.jpg";
 import classes from "./Content.module.css";
 import { FaTimes } from "react-icons/fa";
 import Modal from "../../UI/Modal";
+import { useTranslation } from "react-i18next";
 
 const Assignment = (props) => {
+  const { t } = useTranslation();
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
 
@@ -58,7 +60,7 @@ const Assignment = (props) => {
             {props.item.description}
           </div>
           <div className={classes["content-container__date-container"]}>
-            Od:{" "}
+          {t("Teacher__CourseDetails_From")}{" "}
             {props.item.startDate.split("T")[0].split("-")[2] +
               "-" +
               props.item.startDate.split("T")[0].split("-")[1] +
@@ -67,7 +69,7 @@ const Assignment = (props) => {
             {props.item.startDate.split("T")[1]}
           </div>
           <div className={classes["content-container__date-container"]}>
-            Do:{" "}
+          {t("Teacher__CourseDetails_To")}{" "}
             {props.item.endDate.split("T")[0].split("-")[2] +
               "-" +
               props.item.endDate.split("T")[0].split("-")[1] +

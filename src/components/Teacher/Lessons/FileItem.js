@@ -2,8 +2,10 @@ import classes from "./FileItem.module.css"
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Modal from "../../UI/Modal";
+import { useTranslation } from "react-i18next";
 
 const FileItem = (props) => {
+  const { t } = useTranslation();
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
 
@@ -39,7 +41,7 @@ const FileItem = (props) => {
         {props.file.fileType.split("/")[0] === "video" && (
                 <video className={classes["lesson-content__files-video"]} controls>
                   <source src={props.file.downloadUrl} type={props.file.type} />
-                  Twoja przeglądarka nie wspiera odtwarzacza video.{" "}
+                  {t("Teacher__Lessons_FileNotSupported")}{" "}
                 </video>
               )}
               <div className={classes["lesson-content__file"]}>
@@ -56,7 +58,7 @@ const FileItem = (props) => {
                   className={classes["lesson-content__file-delete"]}
                 >
                   {" "}
-                  usuń
+                  {t("Teacher__Lessons_FileDelete")}
                 </span>
               </div>
               </>

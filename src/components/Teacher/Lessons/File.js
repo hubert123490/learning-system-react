@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useState } from "react";
 import { useParams } from "react-router";
 import classes from "./File.module.css";
@@ -32,22 +33,22 @@ const File = (props) => {
   return (
     <div className={classes["file-content"]}>
       <button onClick={showFileHandler}>
-        {!showFile ? "Dodaj plik" : "Zamknij formularz"}
+        {!showFile ? t("Teacher__Lessons_AddFile") : t("Teacher__Lessons_HideForm")}
       </button>
       {showFile && (
         <div className={classes["add-file"]}>
           <input type="file" onChange={onFileChange} />
           <br />
           <button onClick={onFileUpload} disabled={!file ? true : false}>
-            Wyślij!
+            { t("Teacher__Lessons_SendFile")}
           </button>
         </div>
       )}
       {file && showFile ? (
         <div>
-          <h2>Szczegóły pliku:</h2>
-          <p>Nazwa pliku: {file.name}</p>
-          <p>Typ pliku: {file.type}</p>
+          <h2> { t("Teacher__Lessons_FileDetails")}</h2>
+          <p> { t("Teacher__Lessons_FileName")} {file.name}</p>
+          <p> { t("Teacher__Lessons_FileType")} {file.type}</p>
         </div>
       ) : ""}
     </div>

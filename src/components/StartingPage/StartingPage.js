@@ -43,13 +43,14 @@ const StartingPageContent = () => {
         name: searchParams.get("name"),
         category: searchParams.get("category"),
         lastName: searchParams.get("lastName"),
+        error: t("StartingPage__Error")
       });
     }, 500);
     return () => {
       clearTimeout(identifier);
       return sendRequest();
     };
-  }, [sendRequest, searchParams]);
+  }, [sendRequest, searchParams, t]);
 
   const courseDetailsHandler = (courseId) => {
     navigate(`/student/courses/${courseId}`);

@@ -74,7 +74,7 @@ const Meeting = () => {
     <>
       <div className={classes["meeting"]}>
         <button onClick={showCreateMeetingHandler}>
-          {showCreateMeeting ? "Zmknij formularz" : "Utwórz spotkanie"}
+          {showCreateMeeting ? "Zamknij formularz" : "Utwórz spotkanie"}
         </button>
       </div>
       {showCreateMeeting && (

@@ -4,10 +4,12 @@ import { useParams } from "react-router-dom";
 import examImage from "../../../assets/exam.jpg";
 import { useState } from "react";
 import Modal from "../../UI/Modal";
+import { useTranslation } from "react-i18next";
 
 const Exam = (props) => {
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
+  const { t } = useTranslation();
 
   const showModalHandler = () => {
     setShowModal((prevState) => {
@@ -59,7 +61,7 @@ const Exam = (props) => {
             {props.item.description}
           </div>
           <div className={classes["content-container__date-container"]}>
-            Od: {" "}
+            {t("Teacher__CourseDetails_From")} {" "}
             {props.item.startDate.split("T")[0].split("-")[2] +
               "-" +
               props.item.startDate.split("T")[0].split("-")[1] +
@@ -68,7 +70,7 @@ const Exam = (props) => {
             {props.item.startDate.split("T")[1]}
           </div>
           <div className={classes["content-container__date-container"]}>
-          Do: {" "}
+          {t("Teacher__CourseDetails_To")} {" "}
             {props.item.endDate.split("T")[0].split("-")[2] +
               "-" +
               props.item.endDate.split("T")[0].split("-")[1] +

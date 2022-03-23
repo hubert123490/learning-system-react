@@ -10,15 +10,22 @@ import LoadingSpinner from "../../UI/LoadingSpinner";
 import Card from "../../UI/Card";
 import { useNavigate } from "react-router";
 import useForm from "../../../hooks/use-form";
-import { createCourseForm } from "../../../lib/forms/course-form";
+import {
+  createCourseForm,
+  createCourseFormEn,
+} from "../../../lib/forms/course-form";
 import MyCourse from "./MyCourse";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const MyCourses = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const {
-    renderFormInputs: renderCreateFormInputs
-  } = useForm(createCourseForm);
+  const { renderFormInputs: renderCreateFormInputs } =
+    useForm(createCourseForm);
+  const { renderFormInputs: renderCreateFormInputsEn } =
+    useForm(createCourseFormEn);
   const {
     sendRequest: getAllCourses,
     data: coursesData,
@@ -38,7 +45,7 @@ const MyCourses = () => {
   } = useHttp(createCourse);
 
   useEffect(() => {
-    getAllCourses();
+      getAllCourses();
   }, [getAllCourses, deleteStatus, createdStatus]);
 
   const courseDetailsHandler = (courseId) => {
@@ -47,11 +54,19 @@ const MyCourses = () => {
 
   const submitCreateFormHandler = (event) => {
     event.preventDefault();
-    createCourseRequest({
-      name: renderCreateFormInputs()[0].props.value,
-      category: renderCreateFormInputs()[1].props.value,
-      password: renderCreateFormInputs()[2].props.value,
-    });
+    if (i18next.language === "pl") {
+      createCourseRequest({
+        name: renderCreateFormInputs()[0].props.value,
+        category: renderCreateFormInputs()[1].props.value,
+        password: renderCreateFormInputs()[2].props.value,
+      });
+    } else if (i18next.language === "en") {
+      createCourseRequest({
+        name: renderCreateFormInputsEn()[0].props.value,
+        category: renderCreateFormInputsEn()[1].props.value,
+        password: renderCreateFormInputsEn()[2].props.value,
+      });
+    }
   };
 
   const createCourseRedirectHandler = () => {
@@ -67,55 +82,87 @@ const MyCourses = () => {
       className={classes["create-course__form"]}
       onSubmit={submitCreateFormHandler}
     >
-      {!createdData && <h1>Stwórz nowy kurs</h1>}
-      {createdData && <h1>Utworzono kurs</h1>}
-      {!createdData && renderCreateFormInputs()}
+      {!createdData && <h1>{t("Teacher__MyCourses_CreateCourse")}</h1>}
+      {createdData && <h1>{t("Teacher__MyCourses_CourseCreated")}</h1>}
+      {!createdData && i18next.language === "pl" && renderCreateFormInputs()}
+      {!createdData && i18next.language === "en" && renderCreateFormInputsEn()}
       {createdStatus === "completed" && createdError ? (
         <div className={classes.error}>{createdError}</div>
       ) : (
         ""
       )}
       {createdStatus === "completed" && createdData ? (
-        <div className={classes.success}>{createdData.message}</div>
+        <div className={classes.success}>{t("Teacher__MyCourses_Success")}</div>
       ) : (
         ""
       )}
       {createdStatus === "pending" && !createdData && <LoadingSpinner />}
-      {!createdData && createdStatus !== "pending" && (
-        <button
-          type="submit"
-          disabled={
-            !(
-              renderCreateFormInputs()[0].props.isValid &&
-              renderCreateFormInputs()[1].props.isValid
-            )
-          }
-        >
-          Stwórz kurs{" "}
-        </button>
-      )}
-      {createdStatus === "completed" && createdData && (
-        <button onClick={createCourseRedirectHandler}>
-          Przejdź do nowo utworzonego kursu
-        </button>
-      )}
+      {!createdData &&
+        createdStatus !== "pending" &&
+        (i18next.language === "pl" ? (
+          <button
+            type="submit"
+            disabled={
+              !(
+                renderCreateFormInputs()[0].props.isValid &&
+                renderCreateFormInputs()[1].props.isValid
+              )
+            }
+          >
+            Stwórz kurs{" "}
+          </button>
+        ) : (
+          i18next.language === "en" && (
+            <button
+              type="submit"
+              disabled={
+                !(
+                  renderCreateFormInputsEn()[0].props.isValid &&
+                  renderCreateFormInputsEn()[1].props.isValid
+                )
+              }
+            >
+              Create course{" "}
+            </button>
+          )
+        ))}
+      {createdStatus === "completed" &&
+        createdData &&
+        (i18next.language === "pl" ? (
+          <button onClick={createCourseRedirectHandler}>
+            Przejdź do nowo utworzonego kursu
+          </button>
+        ) : (
+          i18next.language === "en" && (
+            <button onClick={createCourseRedirectHandler}>
+              Move to created course
+            </button>
+          )
+        ))}
     </form>
   );
 
   return (
     <>
       {/* <SideNavigation /> */}
-     
+
       <section className={classes["my-courses"]}>
-        <h1>Twoje kursy!</h1>
+        <h1>{t("Teacher__MyCourses_Title")}</h1>
         <button onClick={showCreateFormHandler}>
-          {showCreateForm ? "Zamknij" : "Dodaj kurs"}
+          {showCreateForm
+            ? t("Teacher__MyCourses_HideForm")
+            : t("Teacher__MyCourses_ShowForm")}
         </button>
         {showCreateForm && createForm}
         <div className={classes["courses"]}>
           {coursesData ? (
             coursesData.courses.map((item) => (
-              <MyCourse key={item.id} item={item} deleteCourseRequest={deleteCourseRequest} courseDetailsHandler={courseDetailsHandler} />
+              <MyCourse
+                key={item.id}
+                item={item}
+                deleteCourseRequest={deleteCourseRequest}
+                courseDetailsHandler={courseDetailsHandler}
+              />
             ))
           ) : courseError ? (
             <div className={classes["error"]}>

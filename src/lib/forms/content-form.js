@@ -1,11 +1,16 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule } from "../../utils/inputValidationRules";
+import { requiredRule, requiredRuleEn } from "../../utils/inputValidationRules";
 
 export const createAddContentForm = {
-    title: {
-      ...createFormFieldConfig("Tytuł kontentu", "title", "text"),
-      validationRules: [
-        requiredRule("Tytuł kontentu"),
-      ],
-    },
-  };
+  title: {
+    ...createFormFieldConfig("Tytuł sekcji", "title", "text"),
+    validationRules: [requiredRule("Tytuł sekcji")],
+  },
+};
+
+export const createAddContentFormEn = {
+  title: {
+    ...createFormFieldConfig("Section title", "title", "text"),
+    validationRules: [requiredRuleEn("Section title")],
+  },
+};
