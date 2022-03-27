@@ -50,6 +50,13 @@ export const enrollInCourseForm = {
   }
 }
 
+export const enrollInCourseFormEn = {
+  coursePassword: {
+    ...createFormFieldConfig("Password", "coursePassword", "text"),
+    validationRules: []
+  }
+}
+
 export const getCoursesForm = {
   courseName : {
     ...createFormFieldConfig("Nazwa kursu", "courseName", "text"),

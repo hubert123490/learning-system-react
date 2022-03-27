@@ -6,8 +6,10 @@ import Card from "../../UI/Card";
 import { useNavigate } from "react-router";
 import { getMyCourses } from "../../../lib/api/course-api";
 import image from "../../../assets/course_image.jpg";
+import { useTranslation } from "react-i18next";
 
 const MeetingCourses = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     sendRequest: getAllCourses,
@@ -27,7 +29,7 @@ const MeetingCourses = () => {
 
   return (
     <section className={classes["meeting-courses"]}>
-      <h1>Wybierz kurs!</h1>
+      <h1>{t("Teacher__Webex_ChooseCourse")}</h1>
       <div className={classes["courses"]}>
         {coursesData ? (
           coursesData.courses.map((item) => (

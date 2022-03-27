@@ -67,3 +67,8 @@
 .delete-icon:hover {
   color: black;
 }
+
+select {
+  background-color: white;
+  color: black;
+}

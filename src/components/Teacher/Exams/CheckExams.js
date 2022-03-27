@@ -7,8 +7,10 @@ import { getUncheckedExams } from "../../../lib/api/exam-api";
 import Card from "../../UI/Card";
 import image from "../../../assets/exam.jpg";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 const CheckExams = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -29,11 +31,11 @@ const CheckExams = () => {
 
   return (
     <section className={classes["check-exams"]}>
-      <h1>Wybierz egzamin!</h1>
+      <h1>{t("Teacher__Exams_CheckExam")}</h1>
       <div className={classes["exams"]}>
         {getExamsData && getExamsData.length === 0 && (
           <div className={classes["notification"]}>
-            Brak egzaminów do sprawdzenia
+            {t("Teacher__Exams_NoExams")}
           </div>
         )}
         {getExamsData ? (
@@ -60,7 +62,7 @@ const CheckExams = () => {
                     </span>
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Od:{" "}
+                    {t("Teacher__Exams_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -69,7 +71,7 @@ const CheckExams = () => {
                     {item.startDate.split("T")[1]}
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Do:{" "}
+                  {t("Teacher__Exams_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

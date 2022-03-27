@@ -5,8 +5,10 @@ import useHttp from "../../../hooks/use-http";
 import classes from "./CheckSubmissions.module.css";
 import Card from "../../UI/Card";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 const CheckSubmissions = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -30,11 +32,11 @@ const CheckSubmissions = () => {
 
   return (
     <section className={classes["submissions"]}>
-      <h1>Sprawdź uczniów!</h1>
+      <h1>{t("Teacher__Submissions_CheckStudents")}</h1>
       {findSubmissionsData && findSubmissionsData.length === 0 && (
         <div className={classes["submission"]}>
-          <h3>Brak uczniów do sprawdzenia</h3>
-          <div>Sprawdzono wszystkich uczniów</div>
+          <h3>{t("Teacher__Submissions_NoSubmissions")}</h3>
+          <div>{t("Teacher__Submissions_SubmissionsChecked")}</div>
         </div>
       )}
       {findSubmissionsData ? (
@@ -48,22 +50,22 @@ const CheckSubmissions = () => {
                 {item.studentFirstName} {item.studentLastName}
               </h3>
               <div>
-                Rozpoczął{" "}
+              {t("Teacher__Submissions_Started")}{" "}
                 {item.startDate.split("T")[0].split("-")[2] +
                   "-" +
                   item.startDate.split("T")[0].split("-")[1] +
                   "-" +
                   item.startDate.split("T")[0].split("-")[0]}{" "}
-                o godzinie: {item.startDate.split("T")[1]}
+                {t("Teacher__Submissions_At")} {item.startDate.split("T")[1]}
               </div>
               <div>
-                Zakończył{" "}
+              {t("Teacher__Submissions_Ended")}{" "}
                 {item.endDate.split("T")[0].split("-")[2] +
                   "-" +
                   item.endDate.split("T")[0].split("-")[1] +
                   "-" +
                   item.endDate.split("T")[0].split("-")[0]}{" "}
-                o godzinie: {item.endDate.split("T")[1]}
+                {t("Teacher__Submissions_At")}  {item.endDate.split("T")[1]}
               </div>
             </div>
           </div>

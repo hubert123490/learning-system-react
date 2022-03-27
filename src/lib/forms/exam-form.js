@@ -79,3 +79,23 @@ export const changeExamDatesForm = {
     validationRules: [requiredRule("Czas zakończenia")],
   },
 }
+
+export const changeExamDatesFormEn = {
+  startDate: {
+    ...createFormFieldConfig(
+      "Exam starting time",
+      "startDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Starting time")],
+  },
+  endDate: {
+    ...createFormFieldConfig(
+      "Exam ending time",
+      "endDate",
+      "datetime-local"
+    ),
+    validationRules: [requiredRule("Ending time")],
+  },
+}
+

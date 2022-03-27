@@ -8,8 +8,10 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 import Card from "../UI/Card"
 import { useNavigate } from "react-router";
 import image from "../../assets/course_image.jpg"
+import { useTranslation } from "react-i18next";
 
 const MyCourses = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { sendRequest: getAllCourses, data: coursesData, error : courseError } = useHttp(
     getMyCoursesStudent,
@@ -26,7 +28,7 @@ const MyCourses = () => {
 
   return (
     <section className={classes["my-courses"]}>
-        <h1>Twoje kursy!</h1>
+        <h1>{t("Student__MyCourses_YourCourses")}</h1>
         <div className={classes["courses"]}>
           {coursesData ? (
             coursesData.courses.map((item) => (

@@ -6,15 +6,21 @@ import {
   createMeeting,
   getMeetings,
 } from "../../../lib/api/webex-api";
-import { createWebexMeetingForm } from "../../../lib/forms/webex-form";
+import {
+  createWebexMeetingForm,
+  createWebexMeetingFormEn,
+} from "../../../lib/forms/webex-form";
 import classes from "./Meeting.module.css";
 import webexHeader from "../../../lib/webex-header";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import { useEffect, useState } from "react";
 import MeetingItem from "./MeetingItem";
 import Card from "../../UI/Card";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const Meeting = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const { state } = useLocation();
   const [showCreateMeeting, setShowCreateMeeting] = useState(false);
@@ -22,6 +28,10 @@ const Meeting = () => {
     renderFormInputs: renderCreateMeetingFormInputs,
     isFormValid: isCreateMeetingFormValid,
   } = useForm(createWebexMeetingForm);
+  const {
+    renderFormInputs: renderCreateMeetingFormInputsEn,
+    isFormValid: isCreateMeetingFormValidEn,
+  } = useForm(createWebexMeetingFormEn);
   const {
     sendRequest: createMeetingRequest,
     data: createMeetingData,
@@ -34,10 +44,8 @@ const Meeting = () => {
     error: getMeetingsError,
     status: getMeetingsStatus,
   } = useHttp(getMeetings);
-  const {
-    sendRequest: cancelMeetingRequest,
-    status: cancelMeetingStatus,
-  } = useHttp(cancelMeeting);
+  const { sendRequest: cancelMeetingRequest, status: cancelMeetingStatus } =
+    useHttp(cancelMeeting);
 
   useEffect(() => {
     getMeetingsRequest({
@@ -50,14 +58,25 @@ const Meeting = () => {
 
   const createMeetingHandler = (event) => {
     event.preventDefault();
-    createMeetingRequest({
-      courseId: params.courseId,
-      request: {
-        start: renderCreateMeetingFormInputs()[0].props.value,
-        end: renderCreateMeetingFormInputs()[1].props.value,
-        token: webexHeader(),
-      },
-    });
+    if (i18next.language === "pl") {
+      createMeetingRequest({
+        courseId: params.courseId,
+        request: {
+          start: renderCreateMeetingFormInputs()[0].props.value,
+          end: renderCreateMeetingFormInputs()[1].props.value,
+          token: webexHeader(),
+        },
+      });
+    } else if (i18next.language === "en") {
+      createMeetingRequest({
+        courseId: params.courseId,
+        request: {
+          start: renderCreateMeetingFormInputsEn()[0].props.value,
+          end: renderCreateMeetingFormInputsEn()[1].props.value,
+          token: webexHeader(),
+        },
+      });
+    }
   };
 
   const showCreateMeetingHandler = () => {
@@ -74,28 +93,38 @@ const Meeting = () => {
     <>
       <div className={classes["meeting"]}>
         <button onClick={showCreateMeetingHandler}>
-          {showCreateMeeting ? "Zamknij formularz" : "Utwórz spotkanie"}
+          {showCreateMeeting
+            ? t("Teacher__Webex_Hide")
+            : t("Teacher__Webex_CreateMeeting")}
         </button>
       </div>
       {showCreateMeeting && (
         <div className={classes["meeting"]}>
-          <h1>Utwórz spotkanie</h1>
+          <h1>{t("Teacher__Webex_CreateMeeting")}</h1>
           {createMeetingStatus === "pending" && <LoadingSpinner />}
           {!createMeetingData && createMeetingStatus !== "pending" && (
             <form
               className={classes.createMeetingForm}
               onSubmit={createMeetingHandler}
             >
-              {renderCreateMeetingFormInputs()}
-              {!createMeetingData && (
+              {i18next.language === "pl" && renderCreateMeetingFormInputs()}
+              {i18next.language === "en" && renderCreateMeetingFormInputsEn()}
+              {!createMeetingData && i18next.language === "pl" && (
                 <button type="submit" disabled={!isCreateMeetingFormValid()}>
                   Utwórz spotkanie
+                </button>
+              )}
+              {!createMeetingData && i18next.language === "en" && (
+                <button type="submit" disabled={!isCreateMeetingFormValidEn()}>
+                  Create meeting
                 </button>
               )}
             </form>
           )}
           {createMeetingData && (
-            <div className={classes["success"]}>Utworzono spotkanie</div>
+            <div className={classes["success"]}>
+              {t("Teacher__Webex_MeetingCreated")}
+            </div>
           )}
           {createMeetingError && (
             <div className={classes["error"]}>{createMeetingError}</div>
@@ -125,9 +154,9 @@ const Meeting = () => {
           </Card>
         )}
         {getMeetingsStatus === "completed" && items && items.length === 0 && (
-            <div>
-              <h1>Brak spotkań</h1>
-            </div>
+          <div>
+            <h1>{t("Teacher__Webex_NoMeetings")}</h1>
+          </div>
         )}
       </div>
     </>

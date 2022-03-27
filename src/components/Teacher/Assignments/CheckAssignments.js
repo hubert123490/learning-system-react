@@ -7,11 +7,12 @@ import Card from "../../UI/Card";
 import classes from "./CheckAssignments.module.css";
 import image from "../../../assets/assignment.jpg";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 const CheckAssignments = () => {
   const navigate = useNavigate();
   const params = useParams();
-
+  const { t } = useTranslation();
   const {
     sendRequest: getAssignmentsRequest,
     data: getAssignmentsData,
@@ -28,11 +29,11 @@ const CheckAssignments = () => {
 
   return (
     <section className={classes["check-assignments"]}>
-      <h1>Wybierz prace!</h1>
+      <h1>{t("Teacher__AssignmentsPreview_ChooseAssignment")}</h1>
       <div className={classes["assignments"]}>
         {getAssignmentsData && getAssignmentsData.length === 0 && (
           <div className={classes["notification"]}>
-            Brak prac do sprawdzenia
+            {t("Teacher__AssignmentsPreview_NoAssignments")}
           </div>
         )}
         {getAssignmentsData ? (
@@ -69,7 +70,7 @@ const CheckAssignments = () => {
                       classes["assignment-description__date-container"]
                     }
                   >
-                    Od:{" "}
+                    {t("Teacher__AssignmentsPreview_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -82,7 +83,7 @@ const CheckAssignments = () => {
                       classes["assignment-description__date-container"]
                     }
                   >
-                    Do:{" "}
+                    {t("Teacher__AssignmentsPreview_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

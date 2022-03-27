@@ -3,19 +3,26 @@ import FileItem from "./FileItem";
 import { useState } from "react";
 import useForm from "../../../hooks/use-form";
 import { rateAnswerForm } from "../../../lib/forms/answer-form";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const Section = (props) => {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const {
     renderFormInputs: renderRateAnswerFormInputs,
     isFormValid: isRateAnswerFormValid,
+  } = useForm(rateAnswerForm);
+  const {
+    renderFormInputs: renderRateAnswerFormInputsEn,
+    isFormValid: isRateAnswerFormValidEn,
   } = useForm(rateAnswerForm);
 
   const showFormHandler = () => {
     setShowForm((prevState) => !prevState);
   };
 
-  console.log(props.item)
+  console.log(props.item);
 
   return (
     <div className={classes["assignment"]}>
@@ -27,16 +34,23 @@ const Section = (props) => {
           {props.item.description}
         </div>
         <hr />
-        <h3>Materiały pomocnicze</h3>
-        {props.item.files && props.item.files.length === 0 && <div>Nie udostępniono żadnych materiałow</div>}
+        <h3>{t("Teacher__AssignmentsPreview_SupportMaterials")}</h3>
+        {props.item.files && props.item.files.length === 0 && (
+          <div>{t("Teacher__AssignmentsPreview_NoSupportMaterials")}</div>
+        )}
         {props.item.files.map((file) => (
           <div key={file.id} className={classes["lesson-content__files"]}>
             <FileItem file={file} />
           </div>
         ))}
         <hr />
-        <h3>Załączone pliki</h3>
-        {props.item.submissionFiles && props.item.submissionFiles.length === 0 && <div style={{color: "red"}}>Brak załączonych plików</div>}
+        <h3>{t("Teacher__AssignmentsPreview_SharedFiles")}</h3>
+        {props.item.submissionFiles &&
+          props.item.submissionFiles.length === 0 && (
+            <div style={{ color: "red" }}>
+              {t("Teacher__AssignmentsPreview_NoSharedFiles")}
+            </div>
+          )}
         {props.item.submissionFiles.map((file) => (
           <div key={file.id} className={classes["lesson-content__files"]}>
             <FileItem
@@ -48,32 +62,58 @@ const Section = (props) => {
         ))}
         <hr />
         <div className={classes["info"]}>
-        <h3>Informacje</h3>
-        <div>Oceniono: {props.item.checkedOnce ? "Tak" : "Nie"}</div>
-        <div>
-          Liczba uzyskanych punktów: {props.item.points} /{" "}
-          {props.item.maxPoints}
-        </div>
-        <button onClick={showFormHandler}>{showForm ? "Schowaj" : "Oceń"}</button>
-        {showForm && (
-          <form
-            onSubmit={(e) =>
-              props.rateAnswerFormHandler(
-                e,
-                props.item.id,
-                renderRateAnswerFormInputs()[0].props.value
-              )
-            }
-            className={classes["rate-answer__form"]}
-          >
-            {renderRateAnswerFormInputs()}
-            <div>Maksymalna liczba punktów: {props.item.maxPoints}</div>
-            <div className={classes["error"]}>{props.children}</div>
-            <button type="submit" disabled={!isRateAnswerFormValid()}>
-              Oceń
-            </button>
-          </form>
-        )}
+          <h3>{t("Teacher__AssignmentsPreview_Informations")}</h3>
+          <div>
+            {t("Teacher__AssignmentsPreview_Rated")}{" "}
+            {props.item.checkedOnce
+              ? t("Teacher__AssignmentsPreview_Yes")
+              : t("Teacher__AssignmentsPreview_No")}
+          </div>
+          <div>
+            {t("Teacher__AssignmentsPreview_PointsObtained")}{" "}
+            {props.item.points} / {props.item.maxPoints}
+          </div>
+          <button onClick={showFormHandler}>
+            {showForm ? t("Teacher__AssignmentsPreview_Hide") : t("Teacher__AssignmentsPreview_Rate")}
+          </button>
+          {showForm && (
+            <form
+              onSubmit={(e) => {
+                if (i18next.language === "pl") {
+                  props.rateAnswerFormHandler(
+                    e,
+                    props.item.id,
+                    renderRateAnswerFormInputs()[0].props.value
+                  );
+                } else if (i18next.language === "en") {
+                  props.rateAnswerFormHandler(
+                    e,
+                    props.item.id,
+                    renderRateAnswerFormInputsEn()[0].props.value
+                  );
+                }
+              }}
+              className={classes["rate-answer__form"]}
+            >
+              {i18next.language === "pl" && renderRateAnswerFormInputs()}
+              {i18next.language === "en" && renderRateAnswerFormInputsEn()}
+              <div>
+                {t("Teacher__AssignmentsPreview_MaxPoints")}{" "}
+                {props.item.maxPoints}
+              </div>
+              <div className={classes["error"]}>{props.children}</div>
+              {i18next.language === "pl" && (
+                <button type="submit" disabled={!isRateAnswerFormValid()}>
+                  Oceń
+                </button>
+              )}
+              {i18next.language === "en" && (
+                <button type="submit" disabled={!isRateAnswerFormValidEn()}>
+                  Rate
+                </button>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </div>

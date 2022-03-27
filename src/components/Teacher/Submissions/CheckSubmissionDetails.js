@@ -4,8 +4,10 @@ import useHttp from "../../../hooks/use-http";
 import classes from "./CheckSubmissionDetails.module.css";
 import { useEffect } from "react";
 import CheckTextArea from "./Answers/CheckTextArea";
+import { useTranslation } from "react-i18next";
 
 const CheckSubmissionDetails = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const {
     sendRequest: getUncheckedAnswersRequest,
@@ -40,7 +42,7 @@ const CheckSubmissionDetails = () => {
   return (
     <div className={classes["submission-details"]}>
       {(!getUncheckedAnswersData || getUncheckedAnswersData.length === 0) && (
-        <div className={classes["card"]}><div><h3 className={classes["checked-exams"]}>Sprawdzony</h3></div></div>
+        <div className={classes["card"]}><div><h3 className={classes["checked-exams"]}>{t("Teacher__Submissions_Checked")}</h3></div></div>
       )}
       {getUncheckedAnswersData &&
         getUncheckedAnswersData

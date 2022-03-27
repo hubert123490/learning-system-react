@@ -11,8 +11,10 @@ import { checkSubmission } from "../../lib/api/submission-api";
 import CountdownTimer from "../UI/CountdownTimer";
 import { useState } from "react";
 import { usePrompt } from "../../hooks/use-blocker";
+import { useTranslation } from "react-i18next";
 
 const ExamDetailsStudent = () => {
+  const { t } = useTranslation();
   let [isBlocking] = useState(true);
 
   usePrompt("Czy napewno chcesz wyjść?",
@@ -133,12 +135,12 @@ const ExamDetailsStudent = () => {
           ))}
       {checkSubmissionData && checkSubmissionData.status === "PENDING" && <div>
       <form onSubmit={saveExamHandler}>
-        <button type="submit">Zapisz</button>
+        <button type="submit">{t("Student__Exam_Save")}</button>
       </form></div>}
       {/* {submitAnswersData && <div>{submitAnswersData.message}</div>} */}
       {submitAnswersError && <div>{submitAnswersError}</div>}
-      {checkSubmissionData && checkSubmissionData.status === "ERROR" && <Card><h3>Test zakończony</h3><div>{checkSubmissionData.message}</div></Card>}
-      {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <Card><h3>Egzamin wymaga sprawdzenia przez nauczyciela</h3><div>{checkSubmissionData.message}</div></Card>}
+      {checkSubmissionData && checkSubmissionData.status === "ERROR" && <Card><h3>{t("Student__Exam_ExamEnded")}</h3><div>{checkSubmissionData.message}</div></Card>}
+      {checkSubmissionData && checkSubmissionData.status === "CHECKING" && <Card><h3>{t("Student__Exam_CheckNeeded")}</h3><div>{checkSubmissionData.message}</div></Card>}
       {checkSubmissionError && <Card><h3>{checkSubmissionError}</h3></Card>}
     </div>
   );

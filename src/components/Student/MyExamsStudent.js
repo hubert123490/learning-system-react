@@ -6,8 +6,10 @@ import classes from "./MyExamsStudent.module.css";
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import image from "../../assets/exam.jpg";
+import { useTranslation } from "react-i18next";
 
 const MyExamsStudent = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     sendRequest: getPendingExamsRequest,
@@ -27,11 +29,11 @@ const MyExamsStudent = () => {
 
   return (
     <section className={classes["my-exams"]}>
-      <h1>Wybierz egzamin!</h1>
+      <h1>{t("Student__Exam_ChooseExam")}</h1>
       <div className={classes["exams"]}>
         {getPendingExamsData && getPendingExamsData.length === 0 && (
           <div className={classes["notification"]}>
-            Brak egzaminów do wyświetlenia
+            {t("Student__Exam_NoExams")}
           </div>
         )}
         {getPendingExamsData ? (
@@ -58,7 +60,7 @@ const MyExamsStudent = () => {
                     </span>
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Od:{" "}
+                  {t("Student__Exam_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -67,7 +69,7 @@ const MyExamsStudent = () => {
                     {item.startDate.split("T")[1]}
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Do:{" "}
+                  {t("Student__Exam_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

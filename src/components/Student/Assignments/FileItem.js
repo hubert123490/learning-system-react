@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import classes from "./FileItem.module.css"
+import classes from "./FileItem.module.css";
 import Modal from "../../UI/Modal";
+import { useTranslation } from "react-i18next";
 
 const FileItem = (props) => {
+  const { t } = useTranslation();
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +31,7 @@ const FileItem = (props) => {
 
   return (
     <>
-    {showModal && (
+      {showModal && (
         <Modal
           item={props.file}
           closeModal={closeModal}
@@ -52,12 +54,12 @@ const FileItem = (props) => {
           {props.file.fileName}
         </a>{" "}
         <span
-                  onClick={showModalHandler}
-                  className={classes["task-content__file-delete"]}
-                >
-                  {" "}
-                  usuń
-                </span>
+          onClick={showModalHandler}
+          className={classes["task-content__file-delete"]}
+        >
+          {" "}
+          {t("Student__Assignment_Delete")}
+        </span>
       </div>
     </>
   );

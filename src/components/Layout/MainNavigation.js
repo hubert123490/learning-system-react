@@ -209,7 +209,7 @@ const MainNavigation = () => {
                         : { color: "white" }
                     }
                   >
-                    {t("MainNavigation__Profile")}
+                    {t("MainNavigation__Grades")}
                   </NavLink>
                 </li>
               )}

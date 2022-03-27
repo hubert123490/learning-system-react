@@ -5,10 +5,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import meetingImage from "../../../assets/meeting.jpg"
 import webexHeader from "../../../lib/webex-header";
+import { useTranslation } from "react-i18next";
 
 const MeetingItem = (props) => {
   const [showModal, setShowModal] = useState(false);
   const params = useParams();
+  const { t } = useTranslation();
 
   const showModalHandler = () => {
     setShowModal((prevState) => {
@@ -77,10 +79,10 @@ const MeetingItem = (props) => {
             <img src={meetingImage} alt="meeting" />
           </div>
           <div className={classes["content-container__start-date"]}>
-            <span>Data rozpoczęcia: </span><span>{`${timeStart.timeOfDay} ${timeStart.timeOfYear}`}</span>
+            <span>{t("Teacher__Webex_StartDate")} </span><span>{`${timeStart.timeOfDay} ${timeStart.timeOfYear}`}</span>
           </div>
           <div className={classes["content-container__end-date"]}>
-          <span>Data zakończenia: </span><span>{`${timeEnd.timeOfDay} ${timeEnd.timeOfYear}`}</span>
+          <span>{t("Teacher__Webex_EndDate")} </span><span>{`${timeEnd.timeOfDay} ${timeEnd.timeOfYear}`}</span>
           </div>
         </div>
       </div>

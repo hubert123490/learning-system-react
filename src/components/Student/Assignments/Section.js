@@ -2,8 +2,10 @@ import classes from "./Section.module.css";
 import FileItem from "./FileItem";
 import File from "./File"
 import FileItemDisplay from "./FileItemDisplay";
+import { useTranslation } from "react-i18next";
 
 const Section = (props) => {
+  const { t } = useTranslation();
   return (
     <div className={classes["assignment"]}>
       <div className={classes["card"]}>
@@ -14,14 +16,14 @@ const Section = (props) => {
           {props.item.description}
         </div>
         <hr />
-        <h3>Materiały pomocnicze</h3>
+        <h3>{t("Student__Assignment_SupportMaterials")}</h3>
         {props.item.files.map((file) => (
           <div key={file.id} className={classes["lesson-content__files"]}>
             <FileItemDisplay file={file} />
           </div>
         ))}
         <hr />
-        <h3>Załączone pliki</h3>
+        <h3>{t("Student__Assignment_Files")}</h3>
         {props.item.submissionFiles.map((file) => (
           <div key={file.id} className={classes["lesson-content__files"]}>
             <FileItem file={file} deleteTaskAnswerFile={props.deleteTaskAnswerFile} taskId={props.item.id}/>

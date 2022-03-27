@@ -6,8 +6,10 @@ import classes from "./MyAssignmentsStudent.module.css";
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import image from "../../assets/assignment.jpg";
+import { useTranslation } from "react-i18next";
 
 const MyAssignmentsStudent = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     sendRequest: getPendingAssignmentsRequest,
@@ -25,12 +27,12 @@ const MyAssignmentsStudent = () => {
 
   return (
     <section className={classes["my-assignments"]}>
-      <h1>Wybierz pracę!</h1>
+      <h1>{t("Student__Assignment_ChooseAssignment")}</h1>
       <div className={classes["assignments"]}>
         {getPendingAssignmentsData &&
           getPendingAssignmentsData.length === 0 && (
             <div className={classes["notification"]}>
-              Brak prac do wyświetlenia
+              {t("Student__Assignment_NoAssignments")}
             </div>
           )}
         {getPendingAssignmentsData ? (
@@ -63,7 +65,7 @@ const MyAssignmentsStudent = () => {
                     </span>
                   </div>
                   <div className={classes["assignment-description__date-container"]}>
-                    Od:{" "}
+                  {t("Student__Assignment_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -72,7 +74,7 @@ const MyAssignmentsStudent = () => {
                     {item.startDate.split("T")[1]}
                   </div>
                   <div className={classes["assignment-description__date-container"]}>
-                    Do:{" "}
+                  {t("Student__Assignment_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

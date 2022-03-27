@@ -108,7 +108,7 @@ export async function createAssignment(assignmentData) {
     const data = await response.json();
   
     if (!response.ok) {
-      throw new Error(data.message || "Nie udało się zmienić czasu rozpoczęcia i zakończenia. Sprawdź poprawność danych.");
+      throw new Error(data.message || "Error");
     }
   
     return data;

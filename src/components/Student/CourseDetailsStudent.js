@@ -6,12 +6,18 @@ import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import { useNavigate, useLocation, useParams } from "react-router";
 import useForm from "../../hooks/use-form";
-import { enrollInCourseForm } from "../../lib/forms/course-form";
+import {
+  enrollInCourseForm,
+  enrollInCourseFormEn,
+} from "../../lib/forms/course-form";
 import lessonImage from "../../assets/lesson.jpg";
 import examImage from "../../assets/exam.jpg";
 import assignmentImage from "../../assets/assignment.jpg";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const CourseDetails = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
@@ -31,6 +37,8 @@ const CourseDetails = () => {
   } = useHttp(enrollInCourse);
   const { renderFormInputs: renderEnrollFormInputs } =
     useForm(enrollInCourseForm);
+  const { renderFormInputs: renderEnrollFormInputsEn } =
+    useForm(enrollInCourseFormEn);
 
   useEffect(() => {
     if (params.courseId) {
@@ -52,13 +60,24 @@ const CourseDetails = () => {
 
   const onEnrollInCourseSubmit = (event) => {
     event.preventDefault();
-    if (params.courseId) {
-      enrollInCourseRequest({
-        password: renderEnrollFormInputs()[0].props.value
-          ? renderEnrollFormInputs()[0].props.value
-          : " ",
-        courseId: params.courseId,
-      });
+    if (i18next.language === "pl") {
+      if (params.courseId) {
+        enrollInCourseRequest({
+          password: renderEnrollFormInputs()[0].props.value
+            ? renderEnrollFormInputs()[0].props.value
+            : " ",
+          courseId: params.courseId,
+        });
+      }
+    } else if (i18next.language === "en") {
+      if (params.courseId) {
+        enrollInCourseRequest({
+          password: renderEnrollFormInputsEn()[0].props.value
+            ? renderEnrollFormInputsEn()[0].props.value
+            : " ",
+          courseId: params.courseId,
+        });
+      }
     }
   };
 
@@ -80,26 +99,36 @@ const CourseDetails = () => {
 
   return (
     <section className={classes["course-details"]}>
-      <h1>{getCourseDetailsError ? "Zapisz się na kurs" : "Witaj"}</h1>
+      <h1>
+        {getCourseDetailsError
+          ? t("Student__MyCourses_SignUp")
+          : t("Student__MyCourses_Welcome")}
+      </h1>
       {!getCourseDetailsError && (
         <div className={classes["filter-container"]}>
           <button
             onClick={showLessonsHandler}
             className={!showLessons ? classes["button-active"] : ""}
           >
-            {showLessons ? "Ukryj lekcje" : "Pokaż lekcje"}
+            {showLessons
+              ? t("Student__MyCourses_HideLessons")
+              : t("Student__MyCourses_ShowLessons")}
           </button>
           <button
             onClick={showExamsHandler}
             className={!showExams ? classes["button-active"] : ""}
           >
-            {showExams ? "Ukryj egzaminy" : "Pokaż egzaminy"}
+            {showExams
+              ? t("Student__MyCourses_HideExams")
+              : t("Student__MyCourses_ShowExams")}
           </button>
           <button
             onClick={showAssignmentsHandler}
             className={!showAssignments ? classes["button-active"] : ""}
           >
-            {showExams ? "Ukryj prace" : "Pokaż prace"}
+            {showExams
+              ? t("Student__MyCourses_HideAssignments")
+              : t("Student__MyCourses_ShowAssignments")}
           </button>
         </div>
       )}
@@ -108,31 +137,36 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showLessons &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.lessons.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <div key={item.id} className={classes["content-container__item"]}>
+            getCourseDetailsData.lessons
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
                 <div
-                  onClick={() => {
-                    lessonDetailsHandler(item.id);
-                  }}
+                  key={item.id}
+                  className={classes["content-container__item"]}
                 >
-                  <h2 className={classes["content-container__title"]}>
-                    {item.name}
-                  </h2>
                   <div
-                    className={classes["content-container__image-container"]}
+                    onClick={() => {
+                      lessonDetailsHandler(item.id);
+                    }}
                   >
-                    <img src={lessonImage} alt="lesson" />
-                  </div>
-                  <div className={classes["content-container__description"]}>
-                    {item.description}
+                    <h2 className={classes["content-container__title"]}>
+                      {item.name}
+                    </h2>
+                    <div
+                      className={classes["content-container__image-container"]}
+                    >
+                      <img src={lessonImage} alt="lesson" />
+                    </div>
+                    <div className={classes["content-container__description"]}>
+                      {item.description}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       )}
       {!getCourseDetailsError && (
@@ -143,52 +177,58 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showExams &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.exams.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <div
-                key={item.id}
-                className={`${classes["content-container__item"]} ${classes["exam"]}`}
-              >
+            getCourseDetailsData.exams
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
                 <div
-                  onClick={() => {
-                    examDetailsHandler(item.id);
-                  }}
+                  key={item.id}
+                  className={`${classes["content-container__item"]} ${classes["exam"]}`}
                 >
-                  <h2 className={classes["content-container__title"]}>
-                    {item.name}
-                  </h2>
                   <div
-                    className={classes["content-container__image-container"]}
+                    onClick={() => {
+                      examDetailsHandler(item.id);
+                    }}
                   >
-                    <img src={examImage} alt="exam" />
-                  </div>
-                  <div className={classes["content-container__description"]}>
-                    {item.description}
-                  </div>
-                  <div className={classes["content-container__date-container"]}>
-                    Od:{" "}
-                    {item.startDate.split("T")[0].split("-")[2] +
-                      "-" +
-                      item.startDate.split("T")[0].split("-")[1] +
-                      "-" +
-                      item.startDate.split("T")[0].split("-")[0]}{" "}
-                    {item.startDate.split("T")[1]}
-                  </div>
-                  <div className={classes["content-container__date-container"]}>
-                    Do:{" "}
-                    {item.endDate.split("T")[0].split("-")[2] +
-                      "-" +
-                      item.endDate.split("T")[0].split("-")[1] +
-                      "-" +
-                      item.endDate.split("T")[0].split("-")[0]}{" "}
-                    {item.endDate.split("T")[1]}
+                    <h2 className={classes["content-container__title"]}>
+                      {item.name}
+                    </h2>
+                    <div
+                      className={classes["content-container__image-container"]}
+                    >
+                      <img src={examImage} alt="exam" />
+                    </div>
+                    <div className={classes["content-container__description"]}>
+                      {item.description}
+                    </div>
+                    <div
+                      className={classes["content-container__date-container"]}
+                    >
+                      {t("Student__MyCourses_From")}{" "}
+                      {item.startDate.split("T")[0].split("-")[2] +
+                        "-" +
+                        item.startDate.split("T")[0].split("-")[1] +
+                        "-" +
+                        item.startDate.split("T")[0].split("-")[0]}{" "}
+                      {item.startDate.split("T")[1]}
+                    </div>
+                    <div
+                      className={classes["content-container__date-container"]}
+                    >
+                      {t("Student__MyCourses_To")}{" "}
+                      {item.endDate.split("T")[0].split("-")[2] +
+                        "-" +
+                        item.endDate.split("T")[0].split("-")[1] +
+                        "-" +
+                        item.endDate.split("T")[0].split("-")[0]}{" "}
+                      {item.endDate.split("T")[1]}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       )}
       {!getCourseDetailsError && (
@@ -199,52 +239,58 @@ const CourseDetails = () => {
           {getCourseDetailsData &&
             showAssignments &&
             getCourseDetailsStatus === "completed" &&
-            getCourseDetailsData.assignments.sort((a, b) => {
-              var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-            }).map((item) => (
-              <div
-                key={item.id}
-                className={`${classes["content-container__item"]} ${classes["assignment"]}`}
-              >
+            getCourseDetailsData.assignments
+              .sort((a, b) => {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              })
+              .map((item) => (
                 <div
-                  onClick={() => {
-                    assignmentDetailsHandler(item.id);
-                  }}
+                  key={item.id}
+                  className={`${classes["content-container__item"]} ${classes["assignment"]}`}
                 >
-                  <h2 className={classes["content-container__title"]}>
-                    {item.name}
-                  </h2>
                   <div
-                    className={classes["content-container__image-container"]}
+                    onClick={() => {
+                      assignmentDetailsHandler(item.id);
+                    }}
                   >
-                    <img src={assignmentImage} alt="assignment" />
-                  </div>
-                  <div className={classes["content-container__description"]}>
-                    {item.description}
-                  </div>
-                  <div className={classes["content-container__date-container"]}>
-                    Od:{" "}
-                    {item.startDate.split("T")[0].split("-")[2] +
-                      "-" +
-                      item.startDate.split("T")[0].split("-")[1] +
-                      "-" +
-                      item.startDate.split("T")[0].split("-")[0]}{" "}
-                    {item.startDate.split("T")[1]}
-                  </div>
-                  <div className={classes["content-container__date-container"]}>
-                    Do:{" "}
-                    {item.endDate.split("T")[0].split("-")[2] +
-                      "-" +
-                      item.endDate.split("T")[0].split("-")[1] +
-                      "-" +
-                      item.endDate.split("T")[0].split("-")[0]}{" "}
-                    {item.endDate.split("T")[1]}
+                    <h2 className={classes["content-container__title"]}>
+                      {item.name}
+                    </h2>
+                    <div
+                      className={classes["content-container__image-container"]}
+                    >
+                      <img src={assignmentImage} alt="assignment" />
+                    </div>
+                    <div className={classes["content-container__description"]}>
+                      {item.description}
+                    </div>
+                    <div
+                      className={classes["content-container__date-container"]}
+                    >
+                      {t("Student__MyCourses_From")}{" "}
+                      {item.startDate.split("T")[0].split("-")[2] +
+                        "-" +
+                        item.startDate.split("T")[0].split("-")[1] +
+                        "-" +
+                        item.startDate.split("T")[0].split("-")[0]}{" "}
+                      {item.startDate.split("T")[1]}
+                    </div>
+                    <div
+                      className={classes["content-container__date-container"]}
+                    >
+                      {t("Student__MyCourses_To")}{" "}
+                      {item.endDate.split("T")[0].split("-")[2] +
+                        "-" +
+                        item.endDate.split("T")[0].split("-")[1] +
+                        "-" +
+                        item.endDate.split("T")[0].split("-")[0]}{" "}
+                      {item.endDate.split("T")[1]}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       )}
 
@@ -262,7 +308,7 @@ const CourseDetails = () => {
         !getCourseDetailsError &&
         getCourseDetailsStatus === "completed" && (
           <h2 className={classes["error"]}>
-            Brak egzaminów, lekcji i prac do wyświetlenia
+            {t("Student__MyCourses_NoContent")}
           </h2>
         )}
 
@@ -270,7 +316,7 @@ const CourseDetails = () => {
         <div className={classes["card"]}>
           {getCourseDetailsError && (
             <div className={classes["error"]}>
-              <h3>{getCourseDetailsError}</h3>
+              <h3>{t("Student__MyCourses_NoAccess")}</h3>
             </div>
           )}
           {getCourseDetailsError ===
@@ -279,11 +325,17 @@ const CourseDetails = () => {
               onSubmit={onEnrollInCourseSubmit}
               className={classes["enroll-form"]}
             >
-              {renderEnrollFormInputs()}
+              {i18next.language === "pl" && renderEnrollFormInputs()}
+              {i18next.language === "en" && renderEnrollFormInputsEn()}
               {enrollInCourseError && (
                 <div className={classes["error"]}>{enrollInCourseError}</div>
               )}
-              <button type="submit">Zapisz się na kurs</button>
+              {i18next.language === "pl" && (
+                <button type="submit">Zapisz się na kurs</button>
+              )}
+               {i18next.language === "en" && (
+                <button type="submit">Enroll</button>
+              )}
             </form>
           )}
           {!getCourseDetailsData &&

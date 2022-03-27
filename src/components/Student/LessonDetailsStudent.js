@@ -5,8 +5,10 @@ import { useEffect } from "react";
 import {
   getContents,
 } from "../../lib/api/content-api";
+import { useTranslation } from "react-i18next";
 
 const LessonDetails = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const { sendRequest: getContentRequest, data: getContentData } = useHttp(
     getContents,
@@ -44,7 +46,7 @@ const LessonDetails = () => {
                   {item.value}
                 </div>
                 <hr />
-                <h3>Pliki</h3>
+                <h3>{t("Student__Lesson_Files")}</h3>
                 {item.files.map((file) => (
                   <div key={file.id} className={classes["lesson-details__files-container"]}>
                      {file.fileType.split("/")[0] === "video" && (

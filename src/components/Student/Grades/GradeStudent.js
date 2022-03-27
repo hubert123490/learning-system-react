@@ -3,8 +3,10 @@ import useHttp from "../../../hooks/use-http";
 import { useEffect } from "react";
 import classes from "./GradeStudent.module.css"
 import GradeDetailsStudent from "./GradeDetailsStudent";
+import { useTranslation } from "react-i18next";
 
 const GradeTable = () => {
+  const { t } = useTranslation();
   const {
     sendRequest: getGradesRequest,
     data: getGradesData,
@@ -21,21 +23,21 @@ const GradeTable = () => {
 
   return (
     <section className={classes["grades"]}>
-      <h1>Twoje oceny!</h1>
+      <h1>{t("Student__Grades_StudentsGrades")}</h1>
       {getGradesError && <div><h3>{getGradesError}</h3></div>}
       <div className={classes["card"]}>
         <table>
           <thead>
             <tr>
-              <th>Nazwa kursu</th>
-              <th>Uzyskana liczba punktów (egzaminy)</th>
-              <th>Maksymalna liczba punktów (egzaminy)</th>
-              <th>Ocena (egzaminy)</th>
-              <th>Uzyskana liczba punktów (prace)</th>
-              <th>Maksymalna liczba punktów (prace)</th>
-              <th>Ocena (prace)</th>
-              <th>Szczegóły (egzaminy)</th>
-              <th>Szczegóły (prace)</th>
+              <th>{t("Student__Grades_CourseName")}</th>
+              <th>{t("Student__Grades_ObtainedPointsExams")}</th>
+              <th>{t("Student__Grades_MaxPointsExams")}</th>
+              <th>{t("Student__Grades_GradeExams")}</th>
+              <th>{t("Student__Grades_ObtainedPointsAssignments")}</th>
+              <th>{t("Student__Grades_MaxPointsAssignments")}</th>
+              <th>{t("Student__Grades_GradeAssignments")}</th>
+              <th>{t("Student__Grades_DetailsExams")}</th>
+              <th>{t("Student__Grades_DetailsAssignments")}</th>
             </tr>
           </thead>
           <tbody>

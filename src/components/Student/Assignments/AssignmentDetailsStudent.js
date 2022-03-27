@@ -5,8 +5,10 @@ import { useEffect } from "react";
 import classes from "./AssignmentDetailsStudent.module.css";
 import Section from "./Section";
 import { addFileToTaskAnswer, deleteTaskAnswerFile } from "../../../lib/api/task-answer-api";
+import { useTranslation } from "react-i18next";
 
 const AssignmentDetailsStudent = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const { sendRequest: getTaskRequest, data: getTaskData } = useHttp(
     getTasks,
@@ -34,7 +36,7 @@ const AssignmentDetailsStudent = () => {
   return (
     <div className={classes["assignment-details"]}>
       {(!getTaskData || getTaskData.length === 0) && (
-        <div className={classes["card"]}>pusto</div>
+        <div className={classes["card"]}>{t("Student__Assignment_Empty")}</div>
       )}
       {getTaskData &&
         getTaskData

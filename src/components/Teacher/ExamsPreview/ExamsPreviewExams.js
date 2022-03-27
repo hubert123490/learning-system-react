@@ -7,8 +7,10 @@ import Card from "../../UI/Card";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import image from "../../../assets/exam.jpg";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ExamsPreviewExams = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -29,11 +31,11 @@ const ExamsPreviewExams = () => {
 
   return (
     <section className={classes["my-exams"]}>
-      <h1>Wybierz egzamin!</h1>
+      <h1>{t("Teacher__ExamsPreview_ChooseExam")}</h1>
       <div className={classes["exams"]}>
         {getPendingExamsData && getPendingExamsData.length === 0 && (
           <div className={classes["notification"]}>
-            Brak egzaminów do wyświetlenia
+            {t("Teacher__ExamsPreview_NoExams")}
           </div>
         )}
         {getPendingExamsData ? (
@@ -60,7 +62,7 @@ const ExamsPreviewExams = () => {
                     </span>
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Od:{" "}
+                    {t("Teacher__ExamsPreview_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -69,7 +71,7 @@ const ExamsPreviewExams = () => {
                     {item.startDate.split("T")[1]}
                   </div>
                   <div className={classes["exam-description__date-container"]}>
-                    Do:{" "}
+                    {t("Teacher__ExamsPreview_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

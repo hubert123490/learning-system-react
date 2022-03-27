@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { addQuestionForm } from "../../../lib/forms/question-form";
+import { addQuestionForm, addQuestionFormEn } from "../../../lib/forms/question-form";
 import useForm from "../../../hooks/use-form";
 import { useState, useEffect } from "react";
 import useHttp from "../../../hooks/use-http";
@@ -13,10 +13,13 @@ import {
 } from "../../../lib/api/question-api";
 import classes from "./ExamDetails.module.css";
 import ExamDetailsItem from "./ExamDetailsItem";
-import { changeExamDatesForm } from "../../../lib/forms/exam-form";
+import { changeExamDatesForm, changeExamDatesFormEn } from "../../../lib/forms/exam-form";
 import { changeExamDates } from "../../../lib/api/exam-api";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const ExamDetails = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const [questionType, setQuestionType] = useState("radio");
   const [showAddQuestionForm, setShowAddQuestionForm] = useState(false);
@@ -26,9 +29,17 @@ const ExamDetails = () => {
     isFormValid: isAddQuestionFormValid,
   } = useForm(addQuestionForm);
   const {
+    renderFormInputs: renderAddQuestionInputsEn,
+    isFormValid: isAddQuestionFormValidEn,
+  } = useForm(addQuestionFormEn);
+  const {
     renderFormInputs: renderChangeExamDatesInputs,
     isFormValid: isChangeExamDatesFormValid,
   } = useForm(changeExamDatesForm);
+  const {
+    renderFormInputs: renderChangeExamDatesInputsEn,
+    isFormValid: isChangeExamDatesFormValidEn,
+  } = useForm(changeExamDatesFormEn);
   const { sendRequest: getQuestionsRequest, data: getQuestionsData } = useHttp(
     getQuestions,
     true
@@ -68,6 +79,7 @@ const ExamDetails = () => {
 
   const addQuestionHandler = (event) => {
     event.preventDefault();
+    if(i18next.language === "pl") {
     addQuestionRequest({
       courseId: params.courseId,
       examId: params.examId,
@@ -77,11 +89,23 @@ const ExamDetails = () => {
         maxPoints: renderAddQuestionInputs()[1].props.value,
       },
     });
+  } else if(i18next.language === "en") {
+    addQuestionRequest({
+      courseId: params.courseId,
+      examId: params.examId,
+      request: {
+        description: renderAddQuestionInputsEn()[0].props.value,
+        type: questionType,
+        maxPoints: renderAddQuestionInputsEn()[1].props.value,
+      },
+    });
+  }
     setShowAddQuestionForm(!showAddQuestionForm);
   };
 
   const changeExamDatesHandler = (event) => {
     event.preventDefault();
+    if(i18next.language === "pl") {
     changeExamDatesRequest({
       courseId: params.courseId,
       examId: params.examId,
@@ -90,6 +114,16 @@ const ExamDetails = () => {
         endDate: renderChangeExamDatesInputs()[1].props.value,
       },
     });
+  } else if(i18next.language === "en") {
+    changeExamDatesRequest({
+      courseId: params.courseId,
+      examId: params.examId,
+      request: {
+        startDate: renderChangeExamDatesInputsEn()[0].props.value,
+        endDate: renderChangeExamDatesInputsEn()[1].props.value,
+      },
+    });
+  }
   };
 
   const showAddQuestionFormHandler = () => {
@@ -108,7 +142,7 @@ const ExamDetails = () => {
     <div className={classes["exam-details"]}>
       <div className={classes["button-container"]}>
         <button onClick={showAddQuestionFormHandler}>
-          {showAddQuestionForm ? "Zamknji formularz" : "Dodaj pytanie"}{" "}
+          {showAddQuestionForm ? t("Teacher__Exams_HideForm") : t("Teacher__Exams_AddQuestion")}{" "}
         </button>
       </div>
       {showAddQuestionForm && (
@@ -116,8 +150,9 @@ const ExamDetails = () => {
           className={classes["create-question__form"]}
           onSubmit={addQuestionHandler}
         >
-          {renderAddQuestionInputs()}
-          <label htmlFor="type-select">Wybierz formę pytania:</label>
+          {i18next.language === "pl" && renderAddQuestionInputs()}
+          {i18next.language === "en" && renderAddQuestionInputsEn()}
+          <label htmlFor="type-select">{t("Teacher__Exams_ChooseQuestionType")}</label>
           <select
             value={questionType}
             onChange={handleQuestionTypeChange}
@@ -125,35 +160,42 @@ const ExamDetails = () => {
             id="type-select"
             required
           >
-            <option value="radio">Zadanie zamknięte</option>
-            <option value="text">Krótkie zadanie otwarte</option>
+            <option value="radio">{t("Teacher__Exams_ClosedQuestion")}</option>
+            <option value="text">{t("Teacher__Exams_OpenQuestion")}</option>
             <option value="textarea">
-              Długie zadanie otwarte (sprawozdanie, kod itp.)
+            {t("Teacher__Exams_LongOpenQuestion")}
             </option>
           </select>
           <br />
-          <button type="submit" disabled={!isAddQuestionFormValid()}>
+          {i18next.language === "pl" && <button type="submit" disabled={!isAddQuestionFormValid()}>
             Dodaj pytanie
-          </button>
+          </button>}
+          {i18next.language === "en" && <button type="submit" disabled={!isAddQuestionFormValidEn()}>
+            Add question
+          </button>}
         </form>
       )}
       <div className={classes["button-container"]}>
         <button onClick={showChangeExamDatesFormHandler}>
-          {showChangeDatesForm ? "Zamknij formularz" : "Zmień datę"}
+          {showChangeDatesForm ? t("Teacher__Exams_HideForm") : t("Teacher__Exams_ChangeDate")}
         </button>
       </div>
       {showChangeDatesForm && (
         <form className={classes["create-question__form"]}
         onSubmit={changeExamDatesHandler} >
-          {renderChangeExamDatesInputs()}
-          <button type="submit" disabled={!isChangeExamDatesFormValid()}>
+          {i18next.language === "pl" && renderChangeExamDatesInputs()}
+          {i18next.language === "en" && renderChangeExamDatesInputsEn()}
+          {i18next.language === "pl" && <button type="submit" disabled={!isChangeExamDatesFormValid()}>
             Zmień czas
-          </button>
+          </button>}
+          {i18next.language === "en" && <button type="submit" disabled={!isChangeExamDatesFormValidEn()}>
+            Change date
+          </button>}
           {changeExamDatesError && <div style={{color : "red"}}>{changeExamDatesError}</div>}
-          {changeExamDatesData && <div style={{color: "green"}}>{changeExamDatesData.message}</div>}
+          {changeExamDatesData && <div style={{color: "green"}}>{t("Teacher__Exams_DateChanged")}</div>}
         </form>
       )}
-      {(!getQuestionsData || getQuestionsData.length === 0) && <div>pusto</div>}
+      {(!getQuestionsData || getQuestionsData.length === 0) && <div>{t("Teacher__Exams_Empty")}</div>}
       {getQuestionsData &&
         getQuestionsData
           .sort((a, b) => b.id - a.id)

@@ -6,8 +6,10 @@ import classes from "./AssignmentsPreviewAssignments.module.css";
 import Card from "../../UI/Card";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import image from "../../../assets/assignment.jpg";
+import { useTranslation } from "react-i18next";
 
 const AssignmentsPreviewAssignments = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -28,11 +30,11 @@ const AssignmentsPreviewAssignments = () => {
 
   return (
     <section className={classes["my-assignments"]}>
-      <h1>Wybierz prace!</h1>
+      <h1>{t("Teacher__AssignmentsPreview_ChooseAssignment")}</h1>
       <div className={classes["assignments"]}>
         {getCourseAssignmentsData && getCourseAssignmentsData.length === 0 && (
           <div className={classes["notification"]}>
-            Brak prac do wyświetlenia
+            {t("Teacher__AssignmentsPreview_NoAssignments")}
           </div>
         )}
         {getCourseAssignmentsData ? (
@@ -65,7 +67,7 @@ const AssignmentsPreviewAssignments = () => {
                     </span>
                   </div>
                   <div className={classes["assignment-description__date-container"]}>
-                    Od:{" "}
+                    {t("Teacher__AssignmentsPreview_From")}{" "}
                     {item.startDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.startDate.split("T")[0].split("-")[1] +
@@ -74,7 +76,7 @@ const AssignmentsPreviewAssignments = () => {
                     {item.startDate.split("T")[1]}
                   </div>
                   <div className={classes["assignment-description__date-container"]}>
-                    Do:{" "}
+                  {t("Teacher__AssignmentsPreview_To")}{" "}
                     {item.endDate.split("T")[0].split("-")[2] +
                       "-" +
                       item.endDate.split("T")[0].split("-")[1] +

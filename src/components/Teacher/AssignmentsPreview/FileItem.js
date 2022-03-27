@@ -1,11 +1,15 @@
-import classes from "./FileItem.module.css"
+import { useTranslation } from "react-i18next";
+import classes from "./FileItem.module.css";
 
 const FileItem = (props) => {
-    return <>
-     {props.file.fileType.split("/")[0] === "video" && (
+  const { t } = useTranslation();
+
+  return (
+    <>
+      {props.file.fileType.split("/")[0] === "video" && (
         <video className={classes["task-content__files-video"]} controls>
           <source src={props.file.downloadUrl} type={props.file.type} />
-          Twoja przeglądarka nie wspiera odtwarzacza video.{" "}
+          {t("Teacher__AssignmentsPreview_FileNotSupported")}{" "}
         </video>
       )}
       <div className={classes["task-content__file"]}>
@@ -17,7 +21,9 @@ const FileItem = (props) => {
         >
           {props.file.fileName}
         </a>{" "}
-      </div></>
-}
+      </div>
+    </>
+  );
+};
 
 export default FileItem;

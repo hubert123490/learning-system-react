@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const AnswerText = (props) => {
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState("");
 
   return (
     <form>
-      <label htmlFor="answer">Podaj odpowiedź </label>
+      <label htmlFor="answer">{t("Student__Exam_Answer")}</label>
       <br />
       <input
         type="text"

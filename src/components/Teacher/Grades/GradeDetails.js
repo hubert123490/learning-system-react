@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import classes from "./GradeDetails.module.css";
 
 const GradeDetails = (props) => {
+  const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
   const [showAssignmentDetails, setShowAssignmentDetails] = useState(false);
 
@@ -35,12 +37,16 @@ const GradeDetails = (props) => {
         </td>
         <td>
           <button onClick={showDetailsHandler}>
-            {showDetails ? "Zamknij" : "Szczegóły"}
+            {showDetails
+              ? t("Teacher__Grades_Hide")
+              : t("Teacher__Grades_Details")}
           </button>
         </td>
         <td>
           <button onClick={showAssignmentDetailsHandler}>
-            {showAssignmentDetails ? "Zamknij" : "Szczegóły"}
+            {showAssignmentDetails
+              ? t("Teacher__Grades_Hide")
+              : t("Teacher__Grades_Details")}
           </button>
         </td>
       </tr>
@@ -50,10 +56,10 @@ const GradeDetails = (props) => {
             <table className={classes["details"]}>
               <thead>
                 <tr>
-                  <th>Nazwa egzaminu</th>
-                  <th>Uzyskana liczba punktów</th>
-                  <th>Maksymalna liczba punktów</th>
-                  <th>Status</th>
+                  <th>{t("Teacher__Grades_ExamName")}</th>
+                  <th>{t("Teacher__Grades_PointsObtained")}</th>
+                  <th>{t("Teacher__Grades_MaxPoints")}</th>
+                  <th>{t("Teacher__Grades_Status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,7 +74,9 @@ const GradeDetails = (props) => {
                     <td>{exam.studentPoints}</td>
                     <td>{exam.maxPoints}</td>
                     <td>
-                      {exam.status === "SUBMITTED" ? "pisano" : "nie pisano"}
+                      {exam.status === "SUBMITTED"
+                        ? t("Teacher__Grades_Submitted")
+                        : t("Teacher__Grades_NotSubmitted")}
                     </td>
                   </tr>
                 ))}
@@ -83,10 +91,10 @@ const GradeDetails = (props) => {
             <table className={classes["details"]}>
               <thead>
                 <tr>
-                  <th>Nazwa pracy</th>
-                  <th>Uzyskana liczba punktów</th>
-                  <th>Maksymalna liczba punktów</th>
-                  <th>Status</th>
+                  <th>{t("Teacher__Grades_AssignmentName")}</th>
+                  <th>{t("Teacher__Grades_PointsObtained")}</th>
+                  <th>{t("Teacher__Grades_MaxPoints")}</th>
+                  <th>{t("Teacher__Grades_Status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,8 +112,8 @@ const GradeDetails = (props) => {
                     <td>{assignment.maxPoints}</td>
                     <td>
                       {assignment.status === "SUBMITTED"
-                        ? "pisano"
-                        : "nie pisano"}
+                        ? t("Teacher__Grades_Submitted")
+                        : t("Teacher__Grades_NotSubmitted")}
                     </td>
                   </tr>
                 ))}

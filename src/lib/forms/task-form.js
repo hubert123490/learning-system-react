@@ -1,5 +1,5 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule } from "../../utils/inputValidationRules";
+import { requiredRule, requiredRuleEn } from "../../utils/inputValidationRules";
 
 export const createAddTaskForm = {
     title: {
@@ -10,6 +10,19 @@ export const createAddTaskForm = {
     },
     points : {
       ...createFormFieldConfig("Liczba punktów za zadanie", "points", "number"),
+      validationRules: []
+    }
+  };
+
+  export const createAddTaskFormEn = {
+    title: {
+      ...createFormFieldConfig("Assignment title", "title", "text"),
+      validationRules: [
+        requiredRuleEn("Assignment title"),
+      ],
+    },
+    points : {
+      ...createFormFieldConfig("Max points for assignment", "points", "number"),
       validationRules: []
     }
   };

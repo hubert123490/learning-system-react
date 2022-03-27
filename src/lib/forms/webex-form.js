@@ -1,5 +1,5 @@
 import { createFormFieldConfig } from "../../utils/formConig";
-import { requiredRule } from "../../utils/inputValidationRules";
+import { requiredRule, requiredRuleEn } from "../../utils/inputValidationRules";
 
 export const createWebexMeetingForm = {
     start: {
@@ -17,6 +17,25 @@ export const createWebexMeetingForm = {
         "datetime-local"
       ),
       validationRules: [requiredRule("Czas zakończenia spotkania")],
+    },
+  };
+
+  export const createWebexMeetingFormEn = {
+    start: {
+      ...createFormFieldConfig(
+        "Start time",
+        "start",
+        "datetime-local"
+      ),
+      validationRules: [requiredRuleEn("Start time")],
+    },
+    end: {
+      ...createFormFieldConfig(
+        "End time",
+        "end",
+        "datetime-local"
+      ),
+      validationRules: [requiredRuleEn("End time")],
     },
   };
   
